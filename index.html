@@ -1007,16 +1007,6 @@
         İhtiyacınıza göre hizmetleri seçin, miktarları belirleyin ve markanıza özel bir dijital plan oluşturun.
       </p>
 
-      <!-- Billing toggle: Aylık / Yıllık -->
-      <div style="display:flex;align-items:center;justify-content:center;gap:12px;margin-top:28px;">
-        <span class="pkg-billing-label active" id="lbl-aylik">Aylık</span>
-        <label class="pkg-switch">
-          <input type="checkbox" id="billing-check" onchange="pkgBillingToggle(this)">
-          <span class="pkg-switch-track"><span class="pkg-switch-thumb"></span></span>
-        </label>
-        <span class="pkg-billing-label" id="lbl-yillik">Yıllık</span>
-        <span class="pkg-yearly-badge" id="yearly-badge">2 ay ücretsiz</span>
-      </div>
     </div>
 
     <!-- Single customizable card -->
@@ -1031,7 +1021,7 @@
       </div>
 
       <div class="pkg-price" style="font-size:0.8rem;color:#3d5557;margin-bottom:20px;">
-        <span style="font-size:0.95rem;font-weight:600;color:#9ab0b2;letter-spacing:0;" id="billing-price-label">Seçiminize göre fiyatlanır &nbsp;·&nbsp; Aylık</span>
+        <span style="font-size:0.95rem;font-weight:600;color:#9ab0b2;letter-spacing:0;">Seçiminize göre fiyatlanır</span>
       </div>
 
       <!-- ─ Sosyal Medya İçerik Üretimi ─ -->
@@ -1154,7 +1144,7 @@
       </div>
 
       <div class="pkg-cta">
-        <a href="#iletisim" class="pkg-btn primary" data-glow>Size Özel Teklif Al</a>
+        <button type="button" class="pkg-btn primary" data-glow onclick="pkgSendOffer()">Size Özel Teklif Al</button>
       </div>
     </div><!-- /card -->
 
@@ -1638,31 +1628,51 @@
           Markanız için doğru dijital stratejiyi birlikte kuralım. Hizmetlerimiz, çalışma modelimiz ve eğitimlerimiz hakkında detaylı bilgi almak için formu doldurun.
         </p>
 
-        <form onsubmit="handleSubmit(event)" class="flex flex-col gap-4">
+        <form id="contact-form" onsubmit="handleSubmit(event)" class="flex flex-col gap-4">
+          <!-- Web3Forms hidden fields -->
+          <input type="hidden" name="access_key" value="BURAYA_WEB3FORMS_ANAHTARINIZI_GIRIN">
+          <input type="hidden" name="subject" value="Yeni Teklif Talebi — BoostMedia360">
+          <input type="hidden" name="from_name" value="BoostMedia360 Web Sitesi">
+          <input type="hidden" name="redirect" value="false">
+          <input type="checkbox" name="botcheck" style="display:none;" tabindex="-1" autocomplete="off">
+
+          <!-- Paket özeti kutusu (paketler bölümünden gelinince görünür) -->
+          <div id="pkg-summary-box" style="display:none; background:rgba(14,206,206,0.05); border:1px solid rgba(14,206,206,0.25); border-radius:12px; padding:16px 18px;">
+            <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:10px;">
+              <div style="display:flex; align-items:center; gap:7px;">
+                <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><path d="M2 8l4.5 4.5L14 3.5" stroke="#0ecece" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <span style="font-size:0.68rem; letter-spacing:0.1em; text-transform:uppercase; color:#0ecece; font-weight:600;">Seçilen Paket Özeti</span>
+              </div>
+              <button type="button" onclick="pkgClearSummary()" style="font-size:0.72rem; color:#3d5557; background:none; border:none; cursor:pointer; padding:2px 6px; border-radius:4px; transition:color 0.15s;" onmouseover="this.style.color='#9ab0b2'" onmouseout="this.style.color='#3d5557'">Temizle ×</button>
+            </div>
+            <div id="pkg-summary-lines" style="font-size:0.81rem; color:#9ab0b2; line-height:1.8; white-space:pre-line;"></div>
+          </div>
+
           <div class="grid sm:grid-cols-2 gap-4">
             <div>
               <label style="display:block; font-size:0.75rem; letter-spacing:0.08em; text-transform:uppercase; color:#3d5557; margin-bottom:8px; font-weight:500;">Ad Soyad</label>
-              <input type="text" placeholder="Adınız Soyadınız" class="form-input" required />
+              <input type="text" name="name" placeholder="Adınız Soyadınız" class="form-input" required />
             </div>
             <div>
               <label style="display:block; font-size:0.75rem; letter-spacing:0.08em; text-transform:uppercase; color:#3d5557; margin-bottom:8px; font-weight:500;">Marka / Şirket</label>
-              <input type="text" placeholder="Şirket veya Marka Adı" class="form-input" />
+              <input type="text" name="sirket" placeholder="Şirket veya Marka Adı" class="form-input" />
             </div>
           </div>
           <div class="grid sm:grid-cols-2 gap-4">
             <div>
               <label style="display:block; font-size:0.75rem; letter-spacing:0.08em; text-transform:uppercase; color:#3d5557; margin-bottom:8px; font-weight:500;">Telefon</label>
-              <input type="tel" placeholder="0xxx xxx xx xx" class="form-input" />
+              <input type="tel" name="telefon" placeholder="0xxx xxx xx xx" class="form-input" />
             </div>
             <div>
               <label style="display:block; font-size:0.75rem; letter-spacing:0.08em; text-transform:uppercase; color:#3d5557; margin-bottom:8px; font-weight:500;">E-posta</label>
-              <input type="email" placeholder="ornek@sirket.com" class="form-input" required />
+              <input type="email" name="email" placeholder="ornek@sirket.com" class="form-input" required />
             </div>
           </div>
           <div>
             <label style="display:block; font-size:0.75rem; letter-spacing:0.08em; text-transform:uppercase; color:#3d5557; margin-bottom:8px; font-weight:500;">Hizmet Türü</label>
-            <select class="form-input" style="cursor:pointer; appearance:none; background-image:url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='M2 4l4 4 4-4' stroke='%235e7476' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E\"); background-repeat:no-repeat; background-position: right 16px center;">
+            <select name="hizmet" class="form-input" style="cursor:pointer; appearance:none; background-image:url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='M2 4l4 4 4-4' stroke='%235e7476' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E\"); background-repeat:no-repeat; background-position: right 16px center;">
               <option value="" style="background:#0d1314;">Hizmet seçin...</option>
+              <option value="paket-yapilandirmasi" style="background:#0d1314;">📦 Paket Yapılandırması</option>
               <option value="markalama" style="background:#0d1314;">Markalama</option>
               <option value="kreatif" style="background:#0d1314;">Kreatif</option>
               <option value="icerik" style="background:#0d1314;">İçerik Üretimi</option>
@@ -1674,7 +1684,7 @@
           </div>
           <div>
             <label style="display:block; font-size:0.75rem; letter-spacing:0.08em; text-transform:uppercase; color:#3d5557; margin-bottom:8px; font-weight:500;">Mesaj</label>
-            <textarea rows="4" placeholder="Projeniz veya markanız hakkında kısaca bilgi verin..." class="form-input" style="resize:vertical;"></textarea>
+            <textarea id="contact-message" name="mesaj" rows="4" placeholder="Projeniz veya markanız hakkında kısaca bilgi verin..." class="form-input" style="resize:vertical;"></textarea>
           </div>
           <div class="pt-2">
             <button type="submit" class="btn-primary" style="padding:15px 36px; align-self:flex-start;">
@@ -2146,6 +2156,7 @@
     background: #0ecece;
   }
   .pkg-sub-title { font-size: 0.72rem; color: #3d5557; font-weight: 500; letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 8px; margin-top: 14px; }
+  @keyframes spin { to { transform: rotate(360deg); } }
 
   /* ── Spotlight glow effect (ported from React GlowCard) ── */
   [data-glow] {
@@ -2329,30 +2340,34 @@
     b3.style.transform = '';
   }
 
-  // ── Contact form handler ──
-  function handleSubmit(e) {
+  // ── Contact form handler — Web3Forms ──
+  async function handleSubmit(e) {
     e.preventDefault();
     const btn = e.target.querySelector('button[type="submit"]');
     const orig = btn.innerHTML;
-    btn.innerHTML = `
-      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" class="animate-spin"><circle cx="8" cy="8" r="6" stroke="rgba(8,12,13,0.4)" stroke-width="2"/><path d="M8 2a6 6 0 0 1 6 6" stroke="#080c0d" stroke-width="2" stroke-linecap="round"/></svg>
-      Gönderiliyor...
-    `;
+    btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="animation:spin 0.8s linear infinite"><circle cx="8" cy="8" r="6" stroke="rgba(8,12,13,0.35)" stroke-width="2"/><path d="M8 2a6 6 0 0 1 6 6" stroke="#080c0d" stroke-width="2" stroke-linecap="round"/></svg> Gönderiliyor...';
     btn.disabled = true;
-
-    setTimeout(() => {
-      btn.innerHTML = `
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 8l4.5 4.5L14 3.5" stroke="#080c0d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        Mesajınız İletildi
-      `;
-      btn.style.background = '#0ba8a8';
-      setTimeout(() => {
-        btn.innerHTML = orig;
-        btn.disabled = false;
-        btn.style.background = '';
-        e.target.reset();
-      }, 3000);
-    }, 1200);
+    try {
+      const formData = new FormData(e.target);
+      const res = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify(Object.fromEntries(formData))
+      });
+      const json = await res.json();
+      if (json.success) {
+        btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 8l4.5 4.5L14 3.5" stroke="#080c0d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Mesajınız İletildi';
+        btn.style.background = '#0ba8a8';
+        pkgClearSummary();
+        setTimeout(() => { btn.innerHTML = orig; btn.disabled = false; btn.style.background = ''; e.target.reset(); }, 4000);
+      } else {
+        throw new Error(json.message || 'Gönderim hatası');
+      }
+    } catch (err) {
+      btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 3v5M8 11v1" stroke="#080c0d" stroke-width="2" stroke-linecap="round"/></svg> Hata — Tekrar Deneyin';
+      btn.style.background = '#c0392b';
+      setTimeout(() => { btn.innerHTML = orig; btn.disabled = false; btn.style.background = ''; }, 3500);
+    }
   }
 
   // ── Smooth scroll for anchor links ──
@@ -2481,22 +2496,94 @@
     input.style.background = `linear-gradient(to right, #0ecece 0%, #0ecece ${pct}%, #182122 ${pct}%, #182122 100%)`;
   }
 
-  function pkgBillingToggle(input) {
-    const lblAylik = document.getElementById('lbl-aylik');
-    const lblYillik = document.getElementById('lbl-yillik');
-    const badge = document.getElementById('yearly-badge');
-    const priceLabel = document.getElementById('billing-price-label');
-    if (input.checked) {
-      lblAylik.classList.remove('active');
-      lblYillik.classList.add('active');
-      badge.classList.add('show');
-      if (priceLabel) priceLabel.textContent = 'Seçiminize göre fiyatlanır \u00a0·\u00a0 Yıllık';
-    } else {
-      lblAylik.classList.add('active');
-      lblYillik.classList.remove('active');
-      badge.classList.remove('show');
-      if (priceLabel) priceLabel.textContent = 'Seçiminize göre fiyatlanır \u00a0·\u00a0 Aylık';
+  // ── Paket yapılandırmasını iletişim formuna aktar ──
+  function pkgSendOffer() {
+    var lines = [];
+
+    // Sosyal Medya İçerik Üretimi
+    var srvIcerik = document.getElementById('srv-icerik');
+    if (srvIcerik && srvIcerik.classList.contains('active')) {
+      var posts = document.getElementById('ozel-post-val');
+      var videos = document.getElementById('ozel-video-val');
+      lines.push('✓ Sosyal Medya İçerik Üretimi — ' +
+        (posts ? posts.textContent : '?') + ' post / ' +
+        (videos ? videos.textContent : '?') + ' video (aylık)');
     }
+
+    // Reklam Yönetimi
+    var srvReklam = document.getElementById('srv-reklam');
+    if (srvReklam && srvReklam.classList.contains('active')) {
+      var channels = [];
+      document.querySelectorAll('#exp-reklam .pkg-toggle-item.active .pkg-toggle-label').forEach(function(el) {
+        channels.push(el.textContent.trim());
+      });
+      lines.push('✓ Reklam Yönetimi' + (channels.length ? ' — ' + channels.join(', ') : ''));
+    }
+
+    // Website Tasarımı
+    var srvWebsite = document.getElementById('srv-website');
+    if (srvWebsite && srvWebsite.classList.contains('active')) {
+      var types = [];
+      document.querySelectorAll('#exp-website .pkg-toggle-item.active .pkg-toggle-label').forEach(function(el) {
+        types.push(el.textContent.trim());
+      });
+      lines.push('✓ Website Tasarımı' + (types.length ? ' — ' + types.join(', ') : ''));
+    }
+
+    // Ekstra hizmetler (card içindeki, expand dışındaki toggle'lar)
+    var extras = [];
+    document.querySelectorAll('.pkg-card .pkg-toggle-item.active').forEach(function(el) {
+      if (!el.closest('.pkg-expand')) {
+        var lbl = el.querySelector('.pkg-toggle-label');
+        if (lbl) extras.push(lbl.textContent.trim());
+      }
+    });
+    if (extras.length) lines.push('✓ Ekstra hizmetler — ' + extras.join(', '));
+
+    // Özel not
+    var customNote = document.querySelector('#paketler .pkg-textarea');
+    if (customNote && customNote.value.trim()) {
+      lines.push('📝 Özel not: ' + customNote.value.trim());
+    }
+
+    // Hiçbir şey seçilmemişse bilgi ver
+    if (!lines.length) {
+      lines.push('(Henüz hizmet seçilmedi — lütfen mesajınıza ekleyin)');
+    }
+
+    var summaryText = lines.join('\n');
+
+    // Özet kutusunu göster
+    var box = document.getElementById('pkg-summary-box');
+    var linesEl = document.getElementById('pkg-summary-lines');
+    if (box && linesEl) {
+      linesEl.textContent = summaryText;
+      box.style.display = 'block';
+    }
+
+    // Mesaj textarea'sını doldur
+    var msg = document.getElementById('contact-message');
+    if (msg) {
+      msg.value = '--- Paket Yapılandırmam ---\n' + summaryText + '\n\n';
+      msg.focus();
+    }
+
+    // Hizmet dropdown'ını otomatik seç
+    var select = document.querySelector('#contact-form select[name="hizmet"]');
+    if (select) select.value = 'paket-yapilandirmasi';
+
+    // Forma scroll et
+    var formSection = document.getElementById('iletisim');
+    if (formSection) formSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  function pkgClearSummary() {
+    var box = document.getElementById('pkg-summary-box');
+    if (box) box.style.display = 'none';
+    var msg = document.getElementById('contact-message');
+    if (msg && msg.value.startsWith('--- Paket')) msg.value = '';
+    var select = document.querySelector('#contact-form select[name="hizmet"]');
+    if (select && select.value === 'paket-yapilandirmasi') select.value = '';
   }
 
   // Initialize all range sliders on load
