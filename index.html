@@ -579,17 +579,21 @@
       from { opacity: 0; transform: translateY(24px); }
       to   { opacity: 1; transform: translateY(0); }
     }
-    /* Paused by default — JS starts them after DOM ready (most reliable cross-browser) */
+    /* CSS transitions — most reliable cross-browser fade-in */
     .animate-fade-up {
       opacity: 0;
-      animation: fadeUp 0.9s cubic-bezier(0.22,1,0.36,1) forwards;
-      animation-play-state: paused;
+      transform: translateY(22px);
+      transition: opacity 0.75s cubic-bezier(0.22,1,0.36,1),
+                  transform 0.75s cubic-bezier(0.22,1,0.36,1);
     }
-    body.page-loaded .animate-fade-up { animation-play-state: running; }
-    .delay-1 { animation-delay: 0.12s; }
-    .delay-2 { animation-delay: 0.26s; }
-    .delay-3 { animation-delay: 0.42s; }
-    .delay-4 { animation-delay: 0.58s; }
+    body.page-loaded .animate-fade-up {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .delay-1 { transition-delay: 0.10s; }
+    .delay-2 { transition-delay: 0.22s; }
+    .delay-3 { transition-delay: 0.36s; }
+    .delay-4 { transition-delay: 0.50s; }
 
     /* ── Responsive section padding ── */
     .section-py { padding-top: 96px; padding-bottom: 96px; }
