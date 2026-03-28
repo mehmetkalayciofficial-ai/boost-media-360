@@ -5,12 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Boost Media 360 — Dijital Reklam &amp; Sosyal Medya Ajansı</title>
   <meta name="description" content="Boost Media 360 — Dijital reklam, sosyal medya yönetimi ve yaratıcı içerik çözümleri. İzmir merkezli, 12+ ülkede deneyimli stratejik dijital ajans." />
-  <script src="https://cdn.tailwindcss.com" defer></script>
+  <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <!-- Non-blocking font load -->
-  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Inter:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" onload="this.onload=null;this.rel='stylesheet'" />
-  <noscript><link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Inter:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet" /></noscript>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Inter:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet" />
   <link rel="preload" as="image" href="boostmedia_docs/boost (1).png" />
 
   <script>
@@ -435,13 +433,12 @@
     .hero-h1 {
       font-family: 'Syne', sans-serif;
       font-weight: 800;
-      font-size: clamp(1.9rem, 8vw, 5rem);
+      font-size: clamp(1.75rem, 7.5vw, 5rem);
       line-height: 1.08;
       letter-spacing: -0.04em;
       text-align: center;
       margin-bottom: 24px;
       overflow-wrap: break-word;
-      word-break: break-word;
     }
     .hero-h1 .line-white {
       color: #e8f2f2;
@@ -613,18 +610,16 @@
       background: linear-gradient(to right, transparent, #182122 20%, #182122 80%, transparent);
     }
 
-    /* ── Animate fade-up ── */
+    /* ── Animate fade-up — plays immediately on load, no JS dependency ── */
     @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(20px); }
+      from { opacity: 0; transform: translateY(24px); }
       to   { opacity: 1; transform: translateY(0); }
     }
-    /* Elements start invisible; animate in after page loads */
-    .animate-fade-up { opacity: 0; transform: translateY(20px); }
-    body.page-loaded .animate-fade-up { animation: fadeUp 0.8s cubic-bezier(0.22,1,0.36,1) forwards; }
-    body.page-loaded .delay-1 { animation-delay: 0.1s; }
-    body.page-loaded .delay-2 { animation-delay: 0.22s; }
-    body.page-loaded .delay-3 { animation-delay: 0.36s; }
-    body.page-loaded .delay-4 { animation-delay: 0.5s; }
+    .animate-fade-up { animation: fadeUp 0.9s cubic-bezier(0.22,1,0.36,1) backwards; }
+    .delay-1 { animation-delay: 0.12s; }
+    .delay-2 { animation-delay: 0.26s; }
+    .delay-3 { animation-delay: 0.42s; }
+    .delay-4 { animation-delay: 0.58s; }
 
     /* ── Responsive section padding ── */
     .section-py { padding-top: 96px; padding-bottom: 96px; }
@@ -1833,15 +1828,6 @@
     });
   });
 
-  // ── Enable entrance animations — fire ASAP, don't wait for fonts/images ──
-  const _triggerAnimations = () => {
-    requestAnimationFrame(() => document.body.classList.add('page-loaded'));
-  };
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => setTimeout(_triggerAnimations, 150));
-  } else {
-    setTimeout(_triggerAnimations, 150);
-  }
 
   // ── Hero Beams Background ──
   (function() {
