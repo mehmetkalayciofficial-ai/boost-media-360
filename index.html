@@ -445,49 +445,32 @@
     }
     .hero-h1 .line-teal {
       color: #0ecece;
-      text-shadow:
-        0 0 14px rgba(14, 206, 206, 0.45),
-        0 0 32px rgba(14, 206, 206, 0.18);
+      white-space: nowrap;
+      position: relative;
+      /* Static base glow — no animation, no repaint */
+      text-shadow: 0 0 18px rgba(14,206,206,0.35), 0 0 40px rgba(14,206,206,0.12);
     }
-    .hero-h1 .line-neon {
-      color: #e8f2f2;
+    /* GPU-composited glow pulse — only opacity animates (compositor-only, 60fps) */
+    .hero-h1 .line-teal::after {
+      content: '';
+      position: absolute;
+      inset: -30px -60px;
+      background: radial-gradient(ellipse 70% 90% at 50% 50%,
+        rgba(14,206,206,0.28) 0%,
+        rgba(14,206,206,0.08) 50%,
+        transparent 75%
+      );
+      border-radius: 50%;
+      pointer-events: none;
+      opacity: 0.5;
+      will-change: opacity;
+      animation: neonGlow 4s ease-in-out infinite;
     }
-    /* Only animate text-shadow on desktop where GPU budget is higher */
-    @media (min-width: 768px) {
-      .hero-h1 .line-teal {
-        animation: neonTeal 4s ease-in-out infinite;
-      }
-      .hero-h1 .line-neon {
-        animation: neonWhite 4.5s ease-in-out 0.8s infinite;
-      }
+    @keyframes neonGlow {
+      0%, 100% { opacity: 0.4; }
+      50%       { opacity: 1;   }
     }
-    @keyframes neonTeal {
-      0%, 100% {
-        text-shadow:
-          0 0 12px rgba(14, 206, 206, 0.40),
-          0 0 28px rgba(14, 206, 206, 0.18),
-          0 0 60px rgba(14, 206, 206, 0.07);
-      }
-      50% {
-        text-shadow:
-          0 0 20px rgba(14, 206, 206, 0.75),
-          0 0 48px rgba(14, 206, 206, 0.38),
-          0 0 100px rgba(14, 206, 206, 0.16);
-      }
-    }
-    @keyframes neonWhite {
-      0%, 100% {
-        text-shadow:
-          0 0 18px rgba(14, 206, 206, 0.10),
-          0 0 40px rgba(14, 206, 206, 0.04);
-      }
-      50% {
-        text-shadow:
-          0 0 28px rgba(14, 206, 206, 0.22),
-          0 0 64px rgba(14, 206, 206, 0.10),
-          0 0 120px rgba(14, 206, 206, 0.05);
-      }
-    }
+    .hero-h1 .line-neon { color: #e8f2f2; }
 
     /* — Ticker strip (Video 2: scrolling symbols row) — */
     .hero-ticker {
