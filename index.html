@@ -598,7 +598,13 @@
       from { opacity: 0; transform: translateY(24px); }
       to   { opacity: 1; transform: translateY(0); }
     }
-    .animate-fade-up { animation: fadeUp 0.9s cubic-bezier(0.22,1,0.36,1) backwards; }
+    /* Paused by default — JS starts them after DOM ready (most reliable cross-browser) */
+    .animate-fade-up {
+      opacity: 0;
+      animation: fadeUp 0.9s cubic-bezier(0.22,1,0.36,1) forwards;
+      animation-play-state: paused;
+    }
+    body.page-loaded .animate-fade-up { animation-play-state: running; }
     .delay-1 { animation-delay: 0.12s; }
     .delay-2 { animation-delay: 0.26s; }
     .delay-3 { animation-delay: 0.42s; }
@@ -731,7 +737,7 @@
 </style>
 
   <!-- Beams canvas background -->
-  <canvas id="hero-beams" aria-hidden="true" style="position:absolute; inset:0; width:100%; height:100%; filter:blur(15px); z-index:1; pointer-events:none; opacity:0; transition:opacity 1.6s ease;"></canvas>
+  <canvas id="hero-beams" aria-hidden="true" style="position:absolute; inset:0; width:100%; height:100%; filter:blur(15px); z-index:1; pointer-events:none; opacity:0; transition:opacity 0.6s ease;"></canvas>
 
   <!-- ── Centered hero content ── -->
   <div style="position:relative; z-index:10; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding: 60px 24px 120px; width:100%; margin-left:auto; margin-right:auto;">
@@ -1724,6 +1730,9 @@
      SCRIPTS
 ═══════════════════════════════════════════════ -->
 <script>
+  // ── Trigger entrance animations immediately after DOM is ready ──
+  requestAnimationFrame(() => document.body.classList.add('page-loaded'));
+
   // ── Navbar scroll effect + floating CTA ──
   const navbar = document.getElementById('navbar');
   const floatingCta = document.getElementById('floating-cta');
@@ -1812,8 +1821,8 @@
   });
 
 
-  // ── Hero Beams Background ──
-  (function() {
+  // ── Hero Beams Background — deferred to not block first paint ──
+  requestAnimationFrame(function initBeams() {
     const canvas = document.getElementById('hero-beams');
     if (!canvas) return;
     const section = document.getElementById('anasayfa');
@@ -1894,9 +1903,8 @@
     resize();
     window.addEventListener('resize', resize, { passive: true });
     animate();
-    // Fade in after a few frames so beams are already in motion
-    setTimeout(() => { canvas.style.opacity = '1'; }, 200);
-  })();
+    requestAnimationFrame(() => { canvas.style.opacity = '1'; });
+  });
 </script>
 
 </body>
