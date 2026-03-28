@@ -1,0 +1,1927 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Boost Media 360 — Dijital Reklam &amp; Sosyal Medya Ajansı</title>
+  <meta name="description" content="Boost Media 360 — Dijital reklam, sosyal medya yönetimi ve yaratıcı içerik çözümleri. İzmir merkezli, 12+ ülkede deneyimli stratejik dijital ajans." />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Inter:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet" />
+  <link rel="preload" as="image" href="boostmedia_docs/boost (1).png" />
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              teal:    '#0ecece',
+              teal2:   '#0ba8a8',
+              dark:    '#080c0d',
+              card:    '#0d1314',
+              border:  '#182122',
+              muted:   '#5e7476',
+              sub:     '#9ab0b2',
+              light:   '#dff0f0',
+              white:   '#f2f6f6',
+            },
+          },
+          fontFamily: {
+            display: ['Syne', 'sans-serif'],
+            body:    ['Inter', 'sans-serif'],
+          },
+          letterSpacing: {
+            tighter2: '-0.04em',
+            tight2:   '-0.025em',
+          },
+          boxShadow: {
+            'teal-sm':  '0 0 0 1px rgba(14,206,206,0.12)',
+            'teal-md':  '0 4px 32px rgba(14,206,206,0.08), 0 1px 4px rgba(0,0,0,0.6)',
+            'teal-glow':'0 0 40px rgba(14,206,206,0.18), 0 8px 40px rgba(0,0,0,0.7)',
+            'card':     '0 2px 24px rgba(0,0,0,0.5), 0 1px 0 rgba(255,255,255,0.03)',
+          },
+        },
+      },
+    };
+  </script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #060a0b;
+      color: #f2f6f6;
+      -webkit-font-smoothing: antialiased;
+      overscroll-behavior: none;
+    }
+
+    /* ── Noise texture overlay ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.025;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-repeat: repeat;
+      background-size: 128px 128px;
+    }
+
+    /* ── Scrollbar ── */
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: #080c0d; }
+    ::-webkit-scrollbar-thumb { background: #182122; border-radius: 2px; }
+    ::-webkit-scrollbar-thumb:hover { background: #0ecece; }
+
+    /* ══════════════════════════════════════
+       NAVBAR — Simple frosted glass bar
+    ══════════════════════════════════════ */
+    #navbar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 50;
+      height: 72px;
+      display: flex;
+      align-items: center;
+      padding: 0 20px;
+      background: rgba(6, 10, 11, 0.70);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    #navbar.scrolled {
+      border-bottom-color: #182122;
+      box-shadow: 0 4px 24px rgba(0, 0, 0, 0.40);
+    }
+
+    @media (max-width: 767px) {
+      #navbar {
+        height: 64px;
+      }
+    }
+
+    /* Content wrapper */
+    #navbar-content {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      max-width: 1280px;
+      margin: 0 auto;
+      height: 100%;
+    }
+
+    /* Nav CTA button */
+    .nav-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 18px;
+      background: #0ecece;
+      color: #060a0b;
+      font-family: 'Syne', sans-serif;
+      font-weight: 600;
+      font-size: 0.82rem;
+      letter-spacing: 0.02em;
+      border-radius: 8px;
+      white-space: nowrap;
+      transition:
+        background 0.2s ease,
+        transform  0.15s ease,
+        box-shadow 0.2s ease;
+    }
+    .nav-cta:hover {
+      background: #14e0e0;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 20px rgba(14, 206, 206, 0.28);
+    }
+    .nav-cta:active  { transform: translateY(0); }
+    .nav-cta:focus-visible { outline: 2px solid #0ecece; outline-offset: 3px; }
+
+    /* ── Mobile menu ── */
+    #mobile-menu {
+      transition: opacity 0.25s ease, transform 0.25s ease;
+    }
+    #mobile-menu.hidden { opacity: 0; transform: translateY(-8px); pointer-events: none; }
+    #mobile-menu.open   { opacity: 1; transform: translateY(0);    pointer-events: auto; }
+
+    /* ── Buttons ── */
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 13px 28px;
+      background: #0ecece;
+      color: #080c0d;
+      font-family: 'Syne', sans-serif;
+      font-weight: 600;
+      font-size: 0.875rem;
+      letter-spacing: 0.02em;
+      border-radius: 6px;
+      transition: background 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+      box-shadow: 0 0 0 0 rgba(14,206,206,0);
+    }
+    .btn-primary:hover {
+      background: #12e0e0;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 24px rgba(14,206,206,0.3);
+    }
+    .btn-primary:active { transform: translateY(0); }
+    .btn-primary:focus-visible { outline: 2px solid #0ecece; outline-offset: 3px; }
+
+    .btn-outline {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 28px;
+      background: transparent;
+      color: #f2f6f6;
+      font-family: 'Syne', sans-serif;
+      font-weight: 600;
+      font-size: 0.875rem;
+      letter-spacing: 0.02em;
+      border-radius: 6px;
+      border: 1px solid #2a3a3b;
+      transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease, transform 0.15s ease;
+    }
+    .btn-outline:hover {
+      border-color: #0ecece;
+      color: #0ecece;
+      background: rgba(14,206,206,0.05);
+      transform: translateY(-1px);
+    }
+    .btn-outline:active { transform: translateY(0); }
+    .btn-outline:focus-visible { outline: 2px solid #0ecece; outline-offset: 3px; }
+
+    /* ── Service/sector cards ── */
+    .service-card {
+      background: #0d1314;
+      border: 1px solid #182122;
+      border-radius: 12px;
+      padding: 32px;
+      transition: border-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+      cursor: default;
+    }
+    .service-card:hover {
+      border-color: rgba(14,206,206,0.35);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 40px rgba(14,206,206,0.07), 0 2px 12px rgba(0,0,0,0.6);
+      background: #0f1718;
+    }
+
+    .sector-tag {
+      background: #0d1314;
+      border: 1px solid #182122;
+      border-radius: 8px;
+      padding: 18px 22px;
+      transition: border-color 0.2s, background 0.2s, color 0.2s;
+      cursor: default;
+      text-align: center;
+    }
+    .sector-tag:hover {
+      border-color: rgba(14,206,206,0.4);
+      background: #0f1718;
+      color: #0ecece;
+    }
+
+    /* ── Stat counter ── */
+    .stat-item {
+      position: relative;
+    }
+    .stat-item::after {
+      content: '';
+      position: absolute;
+      right: 0;
+      top: 20%;
+      height: 60%;
+      width: 1px;
+      background: linear-gradient(to bottom, transparent, #182122 30%, #182122 70%, transparent);
+    }
+    .stat-item:last-child::after { display: none; }
+
+    /* ── Why us items ── */
+    .why-item {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+      padding: 20px 0;
+      border-bottom: 1px solid #182122;
+    }
+    .why-item:last-child { border-bottom: none; }
+
+    /* ── Training module ── */
+    .module-item {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+      padding: 20px 24px;
+      border: 1px solid #182122;
+      border-radius: 10px;
+      background: #0d1314;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .module-item:hover {
+      border-color: rgba(14,206,206,0.25);
+      background: #0f1718;
+    }
+
+    /* ── Form inputs ── */
+    .form-input {
+      width: 100%;
+      background: #0d1314;
+      border: 1px solid #182122;
+      border-radius: 8px;
+      padding: 14px 18px;
+      color: #f2f6f6;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.9rem;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      outline: none;
+    }
+    .form-input::placeholder { color: #4a6264; }
+    .form-input:focus {
+      border-color: #0ecece;
+      box-shadow: 0 0 0 3px rgba(14,206,206,0.08);
+    }
+
+    /* ── Section label ── */
+    .section-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #0ecece;
+    }
+    .section-label::before {
+      content: '';
+      display: block;
+      width: 20px;
+      height: 1px;
+      background: #0ecece;
+    }
+
+    /* ══════════════════════════════════════
+       VIDEO-INSPIRED HERO STYLES
+    ══════════════════════════════════════ */
+
+    /* — Static background gradient (replaced spinning SVG for performance) — */
+    @media (max-width: 767px) {
+      /* Disable floating shapes on mobile */
+      .hs { display: none; }
+    }
+
+    /* — Spotlight beam (Video 2: cone of light from above) — */
+
+    /* — Floating shapes (desktop only decorative elements) — */
+    .hs { position: absolute; }
+    .hs-1 { left:-6%; top:22%; opacity: 0.7; }
+    .hs-2 { right:-1%; top:65%; opacity: 0.6; }
+    .hs-3 { left:7%;  bottom:7%; opacity: 0.6; }
+    .hs-4 { right:17%; top:10%; opacity: 0.5; }
+    .hs-pill {
+      border-radius: 50%;
+      background: linear-gradient(to right, var(--hs-color), transparent);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    /* — Logo orb (Video 2: center object with glow beneath) — */
+    .hero-logo-orb {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+    @media (min-width: 768px) {
+      .hero-logo-orb { margin-bottom: 32px; }
+    }
+    .hero-logo-orb img {
+      width: 80px; height: 80px;
+      object-fit: contain;
+      position: relative; z-index: 2;
+      filter: drop-shadow(0 0 14px rgba(14,206,206,0.55));
+      /* Use only transform for composited animation — no filter animation */
+      animation: logoFloat 4s ease-in-out infinite;
+    }
+    @media (min-width: 768px) {
+      .hero-logo-orb img { width: 96px; height: 96px; }
+    }
+    @keyframes logoFloat {
+      0%, 100% { transform: translateY(0); }
+      50%       { transform: translateY(-4px); }
+    }
+    /* Ground glow beneath logo */
+    .hero-logo-orb::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 90px; height: 16px;
+      background: radial-gradient(ellipse at center, rgba(14,206,206,0.55) 0%, transparent 70%);
+      filter: blur(6px);
+      z-index: 1;
+      animation: glowPulse 4s ease-in-out infinite;
+    }
+    @keyframes glowPulse {
+      0%, 100% { opacity: 0.6; }
+      50%       { opacity: 1; }
+    }
+
+    /* — Badge pill (reference style) — */
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      padding: 5px 6px 5px 16px;
+      border-radius: 100px;
+      background: rgba(14,14,20,0.6);
+      border: 1px solid rgba(255,255,255,0.07);
+      box-shadow: 0 1px 16px rgba(0,0,0,0.4);
+      margin-bottom: 20px;
+      cursor: default;
+    }
+    @media (min-width: 768px) {
+      .hero-badge { margin-bottom: 32px; }
+    }
+    .hero-badge-text {
+      font-size: 0.78rem;
+      font-weight: 400;
+      letter-spacing: 0.01em;
+      color: rgba(154,176,178,0.7);
+    }
+    .hero-badge-arrow {
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      background: rgba(14,206,206,0.08);
+      border: 1px solid rgba(14,206,206,0.2);
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+    .hero-badge-arrow-inner {
+      display: flex;
+      width: 32px;
+      transition: transform 0.3s cubic-bezier(0.4,0,0.2,1);
+    }
+    .hero-badge:hover .hero-badge-arrow-inner {
+      transform: translateX(16px);
+    }
+    .hero-badge-arrow-inner svg {
+      width: 16px; height: 16px; flex-shrink: 0;
+    }
+    @keyframes dotPulse {
+      0%,100% { opacity: 0.8; }
+      50%      { opacity: 1; }
+    }
+
+    /* — Hero heading: Video 1 editorial style — */
+    .hero-h1 {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: clamp(2.6rem, 5.5vw, 5rem);
+      line-height: 1.06;
+      letter-spacing: -0.045em;
+      text-align: center;
+      margin-bottom: 24px;
+    }
+    .hero-h1 .line-white {
+      color: #e8f2f2;
+    }
+    .hero-h1 .line-teal {
+      color: #0ecece;
+      text-shadow:
+        0 0 14px rgba(14, 206, 206, 0.45),
+        0 0 32px rgba(14, 206, 206, 0.18);
+    }
+    .hero-h1 .line-neon {
+      color: #e8f2f2;
+    }
+    /* Only animate text-shadow on desktop where GPU budget is higher */
+    @media (min-width: 768px) {
+      .hero-h1 .line-teal {
+        animation: neonTeal 4s ease-in-out infinite;
+      }
+      .hero-h1 .line-neon {
+        animation: neonWhite 4.5s ease-in-out 0.8s infinite;
+      }
+    }
+    @keyframes neonTeal {
+      0%, 100% {
+        text-shadow:
+          0 0 12px rgba(14, 206, 206, 0.40),
+          0 0 28px rgba(14, 206, 206, 0.18),
+          0 0 60px rgba(14, 206, 206, 0.07);
+      }
+      50% {
+        text-shadow:
+          0 0 20px rgba(14, 206, 206, 0.75),
+          0 0 48px rgba(14, 206, 206, 0.38),
+          0 0 100px rgba(14, 206, 206, 0.16);
+      }
+    }
+    @keyframes neonWhite {
+      0%, 100% {
+        text-shadow:
+          0 0 18px rgba(14, 206, 206, 0.10),
+          0 0 40px rgba(14, 206, 206, 0.04);
+      }
+      50% {
+        text-shadow:
+          0 0 28px rgba(14, 206, 206, 0.22),
+          0 0 64px rgba(14, 206, 206, 0.10),
+          0 0 120px rgba(14, 206, 206, 0.05);
+      }
+    }
+
+    /* — Ticker strip (Video 2: scrolling symbols row) — */
+    .hero-ticker {
+      position: absolute;
+      bottom: 0;
+      left: 0; right: 0;
+      overflow: hidden;
+      border-top: 1px solid rgba(14,206,206,0.08);
+      background: rgba(8,12,13,0.7);
+      padding: 12px 0;
+      z-index: 20;
+    }
+    .ticker-track {
+      display: flex;
+      gap: 0;
+      animation: marquee 28s linear infinite;
+      width: max-content;
+    }
+    .ticker-track:hover { animation-play-state: paused; }
+    @media (max-width: 767px) {
+      /* Slow down ticker on mobile for readability and reduced CPU usage */
+      .ticker-track { animation-duration: 40s; }
+    }
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+    .ticker-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 0 32px;
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #3d5557;
+      white-space: nowrap;
+    }
+    .ticker-dot {
+      width: 3px; height: 3px;
+      border-radius: 50%;
+      background: #0ecece;
+      opacity: 0.5;
+      flex-shrink: 0;
+    }
+
+    /* — Dashboard stat cards (Video 2 style) — */
+    .stat-card {
+      background: linear-gradient(135deg, #0d1314 0%, #0b1112 100%);
+      border: 1px solid rgba(14,206,206,0.12);
+      border-radius: 16px;
+      padding: 28px 24px;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.3s, transform 0.3s;
+    }
+    .stat-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(to right, transparent 10%, rgba(14,206,206,0.4) 50%, transparent 90%);
+    }
+    .stat-card:hover {
+      border-color: rgba(14,206,206,0.28);
+      transform: translateY(-2px);
+    }
+    .stat-card-glow {
+      position: absolute;
+      top: -30px; left: 50%;
+      transform: translateX(-50%);
+      width: 120px; height: 80px;
+      background: radial-gradient(ellipse at center, rgba(14,206,206,0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    /* — Animate fade-up (hero content) — */
+
+    /* ── CTA section glow ── */
+    .cta-glow {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 30% 50%, rgba(14,206,206,0.07) 0%, transparent 60%),
+        radial-gradient(ellipse at 70% 50%, rgba(14,206,206,0.04) 0%, transparent 50%);
+      pointer-events: none;
+    }
+
+    /* ── Nav link ── */
+    .nav-link {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.875rem;
+      font-weight: 400;
+      color: #9ab0b2;
+      transition: color 0.2s;
+      position: relative;
+      padding-bottom: 2px;
+    }
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 0;
+      height: 1px;
+      background: #0ecece;
+      transition: width 0.25s ease;
+    }
+    .nav-link:hover { color: #f2f6f6; }
+    .nav-link:hover::after { width: 100%; }
+    .nav-link:focus-visible { outline: 2px solid #0ecece; outline-offset: 4px; border-radius: 2px; }
+
+    /* ── Logo image sizing ── */
+    .logo-img { height: 36px; width: auto; object-fit: contain; }
+
+    /* ── Divider line ── */
+    .divider {
+      height: 1px;
+      background: linear-gradient(to right, transparent, #182122 20%, #182122 80%, transparent);
+    }
+
+    /* ── Animate fade-up ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    /* Elements start invisible; animate in after page loads */
+    .animate-fade-up { opacity: 0; transform: translateY(20px); }
+    body.page-loaded .animate-fade-up { animation: fadeUp 0.8s cubic-bezier(0.22,1,0.36,1) forwards; }
+    body.page-loaded .delay-1 { animation-delay: 0.1s; }
+    body.page-loaded .delay-2 { animation-delay: 0.22s; }
+    body.page-loaded .delay-3 { animation-delay: 0.36s; }
+    body.page-loaded .delay-4 { animation-delay: 0.5s; }
+
+    /* ── Responsive section padding ── */
+    .section-py { padding-top: 96px; padding-bottom: 96px; }
+    @media (max-width: 768px) { .section-py { padding-top: 64px; padding-bottom: 64px; } }
+
+    /* ── Typography rendering ── */
+    h1, h2, h3, h4 {
+      text-rendering: optimizeLegibility;
+    }
+
+    /* ── CSS containment for performance ── */
+    #hizmetler, #sektorler, #referanslar, #egitimler, #hakkimizda, #iletisim {
+      contain: layout paint;
+    }
+
+    /* ── Reduced motion: disable all animations ── */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+
+    /* ── Mobile form improvements ── */
+    @media (max-width: 640px) {
+      .form-input {
+        font-size: 1rem; /* Prevent iOS zoom on focus (must be >= 16px equivalent) */
+        padding: 13px 16px;
+      }
+      /* Ensure tap targets are at least 44px */
+      .btn-primary, .btn-outline {
+        min-height: 44px;
+      }
+      /* Floating CTA on mobile: move closer to edge */
+      #floating-cta {
+        bottom: 20px;
+        right: 20px;
+      }
+    }
+  </style>
+</head>
+
+<body class="relative">
+
+<!-- ═══════════════════════════════════════════════
+     NAVBAR
+═══════════════════════════════════════════════ -->
+<header id="navbar">
+
+  <!-- Content -->
+  <div id="navbar-content">
+
+    <!-- Logo -->
+    <a href="#" class="flex items-center gap-3 flex-shrink-0" style="text-decoration:none;">
+      <img src="boostmedia_docs/boost (1).png" alt="Boost Media 360 Logo" class="logo-img" width="36" height="36" decoding="async" />
+      <span style="font-family:'Syne',sans-serif; font-size:1.05rem; font-weight:700; letter-spacing:-0.025em; color:#f2f6f6; line-height:1; white-space:nowrap;">
+        Boost<span style="color:#0ecece;">Media</span> 360
+      </span>
+    </a>
+
+    <!-- Desktop Nav -->
+    <nav class="hidden md:flex items-center gap-7">
+      <a href="#hizmetler"   class="nav-link">Hizmetler</a>
+      <a href="#sektorler"   class="nav-link">Sektörler</a>
+      <a href="#referanslar" class="nav-link">Referanslar</a>
+      <a href="#egitimler"   class="nav-link">Eğitimler</a>
+      <a href="#hakkimizda"  class="nav-link">Hakkımızda</a>
+      <a href="#iletisim"    class="nav-link">İletişim</a>
+    </nav>
+
+    <!-- Desktop CTA -->
+    <div class="hidden md:flex items-center">
+      <a href="#iletisim" class="nav-cta">Teklif Alın</a>
+    </div>
+
+    <!-- Mobile burger -->
+    <button id="burger-btn" aria-label="Menü" class="md:hidden flex flex-col justify-center gap-[5px] p-2" style="background:none; border:none; cursor:pointer;">
+      <span style="display:block;width:22px;height:2px;background:#f2f6f6;border-radius:2px;transition:transform 0.25s ease,opacity 0.25s ease;" id="b1"></span>
+      <span style="display:block;width:22px;height:2px;background:#f2f6f6;border-radius:2px;transition:transform 0.25s ease,opacity 0.25s ease;" id="b2"></span>
+      <span style="display:block;width:22px;height:2px;background:#f2f6f6;border-radius:2px;transition:transform 0.25s ease,opacity 0.25s ease;" id="b3"></span>
+    </button>
+  </div>
+
+  <!-- Mobile dropdown menu -->
+  <div id="mobile-menu" class="hidden md:hidden" style="position:absolute;top:64px;left:12px;right:12px;background:#0d1314;border:1px solid #1e2c2e;border-radius:16px;overflow:hidden;z-index:10;">
+    <nav class="flex flex-col px-5 py-4 gap-0">
+      <a href="#hizmetler"   class="nav-link" style="padding:11px 0;border-bottom:1px solid #182122;" onclick="closeMobile()">Hizmetler</a>
+      <a href="#sektorler"   class="nav-link" style="padding:11px 0;border-bottom:1px solid #182122;" onclick="closeMobile()">Sektörler</a>
+      <a href="#referanslar" class="nav-link" style="padding:11px 0;border-bottom:1px solid #182122;" onclick="closeMobile()">Referanslar</a>
+      <a href="#egitimler"   class="nav-link" style="padding:11px 0;border-bottom:1px solid #182122;" onclick="closeMobile()">Eğitimler</a>
+      <a href="#hakkimizda"  class="nav-link" style="padding:11px 0;border-bottom:1px solid #182122;" onclick="closeMobile()">Hakkımızda</a>
+      <a href="#iletisim"    class="nav-link" style="padding:11px 0;" onclick="closeMobile()">İletişim</a>
+      <div style="padding-top:14px;">
+        <a href="#iletisim" class="nav-cta" style="display:flex;width:100%;justify-content:center;" onclick="closeMobile()">Teklif Alın</a>
+      </div>
+    </nav>
+  </div>
+</header>
+
+
+<!-- ═══════════════════════════════════════════════
+     HERO — Video-Inspired Redesign
+     • Video 1: editorial large heading, clean
+     • Video 2: center spotlight, logo glow, ticker
+═══════════════════════════════════════════════ -->
+<section id="anasayfa" style="
+  position: relative;
+  overflow: hidden;
+  padding-top: 72px;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: #060a0b;
+">
+<style>
+  @media (max-width: 767px) {
+    #anasayfa { padding-top: 64px; }
+    /* Reduce hero content padding on mobile so everything fits */
+    #anasayfa > div[style*="padding: 60px"] {
+      padding-top: 40px !important;
+      padding-bottom: 100px !important;
+    }
+  }
+</style>
+
+  <!-- Beams canvas background -->
+  <canvas id="hero-beams" aria-hidden="true" style="position:absolute; inset:0; width:100%; height:100%; filter:blur(15px); z-index:1; pointer-events:none; opacity:0; transition:opacity 1.6s ease;"></canvas>
+
+  <!-- ── Centered hero content ── -->
+  <div style="position:relative; z-index:10; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding: 60px 24px 120px; width:100%; margin-left:auto; margin-right:auto;">
+
+    <!-- Logo orb (Video 2: glowing center object) -->
+    <div class="hero-logo-orb animate-fade-up">
+      <img src="boostmedia_docs/boost (1).png" alt="Boost Media 360" width="96" height="96" fetchpriority="high" decoding="async" />
+    </div>
+
+    <!-- Badge pill -->
+    <div class="hero-badge animate-fade-up delay-1">
+      <span class="hero-badge-text">Dijital Pazarlama &amp; Sosyal Medya</span>
+    </div>
+
+    <!-- Heading -->
+    <h1 class="hero-h1 animate-fade-up delay-2" style="max-width:100%; width:100%; margin-left:auto; margin-right:auto;">
+      <span class="line-white" style="display:block; text-align:center;">Markanızı</span>
+      <span class="line-white" style="display:block; text-align:center;">dijitalde</span>
+      <span class="line-teal" style="display:block; text-align:center;">güçlendiriyoruz.</span>
+    </h1>
+
+    <!-- Description -->
+    <p class="animate-fade-up delay-3" style="
+      font-family:'Inter',sans-serif;
+      font-size:1rem; font-weight:300;
+      line-height:1.8; letter-spacing:0.01em;
+      color:rgba(154,176,178,0.6);
+      max-width:480px;
+      margin-bottom:40px;
+    ">
+      Strateji, içerik ve tasarımı bir araya getirerek markanızı dijitalde kalıcı bir etkiyle konumlandırıyoruz.
+    </p>
+
+    <!-- CTA buttons -->
+    <div class="animate-fade-up delay-4" style="display:flex; gap:14px; flex-wrap:wrap; justify-content:center; margin-bottom:0;">
+      <a href="#hizmetler" class="btn-primary" style="padding:13px 30px;">
+        Hizmetlerimizi Keşfedin
+        <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <a href="#iletisim" class="btn-outline" style="padding:12px 30px;">
+        Teklif Alın
+      </a>
+    </div>
+
+  </div>
+
+  <!-- Ticker strip at bottom (Video 2: scrolling row) -->
+  <div class="hero-ticker">
+    <div class="ticker-track">
+      <!-- Items × 2 for seamless loop -->
+      <span class="ticker-item"><span class="ticker-dot"></span>Sosyal Medya Yönetimi</span>
+      <span class="ticker-item"><span class="ticker-dot"></span>Dijital Reklam</span>
+      <span class="ticker-item"><span class="ticker-dot"></span>İçerik Üretimi</span>
+      <span class="ticker-item"><span class="ticker-dot"></span>Markalama</span>
+      <span class="ticker-item"><span class="ticker-dot"></span>Strateji &amp; Danışmanlık</span>
+      <span class="ticker-item"><span class="ticker-dot"></span>Kreatif Tasarım</span>
+      <span class="ticker-item"><span class="ticker-dot"></span>Performans Reklamcılığı</span>
+      <span class="ticker-item"><span class="ticker-dot"></span>Marka Kimliği</span>
+      <span class="ticker-item"><span class="ticker-dot"></span>12+ Ülke Deneyimi</span>
+      <span class="ticker-item"><span class="ticker-dot"></span>1400+ Müşteri</span>
+      <!-- duplicate for loop -->
+      <span class="ticker-item"><span class="ticker-dot"></span>Sosyal Medya Yönetimi</span>
+      <span class="ticker-item"><span class="ticker-dot"></span>Dijital Reklam</span>
+      <span class="ticker-item"><span class="ticker-dot"></span>İçerik Üretimi</span>
+      <span class="ticker-item"><span class="ticker-dot"></span>Markalama</span>
+      <span class="ticker-item"><span class="ticker-dot"></span>Strateji &amp; Danışmanlık</span>
+      <span class="ticker-item"><span class="ticker-dot"></span>Kreatif Tasarım</span>
+      <span class="ticker-item"><span class="ticker-dot"></span>Performans Reklamcılığı</span>
+      <span class="ticker-item"><span class="ticker-dot"></span>Marka Kimliği</span>
+      <span class="ticker-item"><span class="ticker-dot"></span>12+ Ülke Deneyimi</span>
+      <span class="ticker-item"><span class="ticker-dot"></span>1400+ Müşteri</span>
+    </div>
+  </div>
+
+  <!-- Top edge fade -->
+  <div style="position:absolute; inset:0; pointer-events:none; z-index:6;
+    background: linear-gradient(to bottom, rgba(6,10,11,0.7) 0%, transparent 12%, transparent 80%, rgba(6,10,11,0.5) 100%);
+  "></div>
+
+</section>
+
+
+<!-- ═══════════════════════════════════════════════
+     STATS — Dashboard Card Style (Video 2)
+═══════════════════════════════════════════════ -->
+<div class="relative z-10" style="padding: 64px 0;">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10">
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-5">
+
+      <!-- Card 1 -->
+      <div class="stat-card">
+        <div class="stat-card-glow"></div>
+        <div style="font-size:0.68rem; letter-spacing:0.14em; text-transform:uppercase; color:#3d5557; font-weight:500; margin-bottom:14px; display:flex; align-items:center; gap:6px;">
+          <span style="width:6px; height:6px; border-radius:50%; background:#0ecece; box-shadow:0 0 6px rgba(14,206,206,0.8); display:inline-block;"></span>
+          Müşteri Portföyü
+        </div>
+        <div style="font-family:'Syne',sans-serif; font-size:clamp(2.2rem,3.5vw,3rem); font-weight:800; letter-spacing:-0.05em; color:#0ecece; line-height:1; margin-bottom:8px;">
+          1400<span style="font-size:0.6em; color:#0ba8a8;">+</span>
+        </div>
+        <div style="font-size:0.8rem; color:#3d5557; font-weight:300; line-height:1.5;">Farklı sektörden marka ile çalıştık</div>
+        <!-- Mini chart bars (decorative) -->
+        <div style="display:flex; align-items:flex-end; gap:3px; margin-top:20px; height:28px;">
+          <div style="flex:1; background:rgba(14,206,206,0.12); border-radius:2px 2px 0 0; height:40%;"></div>
+          <div style="flex:1; background:rgba(14,206,206,0.18); border-radius:2px 2px 0 0; height:60%;"></div>
+          <div style="flex:1; background:rgba(14,206,206,0.25); border-radius:2px 2px 0 0; height:45%;"></div>
+          <div style="flex:1; background:rgba(14,206,206,0.35); border-radius:2px 2px 0 0; height:75%;"></div>
+          <div style="flex:1; background:rgba(14,206,206,0.45); border-radius:2px 2px 0 0; height:90%;"></div>
+          <div style="flex:1; background:#0ecece; border-radius:2px 2px 0 0; height:100%; box-shadow:0 0 8px rgba(14,206,206,0.5);"></div>
+        </div>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="stat-card">
+        <div class="stat-card-glow"></div>
+        <div style="font-size:0.68rem; letter-spacing:0.14em; text-transform:uppercase; color:#3d5557; font-weight:500; margin-bottom:14px; display:flex; align-items:center; gap:6px;">
+          <span style="width:6px; height:6px; border-radius:50%; background:#0ecece; box-shadow:0 0 6px rgba(14,206,206,0.8); display:inline-block;"></span>
+          Global Erişim
+        </div>
+        <div style="font-family:'Syne',sans-serif; font-size:clamp(2.2rem,3.5vw,3rem); font-weight:800; letter-spacing:-0.05em; color:#0ecece; line-height:1; margin-bottom:8px;">
+          12<span style="font-size:0.6em; color:#0ba8a8;">+ ülke</span>
+        </div>
+        <div style="font-size:0.8rem; color:#3d5557; font-weight:300; line-height:1.5;">Uluslararası kampanya deneyimi</div>
+        <!-- World dots (decorative) -->
+        <div style="display:flex; flex-wrap:wrap; gap:4px; margin-top:20px;">
+          <span style="font-size:0.65rem; color:#0ecece; opacity:0.8;">TR</span>
+          <span style="font-size:0.65rem; color:#3d5557;">·</span>
+          <span style="font-size:0.65rem; color:#0ba8a8; opacity:0.7;">DE</span>
+          <span style="font-size:0.65rem; color:#3d5557;">·</span>
+          <span style="font-size:0.65rem; color:#0ba8a8; opacity:0.7;">UK</span>
+          <span style="font-size:0.65rem; color:#3d5557;">·</span>
+          <span style="font-size:0.65rem; color:#0ba8a8; opacity:0.6;">AE</span>
+          <span style="font-size:0.65rem; color:#3d5557;">·</span>
+          <span style="font-size:0.65rem; color:#0ba8a8; opacity:0.6;">SA</span>
+          <span style="font-size:0.65rem; color:#3d5557;">·</span>
+          <span style="font-size:0.65rem; color:#0ba8a8; opacity:0.5;">NL</span>
+          <span style="font-size:0.65rem; color:#3d5557;">·</span>
+          <span style="font-size:0.65rem; color:#0ba8a8; opacity:0.5;">FR</span>
+          <span style="font-size:0.65rem; color:#3d5557;">· +5</span>
+        </div>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="stat-card">
+        <div class="stat-card-glow"></div>
+        <div style="font-size:0.68rem; letter-spacing:0.14em; text-transform:uppercase; color:#3d5557; font-weight:500; margin-bottom:14px; display:flex; align-items:center; gap:6px;">
+          <span style="width:6px; height:6px; border-radius:50%; background:#0ecece; box-shadow:0 0 6px rgba(14,206,206,0.8); display:inline-block;"></span>
+          Memnuniyet Skoru
+        </div>
+        <div style="font-family:'Syne',sans-serif; font-size:clamp(2.2rem,3.5vw,3rem); font-weight:800; letter-spacing:-0.05em; color:#0ecece; line-height:1; margin-bottom:8px;">
+          %100
+        </div>
+        <div style="font-size:0.8rem; color:#3d5557; font-weight:300; line-height:1.5;">Müşteri ve ekip memnuniyeti</div>
+        <!-- Progress ring (decorative) -->
+        <div style="margin-top:18px; display:flex; align-items:center; gap:8px;">
+          <div style="position:relative; width:36px; height:36px;">
+            <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
+              <circle cx="18" cy="18" r="15" stroke="rgba(14,206,206,0.12)" stroke-width="3" fill="none"/>
+              <circle cx="18" cy="18" r="15" stroke="#0ecece" stroke-width="3" fill="none"
+                stroke-dasharray="94.2" stroke-dashoffset="0"
+                stroke-linecap="round"
+                transform="rotate(-90 18 18)"
+                style="filter:drop-shadow(0 0 4px rgba(14,206,206,0.7))"/>
+            </svg>
+          </div>
+          <div style="font-size:0.72rem; color:#3d5557; line-height:1.4;">Tüm projeler<br/>başarıyla tamamlandı</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════
+     SERVICES
+═══════════════════════════════════════════════ -->
+<section id="hizmetler" class="section-py relative z-10">
+  <div class="divider" style="margin-bottom:0;"></div>
+  <div class="max-w-7xl mx-auto px-6 lg:px-10 pt-16">
+
+    <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-14">
+      <div>
+        <div class="section-label mb-4">Hizmetler</div>
+        <h2 class="font-display font-700" style="font-size:clamp(1.8rem,3.5vw,2.8rem); font-weight:700; letter-spacing:-0.03em; line-height:1.1;">
+          Dijitalde ihtiyacınız olan<br />her şey, tek bir çatıda.
+        </h2>
+      </div>
+      <p style="font-size:0.9rem; color:#5e7476; max-width:340px; line-height:1.7; font-weight:300;">
+        Strateji, yaratıcı içerik, reklam yönetimi ve marka kimliğini bir arada ele alarak dijital sürecinizi profesyonelce yönetiyoruz.
+      </p>
+    </div>
+
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+
+      <!-- Markalasma -->
+      <div class="service-card">
+        <div style="width:44px; height:44px; border-radius:10px; background:rgba(14,206,206,0.08); border:1px solid rgba(14,206,206,0.15); display:flex; align-items:center; justify-content:center; margin-bottom:22px;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0ecece" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>
+        </div>
+        <h3 class="font-display mb-3" style="font-size:1.05rem; font-weight:700; color:#dff0f0; letter-spacing:-0.02em;">Markalama</h3>
+        <p style="font-size:0.875rem; color:#5e7476; line-height:1.75; font-weight:300;">
+          Markanızın dijital dünyada güçlü, güven veren ve ayırt edilebilir bir kimlik kazanması için stratejik bir temel oluşturuyoruz. İletişim dili, görsel bütünlük ve dijital duruş gibi temel unsurları bir araya getiriyoruz.
+        </p>
+      </div>
+
+      <!-- Kreatif -->
+      <div class="service-card">
+        <div style="width:44px; height:44px; border-radius:10px; background:rgba(14,206,206,0.08); border:1px solid rgba(14,206,206,0.15); display:flex; align-items:center; justify-content:center; margin-bottom:22px;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0ecece" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        </div>
+        <h3 class="font-display mb-3" style="font-size:1.05rem; font-weight:700; color:#dff0f0; letter-spacing:-0.02em;">Kreatif</h3>
+        <p style="font-size:0.875rem; color:#5e7476; line-height:1.75; font-weight:300;">
+          Markanızı dijitalde fark ettiren yaratıcı fikirler ve görsel yaklaşımlar geliştiriyoruz. Hedef kitlenizin dikkatini çeken, marka algınızı güçlendiren modern kreatif çözümler sunuyoruz.
+        </p>
+      </div>
+
+      <!-- Icerik Uretimi -->
+      <div class="service-card">
+        <div style="width:44px; height:44px; border-radius:10px; background:rgba(14,206,206,0.08); border:1px solid rgba(14,206,206,0.15); display:flex; align-items:center; justify-content:center; margin-bottom:22px;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0ecece" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+        </div>
+        <h3 class="font-display mb-3" style="font-size:1.05rem; font-weight:700; color:#dff0f0; letter-spacing:-0.02em;">İçerik Üretimi</h3>
+        <p style="font-size:0.875rem; color:#5e7476; line-height:1.75; font-weight:300;">
+          Markanızın hikayesini dijital mecralara uygun, estetik ve planlı bir içerik yapısıyla sunuyoruz. Görsel tasarım, metin dili, içerik akışı ve platform uyumunu birlikte ele alıyoruz.
+        </p>
+      </div>
+
+      <!-- Sosyal Medya -->
+      <div class="service-card">
+        <div style="width:44px; height:44px; border-radius:10px; background:rgba(14,206,206,0.08); border:1px solid rgba(14,206,206,0.15); display:flex; align-items:center; justify-content:center; margin-bottom:22px;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0ecece" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.59 13.51l6.83 3.98M15.41 6.51l-6.82 3.98"/></svg>
+        </div>
+        <h3 class="font-display mb-3" style="font-size:1.05rem; font-weight:700; color:#dff0f0; letter-spacing:-0.02em;">Sosyal Medya Yönetimi</h3>
+        <p style="font-size:0.875rem; color:#5e7476; line-height:1.75; font-weight:300;">
+          Sosyal medya hesaplarınızı yalnızca aktif tutmakla kalmıyor; markanızın hedeflerine uygun şekilde planlıyoruz. İçerik takvimi, iletişim dili ve topluluk etkileşimini yönetiyoruz.
+        </p>
+      </div>
+
+      <!-- Reklam Yonetimi -->
+      <div class="service-card">
+        <div style="width:44px; height:44px; border-radius:10px; background:rgba(14,206,206,0.08); border:1px solid rgba(14,206,206,0.15); display:flex; align-items:center; justify-content:center; margin-bottom:22px;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0ecece" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M18 20V10"/><path d="M12 20V4"/><path d="M6 20v-6"/></svg>
+        </div>
+        <h3 class="font-display mb-3" style="font-size:1.05rem; font-weight:700; color:#dff0f0; letter-spacing:-0.02em;">Reklam Yönetimi</h3>
+        <p style="font-size:0.875rem; color:#5e7476; line-height:1.75; font-weight:300;">
+          Dijital reklam süreçlerini hedef kitle, bütçe, platform ve performans dengesiyle yönetiyoruz. Markanızın doğru kişilere, doğru zamanda ve doğru mesajla ulaşması için reklam kampanyalarınızı stratejik olarak kurguluyoruz.
+        </p>
+      </div>
+
+      <!-- Strateji ve Danismanlik -->
+      <div class="service-card">
+        <div style="width:44px; height:44px; border-radius:10px; background:rgba(14,206,206,0.08); border:1px solid rgba(14,206,206,0.15); display:flex; align-items:center; justify-content:center; margin-bottom:22px;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0ecece" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+        </div>
+        <h3 class="font-display mb-3" style="font-size:1.05rem; font-weight:700; color:#dff0f0; letter-spacing:-0.02em;">Strateji &amp; Danışmanlık</h3>
+        <p style="font-size:0.875rem; color:#5e7476; line-height:1.75; font-weight:300;">
+          Markanızın mevcut durumunu analiz ederek daha sağlam bir dijital yol haritası oluşturuyoruz. Büyüme hedefleri, içerik yapısı, reklam yaklaşımı ve marka algısını bir bütün olarak değerlendiriyoruz.
+        </p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════
+     SECTORS
+═══════════════════════════════════════════════ -->
+<section id="sektorler" class="section-py relative z-10" style="background:linear-gradient(to bottom, #080c0d, #090e0f 50%, #080c0d);">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10">
+
+    <div class="text-center mb-14">
+      <div class="section-label mb-4" style="justify-content:center;">Sektörel Deneyim</div>
+      <h2 class="font-display font-700 mb-4" style="font-size:clamp(1.8rem,3.5vw,2.8rem); font-weight:700; letter-spacing:-0.03em; line-height:1.1;">
+        Deneyim Gösterdiğimiz Sektörler
+      </h2>
+      <p style="font-size:0.95rem; color:#5e7476; max-width:520px; margin:0 auto; line-height:1.75; font-weight:300;">
+        Farklı sektörlerde edindiğimiz deneyim sayesinde her markanın dinamiklerine, hedef kitlesine ve iletişim ihtiyacına uygun dijital çözümler geliştiriyoruz.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
+      <div class="sector-tag">
+        <div style="font-size:1.4rem; margin-bottom:10px;">🛍️</div>
+        <div class="font-display" style="font-size:0.9rem; font-weight:600; color:#dff0f0; margin-bottom:4px;">Perakende &amp; E-ticaret</div>
+        <div style="font-size:0.78rem; color:#3d5557; line-height:1.5;">Dönüşüm odaklı kampanyalar</div>
+      </div>
+      <div class="sector-tag">
+        <div style="font-size:1.4rem; margin-bottom:10px;">💆‍♀️</div>
+        <div class="font-display" style="font-size:0.9rem; font-weight:600; color:#dff0f0; margin-bottom:4px;">Güzellik &amp; Sağlık</div>
+        <div style="font-size:0.78rem; color:#3d5557; line-height:1.5;">Premium marka algısı</div>
+      </div>
+      <div class="sector-tag">
+        <div style="font-size:1.4rem; margin-bottom:10px;">✈️</div>
+        <div class="font-display" style="font-size:0.9rem; font-weight:600; color:#dff0f0; margin-bottom:4px;">Turizm &amp; Konaklama</div>
+        <div style="font-size:0.78rem; color:#3d5557; line-height:1.5;">Görünürlük ve rezervasyon</div>
+      </div>
+      <div class="sector-tag">
+        <div style="font-size:1.4rem; margin-bottom:10px;">🍽️</div>
+        <div class="font-display" style="font-size:0.9rem; font-weight:600; color:#dff0f0; margin-bottom:4px;">Yiyecek &amp; İçecek</div>
+        <div style="font-size:0.78rem; color:#3d5557; line-height:1.5;">Marka ve müşteri bağı</div>
+      </div>
+      <div class="sector-tag">
+        <div style="font-size:1.4rem; margin-bottom:10px;">🏠</div>
+        <div class="font-display" style="font-size:0.9rem; font-weight:600; color:#dff0f0; margin-bottom:4px;">Emlak &amp; Gayrimenkul</div>
+        <div style="font-size:0.78rem; color:#3d5557; line-height:1.5;">Güven ve prestij iletişimi</div>
+      </div>
+      <div class="sector-tag">
+        <div style="font-size:1.4rem; margin-bottom:10px;">📚</div>
+        <div class="font-display" style="font-size:0.9rem; font-weight:600; color:#dff0f0; margin-bottom:4px;">Eğitim &amp; Danışmanlık</div>
+        <div style="font-size:0.78rem; color:#3d5557; line-height:1.5;">Uzmanlık ve otorite</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════
+     WHY US
+═══════════════════════════════════════════════ -->
+<section class="section-py relative z-10">
+  <div class="divider" style="margin-bottom:0;"></div>
+  <div class="max-w-7xl mx-auto px-6 lg:px-10 pt-16">
+
+    <div class="grid lg:grid-cols-2 gap-16 items-center">
+
+      <!-- Left: heading -->
+      <div>
+        <div class="section-label mb-6">Neden Biz</div>
+        <h2 class="font-display font-700 mb-6" style="font-size:clamp(1.8rem,3.5vw,2.8rem); font-weight:700; letter-spacing:-0.03em; line-height:1.1;">
+          Neden Boost<br /><span style="color:#0ecece;">Media 360</span>?
+        </h2>
+        <p style="font-size:0.95rem; color:#5e7476; line-height:1.8; font-weight:300; max-width:400px;">
+          Markanızın ihtiyacını derinlemesine anlayıp, sonuç odaklı bir yaklaşımla dijital sürecinizi yönetiyoruz.
+        </p>
+        <div class="mt-10">
+          <a href="#iletisim" class="btn-primary">Bizimle Çalışın</a>
+        </div>
+      </div>
+
+      <!-- Right: list -->
+      <div>
+        <div class="why-item">
+          <div style="width:32px; height:32px; border-radius:6px; background:rgba(14,206,206,0.08); border:1px solid rgba(14,206,206,0.2); display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:2px;">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7l3.5 3.5L12 3.5" stroke="#0ecece" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div>
+            <div class="font-display" style="font-size:0.95rem; font-weight:600; color:#dff0f0; margin-bottom:4px;">Strateji ile tasarımı aynı çizgide buluşturan ajans yaklaşımı</div>
+            <div style="font-size:0.82rem; color:#3d5557; line-height:1.6;">Yaratıcı düşünce ve stratejik bakış açısı bir arada.</div>
+          </div>
+        </div>
+        <div class="why-item">
+          <div style="width:32px; height:32px; border-radius:6px; background:rgba(14,206,206,0.08); border:1px solid rgba(14,206,206,0.2); display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:2px;">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7l3.5 3.5L12 3.5" stroke="#0ecece" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div>
+            <div class="font-display" style="font-size:0.95rem; font-weight:600; color:#dff0f0; margin-bottom:4px;">Farklı sektörlerde deneyimli, çok yönlü ekip yapısı</div>
+            <div style="font-size:0.82rem; color:#3d5557; line-height:1.6;">6 farklı sektörde kanıtlanmış kampanya deneyimi.</div>
+          </div>
+        </div>
+        <div class="why-item">
+          <div style="width:32px; height:32px; border-radius:6px; background:rgba(14,206,206,0.08); border:1px solid rgba(14,206,206,0.2); display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:2px;">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7l3.5 3.5L12 3.5" stroke="#0ecece" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div>
+            <div class="font-display" style="font-size:0.95rem; font-weight:600; color:#dff0f0; margin-bottom:4px;">Markaya özel çözüm geliştiren esnek çalışma modeli</div>
+            <div style="font-size:0.82rem; color:#3d5557; line-height:1.6;">Hazır kalıp yok; her marka için özgün strateji.</div>
+          </div>
+        </div>
+        <div class="why-item">
+          <div style="width:32px; height:32px; border-radius:6px; background:rgba(14,206,206,0.08); border:1px solid rgba(14,206,206,0.2); display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:2px;">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7l3.5 3.5L12 3.5" stroke="#0ecece" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div>
+            <div class="font-display" style="font-size:0.95rem; font-weight:600; color:#dff0f0; margin-bottom:4px;">Görünürlüğe değil, marka algısı ve süreçlere odaklanma</div>
+            <div style="font-size:0.82rem; color:#3d5557; line-height:1.6;">Sadece takipçi değil; gerçek marka değeri.</div>
+          </div>
+        </div>
+        <div class="why-item">
+          <div style="width:32px; height:32px; border-radius:6px; background:rgba(14,206,206,0.08); border:1px solid rgba(14,206,206,0.2); display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:2px;">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7l3.5 3.5L12 3.5" stroke="#0ecece" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div>
+            <div class="font-display" style="font-size:0.95rem; font-weight:600; color:#dff0f0; margin-bottom:4px;">Planlı, tutarlı ve profesyonel iletişim anlayışı</div>
+            <div style="font-size:0.82rem; color:#3d5557; line-height:1.6;">Her adımda ölçülebilir, şeffaf ve güvenilir süreç.</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════
+     REFERENCES / PROJECTS
+═══════════════════════════════════════════════ -->
+<section id="referanslar" class="section-py relative z-10">
+  <div class="divider" style="margin-bottom:0;"></div>
+  <div class="max-w-7xl mx-auto px-6 lg:px-10 pt-16">
+
+    <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-14">
+      <div>
+        <div class="section-label mb-4">Referanslar</div>
+        <h2 class="font-display font-700" style="font-size:clamp(1.8rem,3.5vw,2.8rem); font-weight:700; letter-spacing:-0.03em; line-height:1.1;">
+          Projeler &amp; İş Birlikleri
+        </h2>
+      </div>
+      <p style="font-size:0.9rem; color:#5e7476; max-width:380px; line-height:1.75; font-weight:300;">
+        Farklı sektörlerde yürüttüğümüz dijital reklam, sosyal medya ve yaratıcı içerik projeleriyle markalara görünürlük, algı ve iletişim gücü kazandırıyoruz.
+      </p>
+    </div>
+
+    <!-- Project category cards -->
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 mb-10">
+      <div class="service-card flex flex-col justify-between" style="min-height:180px;">
+        <div>
+          <div class="section-label mb-3" style="font-size:0.7rem;">Sosyal Medya</div>
+          <h3 class="font-display" style="font-size:1rem; font-weight:700; color:#dff0f0; margin-bottom:8px; letter-spacing:-0.02em;">Perakende &amp; E-ticaret Markaları</h3>
+          <p style="font-size:0.82rem; color:#3d5557; line-height:1.6;">Ürün odaklı içerik yönetimi, reklam kampanyaları ve marka kimliği çalışmaları.</p>
+        </div>
+        <div class="mt-6">
+          <a href="#iletisim" style="font-size:0.8rem; color:#0ecece; font-weight:500; display:inline-flex; align-items:center; gap:6px; transition:gap 0.2s;" onmouseover="this.style.gap='10px'" onmouseout="this.style.gap='6px'">
+            Referans Talep Et
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="service-card flex flex-col justify-between" style="min-height:180px;">
+        <div>
+          <div class="section-label mb-3" style="font-size:0.7rem;">Dijital Reklam</div>
+          <h3 class="font-display" style="font-size:1rem; font-weight:700; color:#dff0f0; margin-bottom:8px; letter-spacing:-0.02em;">Turizm &amp; Konaklama</h3>
+          <p style="font-size:0.82rem; color:#3d5557; line-height:1.6;">12+ ülkede yürütülen uluslararası kampanyalar ve çok dilli içerik stratejileri.</p>
+        </div>
+        <div class="mt-6">
+          <a href="#iletisim" style="font-size:0.8rem; color:#0ecece; font-weight:500; display:inline-flex; align-items:center; gap:6px; transition:gap 0.2s;" onmouseover="this.style.gap='10px'" onmouseout="this.style.gap='6px'">
+            Referans Talep Et
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="service-card flex flex-col justify-between" style="min-height:180px;">
+        <div>
+          <div class="section-label mb-3" style="font-size:0.7rem;">Marka Kimliği</div>
+          <h3 class="font-display" style="font-size:1rem; font-weight:700; color:#dff0f0; margin-bottom:8px; letter-spacing:-0.02em;">Güzellik &amp; Sağlık Markaları</h3>
+          <p style="font-size:0.82rem; color:#3d5557; line-height:1.6;">Premium görsel kimlik, içerik üretimi ve hedef kitle odaklı dijital iletişim yönetimi.</p>
+        </div>
+        <div class="mt-6">
+          <a href="#iletisim" style="font-size:0.8rem; color:#0ecece; font-weight:500; display:inline-flex; align-items:center; gap:6px; transition:gap 0.2s;" onmouseover="this.style.gap='10px'" onmouseout="this.style.gap='6px'">
+            Referans Talep Et
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Full reference CTA -->
+    <div class="rounded-xl border border-brand-border p-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6" style="background:#0d1314;">
+      <div>
+        <div class="font-display" style="font-size:1rem; font-weight:700; color:#dff0f0; margin-bottom:4px;">Daha fazla referans için bizimle iletişime geçin.</div>
+        <div style="font-size:0.85rem; color:#3d5557;">Sektörünüze özel örnek çalışmalarımızı paylaşalım.</div>
+      </div>
+      <a href="#iletisim" class="btn-outline" style="white-space:nowrap;">Referans Talep Edin</a>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════
+     TRAINING
+═══════════════════════════════════════════════ -->
+<section id="egitimler" class="section-py relative z-10" style="background:linear-gradient(to bottom, #080c0d, #090e0f 50%, #080c0d);">
+  <div class="divider" style="margin-bottom:0;"></div>
+  <div class="max-w-7xl mx-auto px-6 lg:px-10 pt-16">
+
+    <div class="grid lg:grid-cols-2 gap-16 items-start">
+
+      <!-- Left: intro -->
+      <div class="lg:sticky" style="top:100px;">
+        <div class="section-label mb-6">Eğitimler</div>
+        <h2 class="font-display font-700 mb-6" style="font-size:clamp(1.8rem,3.5vw,2.8rem); font-weight:700; letter-spacing:-0.03em; line-height:1.1;">
+          Sosyal medyayı<br />bir marka aracına<br /><span style="color:#0ecece;">dönüştürün.</span>
+        </h2>
+        <p style="font-size:0.95rem; font-weight:300; color:#9ab0b2; line-height:1.8; margin-bottom:16px;">
+          Boost Media 360 sosyal medya eğitimleri; markaların, ekiplerin ve bireysel katılımcıların dijital iletişim süreçlerini daha bilinçli, daha planlı ve daha etkili yönetebilmeleri için tasarlanmıştır.
+        </p>
+        <p style="font-size:0.88rem; font-weight:300; color:#5e7476; line-height:1.8; margin-bottom:36px;">
+          Eğitimler; yalnızca içerik üretimini değil, markanın dijitalde nasıl konumlanacağını, hangi hedeflere göre hareket edeceğini ve hangi ölçümlerle ilerlemesi gerektiğini de kapsar. Sosyal medya, ölçülebilir ve yönetilebilir bir marka aracına dönüşür.
+        </p>
+        <a href="#iletisim" class="btn-primary">
+          Eğitim Bilgisi Alın
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+
+      <!-- Right: modules -->
+      <div class="flex flex-col gap-3">
+
+        <div class="module-item">
+          <div style="width:32px; height:32px; border-radius:6px; background:rgba(14,206,206,0.08); border:1px solid rgba(14,206,206,0.15); display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:2px;">
+            <span style="font-size:0.75rem; font-weight:700; color:#0ecece; font-family:'Syne',sans-serif;">01</span>
+          </div>
+          <div>
+            <div class="font-display" style="font-size:0.9rem; font-weight:600; color:#dff0f0; margin-bottom:3px;">Sosyal Medya Stratejisi Oluşturma</div>
+            <div style="font-size:0.8rem; color:#3d5557; line-height:1.5;">Marka hedeflerine uygun sosyal medya çizgisi kurma ve platform seçimi.</div>
+          </div>
+        </div>
+
+        <div class="module-item">
+          <div style="width:32px; height:32px; border-radius:6px; background:rgba(14,206,206,0.08); border:1px solid rgba(14,206,206,0.15); display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:2px;">
+            <span style="font-size:0.75rem; font-weight:700; color:#0ecece; font-family:'Syne',sans-serif;">02</span>
+          </div>
+          <div>
+            <div class="font-display" style="font-size:0.9rem; font-weight:600; color:#dff0f0; margin-bottom:3px;">Hedef Kitle Analizi</div>
+            <div style="font-size:0.8rem; color:#3d5557; line-height:1.5;">Kitlenin davranışlarını, beklentilerini ve iletişim dilini doğru analiz etme.</div>
+          </div>
+        </div>
+
+        <div class="module-item">
+          <div style="width:32px; height:32px; border-radius:6px; background:rgba(14,206,206,0.08); border:1px solid rgba(14,206,206,0.15); display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:2px;">
+            <span style="font-size:0.75rem; font-weight:700; color:#0ecece; font-family:'Syne',sans-serif;">03</span>
+          </div>
+          <div>
+            <div class="font-display" style="font-size:0.9rem; font-weight:600; color:#dff0f0; margin-bottom:3px;">Hedef Belirleme &amp; KPI Planlama</div>
+            <div style="font-size:0.8rem; color:#3d5557; line-height:1.5;">Sosyal medya sürecini ölçülebilir kılmak için hedef ve performans göstergeleri.</div>
+          </div>
+        </div>
+
+        <div class="module-item">
+          <div style="width:32px; height:32px; border-radius:6px; background:rgba(14,206,206,0.08); border:1px solid rgba(14,206,206,0.15); display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:2px;">
+            <span style="font-size:0.75rem; font-weight:700; color:#0ecece; font-family:'Syne',sans-serif;">04</span>
+          </div>
+          <div>
+            <div class="font-display" style="font-size:0.9rem; font-weight:600; color:#dff0f0; margin-bottom:3px;">İçerik Üretimi &amp; Yönetimi</div>
+            <div style="font-size:0.8rem; color:#3d5557; line-height:1.5;">Planlı, tutarlı ve marka kimliğiyle uyumlu içerik akışları oluşturma.</div>
+          </div>
+        </div>
+
+        <div class="module-item">
+          <div style="width:32px; height:32px; border-radius:6px; background:rgba(14,206,206,0.08); border:1px solid rgba(14,206,206,0.15); display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:2px;">
+            <span style="font-size:0.75rem; font-weight:700; color:#0ecece; font-family:'Syne',sans-serif;">05</span>
+          </div>
+          <div>
+            <div class="font-display" style="font-size:0.9rem; font-weight:600; color:#dff0f0; margin-bottom:3px;">Görsel İçerik Tasarımı</div>
+            <div style="font-size:0.8rem; color:#3d5557; line-height:1.5;">Dijital mecralarda dikkat çeken, estetik ve profesyonel görsel yapılar.</div>
+          </div>
+        </div>
+
+        <div class="module-item">
+          <div style="width:32px; height:32px; border-radius:6px; background:rgba(14,206,206,0.08); border:1px solid rgba(14,206,206,0.15); display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:2px;">
+            <span style="font-size:0.75rem; font-weight:700; color:#0ecece; font-family:'Syne',sans-serif;">06</span>
+          </div>
+          <div>
+            <div class="font-display" style="font-size:0.9rem; font-weight:600; color:#dff0f0; margin-bottom:3px;">Video İçerik Üretimi</div>
+            <div style="font-size:0.8rem; color:#3d5557; line-height:1.5;">Platform dinamiklerine uygun kısa format video içerik mantığı.</div>
+          </div>
+        </div>
+
+        <div class="module-item">
+          <div style="width:32px; height:32px; border-radius:6px; background:rgba(14,206,206,0.08); border:1px solid rgba(14,206,206,0.15); display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:2px;">
+            <span style="font-size:0.75rem; font-weight:700; color:#0ecece; font-family:'Syne',sans-serif;">07</span>
+          </div>
+          <div>
+            <div class="font-display" style="font-size:0.9rem; font-weight:600; color:#dff0f0; margin-bottom:3px;">Reklam Yönetimi</div>
+            <div style="font-size:0.8rem; color:#3d5557; line-height:1.5;">Dijital reklam kampanyalarının hedef kitle ve bütçe bazlı planlanması.</div>
+          </div>
+        </div>
+
+        <div class="module-item">
+          <div style="width:32px; height:32px; border-radius:6px; background:rgba(14,206,206,0.08); border:1px solid rgba(14,206,206,0.15); display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:2px;">
+            <span style="font-size:0.75rem; font-weight:700; color:#0ecece; font-family:'Syne',sans-serif;">08</span>
+          </div>
+          <div>
+            <div class="font-display" style="font-size:0.9rem; font-weight:600; color:#dff0f0; margin-bottom:3px;">Reklam Türleri, Hedefleme &amp; Bütçe</div>
+            <div style="font-size:0.8rem; color:#3d5557; line-height:1.5;">Doğru reklam modelini seçme ve bütçeyi verimli kullanma.</div>
+          </div>
+        </div>
+
+        <div class="module-item">
+          <div style="width:32px; height:32px; border-radius:6px; background:rgba(14,206,206,0.08); border:1px solid rgba(14,206,206,0.15); display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:2px;">
+            <span style="font-size:0.75rem; font-weight:700; color:#0ecece; font-family:'Syne',sans-serif;">09</span>
+          </div>
+          <div>
+            <div class="font-display" style="font-size:0.9rem; font-weight:600; color:#dff0f0; margin-bottom:3px;">Reklam Performans Analizi</div>
+            <div style="font-size:0.8rem; color:#3d5557; line-height:1.5;">Kampanyaların sonuç odaklı değerlendirilmesi ve optimizasyon mantığı.</div>
+          </div>
+        </div>
+
+        <div class="module-item">
+          <div style="width:32px; height:32px; border-radius:6px; background:rgba(14,206,206,0.08); border:1px solid rgba(14,206,206,0.15); display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:2px;">
+            <span style="font-size:0.75rem; font-weight:700; color:#0ecece; font-family:'Syne',sans-serif;">10</span>
+          </div>
+          <div>
+            <div class="font-display" style="font-size:0.9rem; font-weight:600; color:#dff0f0; margin-bottom:3px;">Analitik &amp; Raporlama</div>
+            <div style="font-size:0.8rem; color:#3d5557; line-height:1.5;">Veriye dayalı karar almak için temel metrikleri okuma ve yorumlama.</div>
+          </div>
+        </div>
+
+        <div class="module-item">
+          <div style="width:32px; height:32px; border-radius:6px; background:rgba(14,206,206,0.08); border:1px solid rgba(14,206,206,0.15); display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:2px;">
+            <span style="font-size:0.75rem; font-weight:700; color:#0ecece; font-family:'Syne',sans-serif;">11</span>
+          </div>
+          <div>
+            <div class="font-display" style="font-size:0.9rem; font-weight:600; color:#dff0f0; margin-bottom:3px;">Performans Takibi</div>
+            <div style="font-size:0.8rem; color:#3d5557; line-height:1.5;">Yapılan çalışmaların etkisini sürekli izleme ve gelişim alanlarını belirleme.</div>
+          </div>
+        </div>
+
+        <div class="module-item">
+          <div style="width:32px; height:32px; border-radius:6px; background:rgba(14,206,206,0.08); border:1px solid rgba(14,206,206,0.15); display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:2px;">
+            <span style="font-size:0.75rem; font-weight:700; color:#0ecece; font-family:'Syne',sans-serif;">12</span>
+          </div>
+          <div>
+            <div class="font-display" style="font-size:0.9rem; font-weight:600; color:#dff0f0; margin-bottom:3px;">Araçlar &amp; Kaynaklar</div>
+            <div style="font-size:0.8rem; color:#3d5557; line-height:1.5;">Dijital araçlar, içerik planlama sistemleri ve temel iş akışı kaynakları.</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════
+     CTA BAND
+═══════════════════════════════════════════════ -->
+<section class="relative z-10 overflow-hidden" style="background:#0d1314; border-top:1px solid #182122; border-bottom:1px solid #182122;">
+  <div class="cta-glow"></div>
+  <div class="relative max-w-7xl mx-auto px-6 lg:px-10 py-20 text-center">
+    <div class="section-label mb-6" style="justify-content:center;">Başlayalım</div>
+    <h2 class="font-display font-700 mb-6" style="font-size:clamp(2rem,4.5vw,3.6rem); font-weight:700; letter-spacing:-0.04em; line-height:1.1; max-width:700px; margin:0 auto 24px;">
+      Markanız için doğru dijital yapıyı birlikte oluşturalım.
+    </h2>
+    <p style="font-size:1rem; font-weight:300; color:#9ab0b2; line-height:1.75; max-width:480px; margin:0 auto 40px;">
+      Dijitalde daha güçlü, daha planlı ve daha profesyonel bir görünüm için bize ulaşın. İhtiyacınıza uygun çözümleri birlikte değerlendirelim.
+    </p>
+    <div class="flex flex-wrap gap-4 justify-center">
+      <a href="#iletisim" class="btn-primary">
+        Teklif Alın
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <a href="#iletisim" class="btn-outline">İletişime Geçin</a>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════
+     ABOUT
+═══════════════════════════════════════════════ -->
+<section id="hakkimizda" class="section-py relative z-10">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10">
+    <div class="grid lg:grid-cols-2 gap-16 items-center">
+
+      <!-- Left: text -->
+      <div>
+        <div class="section-label mb-6">Hakkımızda</div>
+        <h2 class="font-display font-700 mb-6" style="font-size:clamp(1.8rem,3.5vw,2.8rem); font-weight:700; letter-spacing:-0.03em; line-height:1.1;">
+          Strateji, tasarım ve<br />içeriği tek çatıda<br />birleştiren ajans.
+        </h2>
+        <p style="font-size:1rem; font-weight:300; line-height:1.8; color:#9ab0b2; margin-bottom:20px;">
+          Boost Media 360, markaların dijital potansiyelini ortaya çıkarmak için strateji, reklam, tasarım ve içeriği tek çatı altında buluşturan yaratıcı bir ajanstır. Her markanın ihtiyacı, hedef kitlesi ve iletişim dili farklıdır.
+        </p>
+        <p style="font-size:1rem; font-weight:300; line-height:1.8; color:#9ab0b2; margin-bottom:36px;">
+          Bu nedenle hazır kalıplarla değil; markaya özel, planlı ve güçlü çözümlerle ilerleriz. Amacımız, markaları dijitalde yalnızca görünür kılmak değil; doğru algı ve doğru iletişimle kalıcı bir etki oluşturmaktır.
+        </p>
+        <div class="flex gap-8">
+          <div>
+            <div class="font-display font-700 mb-1" style="font-size:1.5rem; font-weight:700; color:#0ecece; letter-spacing:-0.03em;">Vizyon</div>
+            <p style="font-size:0.85rem; color:#5e7476; line-height:1.6; max-width:220px;">Yenilikçi ve güvenilir çözümlerle dijital iletişimde uzun vadeli değer üreten öncü ajans.</p>
+          </div>
+          <div>
+            <div class="font-display font-700 mb-1" style="font-size:1.5rem; font-weight:700; color:#0ecece; letter-spacing:-0.03em;">Misyon</div>
+            <p style="font-size:0.85rem; color:#5e7476; line-height:1.6; max-width:220px;">Her markanın özgün yapısını doğru stratejiyle ele alarak dijitalde güçlü bir duruş kazandırmak.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: visual card -->
+      <div class="relative">
+        <div class="relative rounded-2xl overflow-hidden" style="
+          background: linear-gradient(135deg, #0d1314 0%, #111d1e 100%);
+          border: 1px solid #182122;
+          padding: 48px;
+        ">
+          <!-- Glow blob -->
+          <div style="
+            position:absolute; top:-40px; right:-40px; width:220px; height:220px;
+            background: radial-gradient(circle, rgba(14,206,206,0.10) 0%, transparent 70%);
+            pointer-events:none;
+          "></div>
+
+          <img src="boostmedia_docs/boost (1).png" alt="Boost Media 360" width="80" height="80" loading="lazy" decoding="async" style="width:80px; height:80px; object-fit:contain; margin-bottom:28px;" />
+
+          <blockquote style="font-family:'Syne',sans-serif; font-size:1.2rem; font-weight:600; line-height:1.5; color:#dff0f0; letter-spacing:-0.02em; margin-bottom:24px;">
+            "Ne yaptığını bilen, süreci yönetebilen, tasarım ve stratejiyi bir arada düşünebilen profesyonel bir ekip."
+          </blockquote>
+
+          <div class="divider" style="margin-bottom:24px;"></div>
+
+          <div class="grid grid-cols-2 gap-6">
+            <div>
+              <div style="font-size:0.72rem; letter-spacing:0.1em; text-transform:uppercase; color:#3d5557; margin-bottom:4px;">Konum</div>
+              <div style="font-size:0.9rem; color:#9ab0b2; font-weight:400;">İzmir, Türkiye</div>
+            </div>
+            <div>
+              <div style="font-size:0.72rem; letter-spacing:0.1em; text-transform:uppercase; color:#3d5557; margin-bottom:4px;">Çalışma Saatleri</div>
+              <div style="font-size:0.9rem; color:#9ab0b2; font-weight:400; line-height:1.5;">Pzt–Cum: 09:00–00:00<br/>Cts–Pzr: 09:00–23:00</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════
+     CONTACT
+═══════════════════════════════════════════════ -->
+<section id="iletisim" class="section-py relative z-10">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10">
+
+    <div class="grid lg:grid-cols-2 gap-16">
+
+      <!-- Left: form -->
+      <div>
+        <div class="section-label mb-6">İletişim</div>
+        <h2 class="font-display font-700 mb-4" style="font-size:clamp(1.8rem,3.5vw,2.8rem); font-weight:700; letter-spacing:-0.03em; line-height:1.1;">
+          Bizimle İletişime Geçin
+        </h2>
+        <p style="font-size:0.95rem; font-weight:300; color:#9ab0b2; line-height:1.75; margin-bottom:36px;">
+          Markanız için doğru dijital stratejiyi birlikte kuralım. Hizmetlerimiz, çalışma modelimiz ve eğitimlerimiz hakkında detaylı bilgi almak için formu doldurun.
+        </p>
+
+        <form onsubmit="handleSubmit(event)" class="flex flex-col gap-4">
+          <div class="grid sm:grid-cols-2 gap-4">
+            <div>
+              <label style="display:block; font-size:0.75rem; letter-spacing:0.08em; text-transform:uppercase; color:#3d5557; margin-bottom:8px; font-weight:500;">Ad Soyad</label>
+              <input type="text" placeholder="Adınız Soyadınız" class="form-input" required />
+            </div>
+            <div>
+              <label style="display:block; font-size:0.75rem; letter-spacing:0.08em; text-transform:uppercase; color:#3d5557; margin-bottom:8px; font-weight:500;">Marka / Şirket</label>
+              <input type="text" placeholder="Şirket veya Marka Adı" class="form-input" />
+            </div>
+          </div>
+          <div class="grid sm:grid-cols-2 gap-4">
+            <div>
+              <label style="display:block; font-size:0.75rem; letter-spacing:0.08em; text-transform:uppercase; color:#3d5557; margin-bottom:8px; font-weight:500;">Telefon</label>
+              <input type="tel" placeholder="0xxx xxx xx xx" class="form-input" />
+            </div>
+            <div>
+              <label style="display:block; font-size:0.75rem; letter-spacing:0.08em; text-transform:uppercase; color:#3d5557; margin-bottom:8px; font-weight:500;">E-posta</label>
+              <input type="email" placeholder="ornek@sirket.com" class="form-input" required />
+            </div>
+          </div>
+          <div>
+            <label style="display:block; font-size:0.75rem; letter-spacing:0.08em; text-transform:uppercase; color:#3d5557; margin-bottom:8px; font-weight:500;">Hizmet Türü</label>
+            <select class="form-input" style="cursor:pointer; appearance:none; background-image:url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='M2 4l4 4 4-4' stroke='%235e7476' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E\"); background-repeat:no-repeat; background-position: right 16px center;">
+              <option value="" style="background:#0d1314;">Hizmet seçin...</option>
+              <option value="markalama" style="background:#0d1314;">Markalama</option>
+              <option value="kreatif" style="background:#0d1314;">Kreatif</option>
+              <option value="icerik" style="background:#0d1314;">İçerik Üretimi</option>
+              <option value="sosyal-medya" style="background:#0d1314;">Sosyal Medya Yönetimi</option>
+              <option value="reklam" style="background:#0d1314;">Reklam Yönetimi</option>
+              <option value="strateji" style="background:#0d1314;">Strateji &amp; Danışmanlık</option>
+              <option value="egitim" style="background:#0d1314;">Eğitim</option>
+            </select>
+          </div>
+          <div>
+            <label style="display:block; font-size:0.75rem; letter-spacing:0.08em; text-transform:uppercase; color:#3d5557; margin-bottom:8px; font-weight:500;">Mesaj</label>
+            <textarea rows="4" placeholder="Projeniz veya markanız hakkında kısaca bilgi verin..." class="form-input" style="resize:vertical;"></textarea>
+          </div>
+          <div class="pt-2">
+            <button type="submit" class="btn-primary" style="padding:15px 36px; align-self:flex-start;">
+              Mesaj Gönder
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Right: contact info -->
+      <div class="flex flex-col gap-6">
+
+        <!-- Info cards -->
+        <div class="rounded-xl border border-brand-border p-7" style="background:#0d1314;">
+          <div style="font-size:0.72rem; letter-spacing:0.1em; text-transform:uppercase; color:#3d5557; font-weight:500; margin-bottom:16px;">İletişim Bilgileri</div>
+          <div class="flex flex-col gap-5">
+            <div class="flex items-center gap-4">
+              <div style="width:40px; height:40px; border-radius:8px; background:rgba(14,206,206,0.08); border:1px solid rgba(14,206,206,0.15); display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0ecece" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.86 13.1a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.77 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l.91-.91a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 17z"/></svg>
+              </div>
+              <div>
+                <div style="font-size:0.75rem; color:#3d5557; margin-bottom:2px;">Telefon</div>
+                <a href="tel:05050724760" style="font-size:0.95rem; color:#dff0f0; font-weight:500; transition:color 0.2s;" onmouseover="this.style.color='#0ecece'" onmouseout="this.style.color='#dff0f0'">0505 072 4760</a>
+              </div>
+            </div>
+            <div class="flex items-center gap-4">
+              <div style="width:40px; height:40px; border-radius:8px; background:rgba(14,206,206,0.08); border:1px solid rgba(14,206,206,0.15); display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0ecece" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+              </div>
+              <div>
+                <div style="font-size:0.75rem; color:#3d5557; margin-bottom:2px;">E-posta</div>
+                <a href="mailto:boostmedia360@gmail.com" style="font-size:0.9rem; color:#dff0f0; font-weight:500; transition:color 0.2s;" onmouseover="this.style.color='#0ecece'" onmouseout="this.style.color='#dff0f0'">boostmedia360@gmail.com</a>
+              </div>
+            </div>
+            <div class="flex items-center gap-4">
+              <div style="width:40px; height:40px; border-radius:8px; background:rgba(14,206,206,0.08); border:1px solid rgba(14,206,206,0.15); display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0ecece" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              </div>
+              <div>
+                <div style="font-size:0.75rem; color:#3d5557; margin-bottom:2px;">Konum</div>
+                <div style="font-size:0.95rem; color:#dff0f0; font-weight:500;">İzmir, Türkiye</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Working hours -->
+        <div class="rounded-xl border border-brand-border p-7" style="background:#0d1314;">
+          <div style="font-size:0.72rem; letter-spacing:0.1em; text-transform:uppercase; color:#3d5557; font-weight:500; margin-bottom:16px;">Çalışma Saatleri</div>
+          <div class="flex flex-col gap-3">
+            <div class="flex justify-between items-center">
+              <span style="font-size:0.875rem; color:#5e7476;">Pazartesi – Cuma</span>
+              <span style="font-size:0.875rem; color:#dff0f0; font-weight:500;">09:00 – 00:00</span>
+            </div>
+            <div class="flex justify-between items-center">
+              <span style="font-size:0.875rem; color:#5e7476;">Cumartesi</span>
+              <span style="font-size:0.875rem; color:#dff0f0; font-weight:500;">09:00 – 23:00</span>
+            </div>
+            <div class="flex justify-between items-center">
+              <span style="font-size:0.875rem; color:#5e7476;">Pazar</span>
+              <span style="font-size:0.875rem; color:#dff0f0; font-weight:500;">09:00 – 23:00</span>
+            </div>
+          </div>
+          <div class="mt-4 pt-4 border-t border-brand-border flex items-center gap-2">
+            <div style="width:7px; height:7px; border-radius:50%; background:#0ecece; box-shadow: 0 0 8px rgba(14,206,206,0.6);"></div>
+            <span style="font-size:0.78rem; color:#3d5557;">Şu an müsait</span>
+          </div>
+        </div>
+
+        <!-- Social links -->
+        <div class="rounded-xl border border-brand-border p-7" style="background:#0d1314;">
+          <div style="font-size:0.72rem; letter-spacing:0.1em; text-transform:uppercase; color:#3d5557; font-weight:500; margin-bottom:16px;">Sosyal Medya</div>
+          <div class="flex gap-3">
+            <!-- Instagram -->
+            <a href="https://www.instagram.com/boostmedia360/" target="_blank" rel="noopener" aria-label="Instagram" style="width:44px; height:44px; border-radius:8px; background:rgba(14,206,206,0.06); border:1px solid #182122; display:flex; align-items:center; justify-content:center; transition:border-color 0.2s, background 0.2s;" onmouseover="this.style.borderColor='rgba(14,206,206,0.4)';this.style.background='rgba(14,206,206,0.1)'" onmouseout="this.style.borderColor='#182122';this.style.background='rgba(14,206,206,0.06)'">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#9ab0b2" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════
+     FOOTER
+═══════════════════════════════════════════════ -->
+<footer class="relative z-10 border-t border-brand-border" style="background:#080c0d;">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10 pt-16 pb-8">
+
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-10 mb-14">
+
+      <!-- Brand column -->
+      <div class="col-span-2 lg:col-span-1">
+        <a href="#" class="flex items-center gap-3 mb-4">
+          <img src="boostmedia_docs/boost (1).png" alt="Boost Media 360 Logo" width="32" height="32" loading="lazy" decoding="async" style="height:32px; width:auto; object-fit:contain;" />
+          <span class="font-display font-700" style="font-size:1rem; font-weight:700; letter-spacing:-0.02em; color:#f2f6f6;">
+            Boost<span style="color:#0ecece;">Media</span> 360
+          </span>
+        </a>
+        <p style="font-size:0.82rem; color:#3d5557; line-height:1.7; max-width:220px; font-weight:300;">
+          Dijital reklam, sosyal medya ve yaratıcı içerik çözümleri. İzmir merkezli, global deneyimli ajans.
+        </p>
+      </div>
+
+      <!-- Quick links -->
+      <div>
+        <div style="font-size:0.72rem; letter-spacing:0.1em; text-transform:uppercase; color:#3d5557; font-weight:500; margin-bottom:14px;">Hızlı Menü</div>
+        <nav class="flex flex-col gap-3">
+          <a href="#hakkimizda" style="font-size:0.85rem; color:#5e7476; transition:color 0.2s;" onmouseover="this.style.color='#dff0f0'" onmouseout="this.style.color='#5e7476'">Hakkımızda</a>
+          <a href="#hizmetler"  style="font-size:0.85rem; color:#5e7476; transition:color 0.2s;" onmouseover="this.style.color='#dff0f0'" onmouseout="this.style.color='#5e7476'">Hizmetler</a>
+          <a href="#referanslar" style="font-size:0.85rem; color:#5e7476; transition:color 0.2s;" onmouseover="this.style.color='#dff0f0'" onmouseout="this.style.color='#5e7476'">Referanslar</a>
+          <a href="#egitimler"  style="font-size:0.85rem; color:#5e7476; transition:color 0.2s;" onmouseover="this.style.color='#dff0f0'" onmouseout="this.style.color='#5e7476'">Eğitimler</a>
+          <a href="#iletisim"   style="font-size:0.85rem; color:#5e7476; transition:color 0.2s;" onmouseover="this.style.color='#dff0f0'" onmouseout="this.style.color='#5e7476'">İletişim</a>
+        </nav>
+      </div>
+
+      <!-- Services -->
+      <div>
+        <div style="font-size:0.72rem; letter-spacing:0.1em; text-transform:uppercase; color:#3d5557; font-weight:500; margin-bottom:14px;">Hizmetler</div>
+        <nav class="flex flex-col gap-3">
+          <a href="#hizmetler" style="font-size:0.85rem; color:#5e7476; transition:color 0.2s;" onmouseover="this.style.color='#dff0f0'" onmouseout="this.style.color='#5e7476'">Markalama</a>
+          <a href="#hizmetler" style="font-size:0.85rem; color:#5e7476; transition:color 0.2s;" onmouseover="this.style.color='#dff0f0'" onmouseout="this.style.color='#5e7476'">Kreatif</a>
+          <a href="#hizmetler" style="font-size:0.85rem; color:#5e7476; transition:color 0.2s;" onmouseover="this.style.color='#dff0f0'" onmouseout="this.style.color='#5e7476'">İçerik Üretimi</a>
+          <a href="#hizmetler" style="font-size:0.85rem; color:#5e7476; transition:color 0.2s;" onmouseover="this.style.color='#dff0f0'" onmouseout="this.style.color='#5e7476'">Sosyal Medya</a>
+          <a href="#hizmetler" style="font-size:0.85rem; color:#5e7476; transition:color 0.2s;" onmouseover="this.style.color='#dff0f0'" onmouseout="this.style.color='#5e7476'">Reklam Yönetimi</a>
+          <a href="#hizmetler" style="font-size:0.85rem; color:#5e7476; transition:color 0.2s;" onmouseover="this.style.color='#dff0f0'" onmouseout="this.style.color='#5e7476'">Strateji &amp; Danışmanlık</a>
+        </nav>
+      </div>
+
+      <!-- Contact -->
+      <div>
+        <div style="font-size:0.72rem; letter-spacing:0.1em; text-transform:uppercase; color:#3d5557; font-weight:500; margin-bottom:14px;">İletişim</div>
+        <div class="flex flex-col gap-3">
+          <a href="tel:05050724760" style="font-size:0.85rem; color:#5e7476; transition:color 0.2s;" onmouseover="this.style.color='#dff0f0'" onmouseout="this.style.color='#5e7476'">0505 072 4760</a>
+          <a href="mailto:boostmedia360@gmail.com" style="font-size:0.85rem; color:#5e7476; transition:color 0.2s;" onmouseover="this.style.color='#dff0f0'" onmouseout="this.style.color='#5e7476'">boostmedia360@gmail.com</a>
+          <span style="font-size:0.85rem; color:#5e7476;">İzmir, Türkiye</span>
+          <div class="flex gap-2 mt-2">
+            <a href="https://www.instagram.com/boostmedia360/" target="_blank" rel="noopener" aria-label="Instagram" style="width:34px; height:34px; border-radius:6px; border:1px solid #182122; display:flex; align-items:center; justify-content:center; transition:border-color 0.2s;" onmouseover="this.style.borderColor='rgba(14,206,206,0.4)'" onmouseout="this.style.borderColor='#182122'">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#5e7476" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Footer bottom -->
+    <div class="divider mb-6"></div>
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+      <p style="font-size:0.78rem; color:#2a3a3b;">
+        &copy; 2026 Boost Media 360. Tüm hakları saklıdır.
+      </p>
+      <p style="font-size:0.78rem; color:#2a3a3b;">
+        İzmir, Türkiye &mdash; Dijital Reklam &amp; Sosyal Medya Ajansı
+      </p>
+    </div>
+
+  </div>
+</footer>
+
+
+<!-- ═══════════════════════════════════════════════
+     FLOATING CTA
+═══════════════════════════════════════════════ -->
+<div id="floating-cta" style="
+  position: fixed;
+  bottom: 32px;
+  right: 32px;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  pointer-events: none;
+">
+  <a href="tel:05050724760" aria-label="Bizi Ara" style="
+    width: 52px; height: 52px; border-radius: 50%;
+    background: #0ecece;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 4px 20px rgba(14,206,206,0.4), 0 2px 8px rgba(0,0,0,0.6);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    pointer-events: auto;
+  " onmouseover="this.style.transform='scale(1.1)';this.style.boxShadow='0 6px 28px rgba(14,206,206,0.5), 0 3px 12px rgba(0,0,0,0.7)'"
+     onmouseout="this.style.transform='';this.style.boxShadow='0 4px 20px rgba(14,206,206,0.4), 0 2px 8px rgba(0,0,0,0.6)'"
+     onfocus="this.style.outline='2px solid #0ecece'; this.style.outlineOffset='3px'"
+     onblur="this.style.outline=''">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#080c0d" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.86 13.1a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.77 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l.91-.91a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 17z"/>
+    </svg>
+  </a>
+</div>
+
+<!-- Scroll indicator at hero bottom -->
+<style>
+  @keyframes scrollBounce {
+    0%, 100% { transform: translateY(0); opacity: 0.6; }
+    50% { transform: translateY(6px); opacity: 1; }
+  }
+  .scroll-indicator { animation: scrollBounce 2s ease-in-out infinite; }
+</style>
+
+<!-- ═══════════════════════════════════════════════
+     SCRIPTS
+═══════════════════════════════════════════════ -->
+<script>
+  // ── Navbar scroll effect + floating CTA ──
+  const navbar = document.getElementById('navbar');
+  const floatingCta = document.getElementById('floating-cta');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 30) navbar.classList.add('scrolled');
+    else navbar.classList.remove('scrolled');
+    // Show floating CTA after scrolling 400px
+    if (window.scrollY > 400) {
+      floatingCta.style.opacity = '1';
+      floatingCta.style.transform = 'translateY(0)';
+      floatingCta.style.pointerEvents = 'auto';
+    } else {
+      floatingCta.style.opacity = '0';
+      floatingCta.style.transform = 'translateY(12px)';
+      floatingCta.style.pointerEvents = 'none';
+    }
+  }, { passive: true });
+
+  // ── Mobile menu toggle ──
+  const burger = document.getElementById('burger-btn');
+  const menu   = document.getElementById('mobile-menu');
+  const b1 = document.getElementById('b1');
+  const b2 = document.getElementById('b2');
+  const b3 = document.getElementById('b3');
+  let menuOpen = false;
+
+  burger.addEventListener('click', () => {
+    menuOpen = !menuOpen;
+    if (menuOpen) {
+      menu.classList.remove('hidden');
+      menu.classList.add('open');
+      b1.style.transform = 'translateY(8px) rotate(45deg)';
+      b2.style.opacity   = '0';
+      b3.style.transform = 'translateY(-8px) rotate(-45deg)';
+    } else {
+      closeMobile();
+    }
+  });
+
+  function closeMobile() {
+    menuOpen = false;
+    menu.classList.remove('open');
+    menu.classList.add('hidden');
+    b1.style.transform = '';
+    b2.style.opacity   = '';
+    b3.style.transform = '';
+  }
+
+  // ── Contact form handler ──
+  function handleSubmit(e) {
+    e.preventDefault();
+    const btn = e.target.querySelector('button[type="submit"]');
+    const orig = btn.innerHTML;
+    btn.innerHTML = `
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" class="animate-spin"><circle cx="8" cy="8" r="6" stroke="rgba(8,12,13,0.4)" stroke-width="2"/><path d="M8 2a6 6 0 0 1 6 6" stroke="#080c0d" stroke-width="2" stroke-linecap="round"/></svg>
+      Gönderiliyor...
+    `;
+    btn.disabled = true;
+
+    setTimeout(() => {
+      btn.innerHTML = `
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 8l4.5 4.5L14 3.5" stroke="#080c0d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Mesajınız İletildi
+      `;
+      btn.style.background = '#0ba8a8';
+      setTimeout(() => {
+        btn.innerHTML = orig;
+        btn.disabled = false;
+        btn.style.background = '';
+        e.target.reset();
+      }, 3000);
+    }, 1200);
+  }
+
+  // ── Smooth scroll for anchor links ──
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const id = a.getAttribute('href').slice(1);
+      if (!id) return;
+      const el = document.getElementById(id);
+      if (el) {
+        e.preventDefault();
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+
+  // ── Enable entrance animations after page is ready ──
+  window.addEventListener('load', () => {
+    requestAnimationFrame(() => {
+      document.body.classList.add('page-loaded');
+    });
+  });
+
+  // ── Hero Beams Background ──
+  (function() {
+    const canvas = document.getElementById('hero-beams');
+    if (!canvas) return;
+    const section = document.getElementById('anasayfa');
+    const ctx = canvas.getContext('2d');
+    let beams = [];
+    let raf;
+    const BEAM_COUNT = 30;
+
+    function createBeam(w, h) {
+      const angle = -35 + Math.random() * 10;
+      return {
+        x: Math.random() * w * 1.5 - w * 0.25,
+        y: Math.random() * h * 1.5 - h * 0.25,
+        width: 30 + Math.random() * 60,
+        length: h * 2.5,
+        angle: angle,
+        speed: 0.5 + Math.random() * 1.0,
+        opacity: 0.10 + Math.random() * 0.14,
+        hue: 175 + Math.random() * 30,
+        pulse: Math.random() * Math.PI * 2,
+        pulseSpeed: 0.02 + Math.random() * 0.03
+      };
+    }
+
+    function resetBeam(beam, index) {
+      const w = canvas.width, h = canvas.height;
+      const col = index % 3;
+      const spacing = w / 3;
+      beam.y = h + 100;
+      beam.x = col * spacing + spacing / 2 + (Math.random() - 0.5) * spacing * 0.5;
+      beam.width = 80 + Math.random() * 80;
+      beam.speed = 0.4 + Math.random() * 0.5;
+      beam.hue = 175 + (index * 30) / BEAM_COUNT;
+      beam.opacity = 0.12 + Math.random() * 0.10;
+    }
+
+    function drawBeam(beam) {
+      ctx.save();
+      ctx.translate(beam.x, beam.y);
+      ctx.rotate(beam.angle * Math.PI / 180);
+      const pOpacity = beam.opacity * (0.8 + Math.sin(beam.pulse) * 0.2);
+      const g = ctx.createLinearGradient(0, 0, 0, beam.length);
+      g.addColorStop(0,   `hsla(${beam.hue},85%,62%,0)`);
+      g.addColorStop(0.1, `hsla(${beam.hue},85%,62%,${pOpacity * 0.5})`);
+      g.addColorStop(0.4, `hsla(${beam.hue},85%,62%,${pOpacity})`);
+      g.addColorStop(0.6, `hsla(${beam.hue},85%,62%,${pOpacity})`);
+      g.addColorStop(0.9, `hsla(${beam.hue},85%,62%,${pOpacity * 0.5})`);
+      g.addColorStop(1,   `hsla(${beam.hue},85%,62%,0)`);
+      ctx.fillStyle = g;
+      ctx.fillRect(-beam.width / 2, 0, beam.width, beam.length);
+      ctx.restore();
+    }
+
+    function resize() {
+      const dpr = window.devicePixelRatio || 1;
+      const w = section.offsetWidth;
+      const h = section.offsetHeight;
+      canvas.width  = w * dpr;
+      canvas.height = h * dpr;
+      canvas.style.width  = w + 'px';
+      canvas.style.height = h + 'px';
+      ctx.scale(dpr, dpr);
+      beams = Array.from({ length: BEAM_COUNT }, () => createBeam(w, h));
+    }
+
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.filter = 'blur(32px)';
+      beams.forEach((beam, i) => {
+        beam.y -= beam.speed;
+        beam.pulse += beam.pulseSpeed;
+        if (beam.y + beam.length < -100) resetBeam(beam, i);
+        drawBeam(beam);
+      });
+      raf = requestAnimationFrame(animate);
+    }
+
+    resize();
+    window.addEventListener('resize', resize, { passive: true });
+    animate();
+    // Fade in after a few frames so beams are already in motion
+    setTimeout(() => { canvas.style.opacity = '1'; }, 200);
+  })();
+</script>
+
+</body>
+</html>
