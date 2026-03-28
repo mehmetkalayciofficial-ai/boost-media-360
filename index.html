@@ -5,10 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Boost Media 360 — Dijital Reklam &amp; Sosyal Medya Ajansı</title>
   <meta name="description" content="Boost Media 360 — Dijital reklam, sosyal medya yönetimi ve yaratıcı içerik çözümleri. İzmir merkezli, 12+ ülkede deneyimli stratejik dijital ajans." />
-  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.tailwindcss.com" defer></script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Inter:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet" />
+  <!-- Non-blocking font load -->
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Inter:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" onload="this.onload=null;this.rel='stylesheet'" />
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Inter:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet" /></noscript>
   <link rel="preload" as="image" href="boostmedia_docs/boost (1).png" />
 
   <script>
@@ -433,11 +435,13 @@
     .hero-h1 {
       font-family: 'Syne', sans-serif;
       font-weight: 800;
-      font-size: clamp(2.6rem, 5.5vw, 5rem);
-      line-height: 1.06;
-      letter-spacing: -0.045em;
+      font-size: clamp(1.9rem, 8vw, 5rem);
+      line-height: 1.08;
+      letter-spacing: -0.04em;
       text-align: center;
       margin-bottom: 24px;
+      overflow-wrap: break-word;
+      word-break: break-word;
     }
     .hero-h1 .line-white {
       color: #e8f2f2;
@@ -1829,12 +1833,15 @@
     });
   });
 
-  // ── Enable entrance animations after page is ready ──
-  window.addEventListener('load', () => {
-    requestAnimationFrame(() => {
-      document.body.classList.add('page-loaded');
-    });
-  });
+  // ── Enable entrance animations — fire ASAP, don't wait for fonts/images ──
+  const _triggerAnimations = () => {
+    requestAnimationFrame(() => document.body.classList.add('page-loaded'));
+  };
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => setTimeout(_triggerAnimations, 150));
+  } else {
+    setTimeout(_triggerAnimations, 150);
+  }
 
   // ── Hero Beams Background ──
   (function() {
