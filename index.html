@@ -446,29 +446,10 @@
     .hero-h1 .line-teal {
       color: #0ecece;
       white-space: nowrap;
-      position: relative;
-      /* Static base glow — no animation, no repaint */
-      text-shadow: 0 0 18px rgba(14,206,206,0.35), 0 0 40px rgba(14,206,206,0.12);
-    }
-    /* GPU-composited glow pulse — only opacity animates (compositor-only, 60fps) */
-    .hero-h1 .line-teal::after {
-      content: '';
-      position: absolute;
-      inset: -30px -60px;
-      background: radial-gradient(ellipse 70% 90% at 50% 50%,
-        rgba(14,206,206,0.28) 0%,
-        rgba(14,206,206,0.08) 50%,
-        transparent 75%
-      );
-      border-radius: 50%;
-      pointer-events: none;
-      opacity: 0.5;
-      will-change: opacity;
-      animation: neonGlow 4s ease-in-out infinite;
-    }
-    @keyframes neonGlow {
-      0%, 100% { opacity: 0.4; }
-      50%       { opacity: 1;   }
+      text-shadow:
+        0 0 20px rgba(14,206,206,0.55),
+        0 0 50px rgba(14,206,206,0.20),
+        0 0 90px rgba(14,206,206,0.08);
     }
     .hero-h1 .line-neon { color: #e8f2f2; }
 
