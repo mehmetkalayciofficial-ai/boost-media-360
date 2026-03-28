@@ -2352,8 +2352,8 @@
       const formData = new FormData(e.target);
       const res = await fetch('https://api.web3forms.com/submit', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-        body: JSON.stringify(Object.fromEntries(formData))
+        headers: { 'Accept': 'application/json' },
+        body: formData
       });
       const json = await res.json();
       if (json.success) {
