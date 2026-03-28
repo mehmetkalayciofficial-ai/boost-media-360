@@ -494,17 +494,23 @@
     .ticker-track {
       display: flex;
       gap: 0;
-      animation: marquee 28s linear infinite;
       width: max-content;
+      will-change: transform;
+      -webkit-animation: marquee 28s linear infinite;
+              animation: marquee 28s linear infinite;
     }
     .ticker-track:hover { animation-play-state: paused; }
     @media (max-width: 767px) {
-      /* Slow down ticker on mobile for readability and reduced CPU usage */
       .ticker-track { animation-duration: 40s; }
     }
+    /* translate3d forces GPU compositing on Android/mobile */
+    @-webkit-keyframes marquee {
+      from { -webkit-transform: translate3d(0, 0, 0); transform: translate3d(0, 0, 0); }
+      to   { -webkit-transform: translate3d(-50%, 0, 0); transform: translate3d(-50%, 0, 0); }
+    }
     @keyframes marquee {
-      from { transform: translateX(0); }
-      to   { transform: translateX(-50%); }
+      from { transform: translate3d(0, 0, 0); }
+      to   { transform: translate3d(-50%, 0, 0); }
     }
     .ticker-item {
       display: inline-flex;
