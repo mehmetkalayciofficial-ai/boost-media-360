@@ -583,12 +583,14 @@
     .animate-fade-up {
       opacity: 0;
       transform: translateY(22px);
+      will-change: opacity, transform;
       transition: opacity 0.75s cubic-bezier(0.22,1,0.36,1),
                   transform 0.75s cubic-bezier(0.22,1,0.36,1);
     }
     body.page-loaded .animate-fade-up {
       opacity: 1;
       transform: translateY(0);
+      will-change: auto;
     }
     .delay-1 { transition-delay: 0.10s; }
     .delay-2 { transition-delay: 0.22s; }
@@ -2159,12 +2161,11 @@
   .pkg-sub-title { font-size: 0.72rem; color: #3d5557; font-weight: 500; letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 8px; margin-top: 14px; }
   @keyframes spin { to { transform: rotate(360deg); } }
 
-  /* ── Spotlight glow effect (ported from React GlowCard) ── */
+  /* ── Spotlight glow effect — element-relative coords, no fixed-attachment ── */
   [data-glow] {
-    --gx: -9999;
-    --gy: -9999;
+    --gx: -500;
+    --gy: -500;
     --gxp: 0;
-    --gyp: 0;
     --ghue: 180;
     --gspread: 22;
     --gsz: 320;
@@ -2173,7 +2174,7 @@
     --gs: calc(var(--gsz) * 1px);
     --ghc: calc(var(--ghue) + var(--gxp) * var(--gspread));
   }
-  /* Surface spotlight on card background */
+  /* Surface spotlight on card — element-relative, no repaint on scroll */
   .pkg-card[data-glow] {
     background:
       radial-gradient(
@@ -2181,9 +2182,8 @@
         hsl(var(--ghc) 85% 62% / 0.07) 0%, transparent 65%
       ),
       #0d1314;
-    background-attachment: fixed, scroll;
   }
-  /* Shared border-glow pseudo-element base */
+  /* Border-glow pseudo-elements base — element-relative, no fixed */
   [data-glow]::before,
   [data-glow]::after {
     content: "";
@@ -2192,11 +2192,6 @@
     inset: calc(var(--gb) * -1);
     border: var(--gb) solid transparent;
     border-radius: inherit;
-    background-attachment: fixed;
-    background-size: calc(100% + 2 * var(--gb)) calc(100% + 2 * var(--gb));
-    background-repeat: no-repeat;
-    background-position: 50% 50%;
-    /* Clip to border ring only (standard + webkit) */
     -webkit-mask: linear-gradient(#0000, #0000), linear-gradient(#fff, #fff);
     -webkit-mask-clip: padding-box, border-box;
     -webkit-mask-composite: destination-in;
@@ -2204,7 +2199,6 @@
     mask-clip: padding-box, border-box;
     mask-composite: intersect;
   }
-  /* Teal border glow */
   [data-glow]::before {
     background-image: radial-gradient(
       calc(var(--gs) * 0.8) calc(var(--gs) * 0.8) at calc(var(--gx) * 1px) calc(var(--gy) * 1px),
@@ -2212,36 +2206,23 @@
     );
     filter: brightness(2);
   }
-  /* White shimmer on border */
   [data-glow]::after {
     background-image: radial-gradient(
       calc(var(--gs) * 0.5) calc(var(--gs) * 0.5) at calc(var(--gx) * 1px) calc(var(--gy) * 1px),
       hsl(0 100% 100% / 0.13), transparent 100%
     );
   }
-  /* Primary button: white hotspot overlay */
   .pkg-btn.primary[data-glow] {
     background-image: radial-gradient(
       90px 90px at calc(var(--gx) * 1px) calc(var(--gy) * 1px),
       rgba(255,255,255,0.22) 0%, transparent 70%
     );
-    background-attachment: fixed;
   }
-  /* Outline button: teal tinted spotlight */
-  .pkg-btn.outline[data-glow] {
-    background-image: radial-gradient(
-      90px 90px at calc(var(--gx) * 1px) calc(var(--gy) * 1px),
-      hsl(var(--ghc) 85% 62% / 0.10) 0%, transparent 70%
-    );
-    background-attachment: fixed;
-  }
-  /* Disable fixed-attachment effects on touch devices (iOS Safari compat) */
+  /* Touch/mobile: skip border glow (no hover), keep surface subtle */
   @media (hover: none) {
-    [data-glow]::before,
-    [data-glow]::after { display: none; }
-    .pkg-card[data-glow] { background: #0d1314; background-attachment: scroll; }
-    .pkg-btn.primary[data-glow] { background-image: none; background-attachment: scroll; }
-    .pkg-btn.outline[data-glow] { background-image: none; background-attachment: scroll; }
+    [data-glow]::before, [data-glow]::after { display: none; }
+    .pkg-card[data-glow] { background: #0d1314; }
+    .pkg-btn.primary[data-glow] { background-image: none; }
   }
 
   /* iOS-style billing switch */
@@ -2290,8 +2271,8 @@
      SCRIPTS
 ═══════════════════════════════════════════════ -->
 <script>
-  // ── Trigger entrance animations immediately after DOM is ready ──
-  requestAnimationFrame(() => document.body.classList.add('page-loaded'));
+  // ── Trigger entrance animations — double RAF guarantees paint before transition ──
+  requestAnimationFrame(() => requestAnimationFrame(() => document.body.classList.add('page-loaded')));
 
   // ── Navbar scroll effect + floating CTA ──
   const navbar = document.getElementById('navbar');
@@ -2390,10 +2371,11 @@
     const canvas = document.getElementById('hero-beams');
     if (!canvas) return;
     const section = document.getElementById('anasayfa');
-    const ctx = canvas.getContext('2d');
+    const ctx = canvas.getContext('2d', { alpha: true });
     let beams = [];
     let raf;
-    const BEAM_COUNT = 30;
+    const isMobile = window.innerWidth < 768;
+    const BEAM_COUNT = isMobile ? 12 : 22;
 
     function createBeam(w, h) {
       const angle = -35 + Math.random() * 10;
@@ -2441,7 +2423,7 @@
     }
 
     function resize() {
-      const dpr = window.devicePixelRatio || 1;
+      const dpr = Math.min(window.devicePixelRatio || 1, 2); // cap DPR at 2
       const w = section.offsetWidth;
       const h = section.offsetHeight;
       canvas.width  = w * dpr;
@@ -2453,8 +2435,9 @@
     }
 
     function animate() {
+      if (document.hidden) { raf = requestAnimationFrame(animate); return; }
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.filter = 'blur(32px)';
+      // ctx.filter removed — CSS filter:blur(15px) on canvas handles this at compositor level
       beams.forEach((beam, i) => {
         beam.y -= beam.speed;
         beam.pulse += beam.pulseSpeed;
@@ -2466,6 +2449,9 @@
 
     resize();
     window.addEventListener('resize', resize, { passive: true });
+    document.addEventListener('visibilitychange', function() {
+      if (!document.hidden && !raf) raf = requestAnimationFrame(animate);
+    });
     animate();
     requestAnimationFrame(() => { canvas.style.opacity = '1'; });
   });
@@ -2590,24 +2576,25 @@
   // Initialize all range sliders on load
   document.querySelectorAll('input[type=range].pkg-range').forEach(pkgUpdateRange);
 
-  // ── Spotlight glow pointer tracking (RAF-throttled, passive) ──
+  // ── Spotlight glow — element-relative coords, cached, RAF-throttled ──
   (function() {
-    var _x = -9999, _y = -9999, _pending = false;
+    var _x = -9999, _y = -9999, _pending = false, _els = [];
+    function cacheGlowEls() { _els = Array.from(document.querySelectorAll('[data-glow]')); }
+    cacheGlowEls(); // cache immediately on script run
     function applyGlow() {
       _pending = false;
       var xp = (_x / window.innerWidth).toFixed(3);
-      var yp = (_y / window.innerHeight).toFixed(3);
-      var els = document.querySelectorAll('[data-glow]');
-      for (var i = 0; i < els.length; i++) {
-        els[i].style.setProperty('--gx', _x);
-        els[i].style.setProperty('--gy', _y);
-        els[i].style.setProperty('--gxp', xp);
-        els[i].style.setProperty('--gyp', yp);
+      for (var i = 0; i < _els.length; i++) {
+        var el = _els[i];
+        var r = el.getBoundingClientRect();
+        // element-relative position: no background-attachment:fixed needed
+        el.style.setProperty('--gx', (_x - r.left).toFixed(0));
+        el.style.setProperty('--gy', (_y - r.top).toFixed(0));
+        el.style.setProperty('--gxp', xp);
       }
     }
     document.addEventListener('pointermove', function(e) {
-      _x = e.clientX;
-      _y = e.clientY;
+      _x = e.clientX; _y = e.clientY;
       if (!_pending) { _pending = true; requestAnimationFrame(applyGlow); }
     }, { passive: true });
   })();
