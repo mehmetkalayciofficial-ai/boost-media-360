@@ -625,7 +625,6 @@
     body.page-loaded .animate-fade-up {
       opacity: 1;
       transform: translateY(0);
-      will-change: auto;
     }
     .delay-1 { transition-delay: 0.10s; }
     .delay-2 { transition-delay: 0.22s; }
@@ -2298,8 +2297,12 @@
      SCRIPTS
 ═══════════════════════════════════════════════ -->
 <script>
-  // ── Trigger entrance animations — double RAF guarantees paint before transition ──
-  requestAnimationFrame(() => requestAnimationFrame(() => document.body.classList.add('page-loaded')));
+  // ── Trigger entrance animations ──
+  // setTimeout(100) is the most reliable cross-platform approach.
+  // Double-RAF alone can fire before Android Chrome's compositor settles its
+  // initial paint, causing elements to jump from opacity:0 → 1 with no transition.
+  // 100ms is imperceptible (transitions are 750ms) but reliable on all devices.
+  setTimeout(function() { document.body.classList.add('page-loaded'); }, 100);
 
   // ── Navbar scroll effect + floating CTA ──
   const navbar = document.getElementById('navbar');
