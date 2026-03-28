@@ -995,275 +995,169 @@
 ═══════════════════════════════════════════════ -->
 <section id="paketler" class="section-py relative z-10" style="background:linear-gradient(to bottom,#080c0d,#060a0b 60%,#080c0d);">
   <div class="divider" style="margin-bottom:0;"></div>
-  <div class="max-w-7xl mx-auto px-6 lg:px-10 pt-16">
+  <div class="max-w-3xl mx-auto px-6 lg:px-10 pt-16">
 
     <!-- Header -->
-    <div class="text-center mb-14">
-      <div class="section-label mb-4" style="justify-content:center;">Aylık Plan</div>
-      <h2 class="font-display font-700 mb-5" style="font-size:clamp(1.8rem,3.5vw,2.8rem);font-weight:700;letter-spacing:-0.03em;line-height:1.1;">
-        Sosyal Medya Yönetim Paketleri
+    <div class="text-center mb-12">
+      <div class="section-label mb-4" style="justify-content:center;">Fiyatlandırma</div>
+      <h2 class="font-display font-700 mb-4" style="font-size:clamp(1.8rem,3.5vw,2.8rem);font-weight:700;letter-spacing:-0.03em;line-height:1.1;">
+        Paketinizi Özelleştirin
       </h2>
-      <p style="font-size:0.92rem;color:#5e7476;max-width:580px;margin:0 auto;line-height:1.75;font-weight:300;">
-        Markanıza uygun sosyal medya yönetimi, içerik üretimi, reklam desteği ve dijital büyüme çözümlerini ihtiyacınıza göre şekillendirin. Aylık paketlerimiz ile işletmeniz için en doğru yapıyı kolayca oluşturun.
+      <p style="font-size:0.92rem;color:#5e7476;max-width:480px;margin:0 auto;line-height:1.75;font-weight:300;">
+        İhtiyacınıza göre hizmetleri seçin, miktarları belirleyin ve markanıza özel bir dijital plan oluşturun.
       </p>
+
+      <!-- Billing toggle: Aylık / Yıllık -->
+      <div style="display:flex;align-items:center;justify-content:center;gap:12px;margin-top:28px;">
+        <span class="pkg-billing-label active" id="lbl-aylik">Aylık</span>
+        <label class="pkg-switch">
+          <input type="checkbox" id="billing-check" onchange="pkgBillingToggle(this)">
+          <span class="pkg-switch-track"><span class="pkg-switch-thumb"></span></span>
+        </label>
+        <span class="pkg-billing-label" id="lbl-yillik">Yıllık</span>
+        <span class="pkg-yearly-badge" id="yearly-badge">2 ay ücretsiz</span>
+      </div>
     </div>
 
-    <!-- Cards grid: 2x2 on md, 1 col on mobile -->
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <!-- Single customizable card -->
+    <div class="pkg-card" style="border-color:rgba(14,206,206,0.18);box-shadow:0 0 80px rgba(14,206,206,0.05),0 8px 40px rgba(0,0,0,0.55);">
 
-      <!-- ── PAKET 1: GİRİŞ ── -->
-      <div class="pkg-card">
-        <div class="pkg-name">Sosyal Medya Giriş</div>
-        <div class="pkg-desc">Sosyal medyada profesyonel bir başlangıç yapmak isteyen markalar için ideal başlangıç paketi.</div>
-        <div class="pkg-price">Aylık Plan &nbsp;<span>₺ —</span> / aylık</div>
-
-        <!-- Sliders -->
-        <div class="pkg-slider-wrap">
-          <div class="pkg-slider-label">Aylık Post Sayısı <strong id="giris-post-val">8</strong></div>
-          <input type="range" class="pkg-range" min="1" max="20" value="8" oninput="document.getElementById('giris-post-val').textContent=this.value;pkgUpdateRange(this)">
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:6px;">
+        <div>
+          <div class="pkg-name" style="margin-bottom:6px;">Paketinizi Özelleştirin</div>
+          <div class="pkg-desc" style="margin-bottom:0;">Hizmetleri seçin, miktarları ayarlayın — size özel teklif oluşturalım.</div>
         </div>
-        <div class="pkg-slider-wrap">
-          <div class="pkg-slider-label">Aylık Video Sayısı <strong id="giris-video-val">4</strong></div>
-          <input type="range" class="pkg-range" min="1" max="20" value="4" oninput="document.getElementById('giris-video-val').textContent=this.value;pkgUpdateRange(this)">
-        </div>
+        <div class="pkg-badge" style="background:transparent;border:1px solid rgba(14,206,206,0.35);color:#0ecece;white-space:nowrap;flex-shrink:0;">Esnek</div>
+      </div>
 
-        <!-- Features -->
-        <div class="pkg-features">
-          <div class="pkg-features-title">Paket Kapsamı</div>
-          <div class="pkg-feature-item"><div class="pkg-feature-dot"></div>Profesyonel içerik planlaması</div>
-          <div class="pkg-feature-item"><div class="pkg-feature-dot"></div>Markanıza uygun görsel iletişim</div>
-          <div class="pkg-feature-item"><div class="pkg-feature-dot"></div>Aylık post ve video seçimi</div>
-          <div class="pkg-feature-item"><div class="pkg-feature-dot"></div>Düzenli içerik akışı</div>
-        </div>
+      <div class="pkg-price" style="font-size:0.8rem;color:#3d5557;margin-bottom:20px;">
+        <span style="font-size:0.95rem;font-weight:600;color:#9ab0b2;letter-spacing:0;" id="billing-price-label">Seçiminize göre fiyatlanır &nbsp;·&nbsp; Aylık</span>
+      </div>
 
-        <div class="pkg-cta">
-          <a href="#iletisim" class="pkg-btn outline">Paketi İncele</a>
+      <!-- ─ Sosyal Medya İçerik Üretimi ─ -->
+      <div class="pkg-sub-title" style="margin-top:0;">Hizmetleri yapılandırın</div>
+
+      <div class="pkg-service-item" id="srv-icerik" onclick="pkgToggleService('icerik')">
+        <div class="pkg-service-left">
+          <div class="pkg-service-icon">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#0ecece" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+          </div>
+          <span class="pkg-service-name">Sosyal Medya İçerik Üretimi</span>
+        </div>
+        <svg class="pkg-service-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+      </div>
+      <div class="pkg-expand" id="exp-icerik">
+        <div style="background:#0d1314;border:1px solid #1e2c2e;border-radius:10px;padding:16px 16px 10px;margin-bottom:2px;">
+          <div class="pkg-slider-wrap" style="margin-bottom:16px;">
+            <div class="pkg-slider-label">Aylık Post Sayısı <strong id="ozel-post-val">8</strong></div>
+            <input type="range" class="pkg-range" min="1" max="30" value="8" oninput="document.getElementById('ozel-post-val').textContent=this.value;pkgUpdateRange(this)">
+          </div>
+          <div class="pkg-slider-wrap" style="margin-bottom:4px;">
+            <div class="pkg-slider-label">Aylık Video Sayısı <strong id="ozel-video-val">4</strong></div>
+            <input type="range" class="pkg-range" min="1" max="20" value="4" oninput="document.getElementById('ozel-video-val').textContent=this.value;pkgUpdateRange(this)">
+          </div>
         </div>
       </div>
 
-      <!-- ── PAKET 2: GELİŞİM ── -->
-      <div class="pkg-card">
-        <div class="pkg-name">Sosyal Medya Gelişim</div>
-        <div class="pkg-desc">İçerik üretimini reklam yönetimi desteğiyle güçlendirmek isteyen işletmeler için.</div>
-        <div class="pkg-price">Aylık Plan &nbsp;<span>₺ —</span> / aylık</div>
-
-        <!-- Sliders -->
-        <div class="pkg-slider-wrap">
-          <div class="pkg-slider-label">Aylık Post Sayısı <strong id="gelisim-post-val">12</strong></div>
-          <input type="range" class="pkg-range" min="1" max="20" value="12" oninput="document.getElementById('gelisim-post-val').textContent=this.value;pkgUpdateRange(this)">
+      <!-- ─ Reklam Yönetimi ─ -->
+      <div class="pkg-service-item" id="srv-reklam" onclick="pkgToggleService('reklam')">
+        <div class="pkg-service-left">
+          <div class="pkg-service-icon">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#0ecece" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M18 20V10"/><path d="M12 20V4"/><path d="M6 20v-6"/></svg>
+          </div>
+          <span class="pkg-service-name">Reklam Yönetimi</span>
         </div>
-        <div class="pkg-slider-wrap">
-          <div class="pkg-slider-label">Aylık Video Sayısı <strong id="gelisim-video-val">6</strong></div>
-          <input type="range" class="pkg-range" min="1" max="20" value="6" oninput="document.getElementById('gelisim-video-val').textContent=this.value;pkgUpdateRange(this)">
-        </div>
-
-        <!-- Reklam kanalları -->
-        <div style="margin-top:4px;">
-          <div class="pkg-sub-title">Reklam Kanalları</div>
-          <div class="pkg-toggle-group">
-            <div class="pkg-toggle-item" onclick="pkgToggle(this)">
+        <svg class="pkg-service-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+      </div>
+      <div class="pkg-expand" id="exp-reklam">
+        <div style="background:#0d1314;border:1px solid #1e2c2e;border-radius:10px;padding:10px 10px 4px;margin-bottom:2px;">
+          <div class="pkg-toggle-group" style="gap:6px;">
+            <div class="pkg-toggle-item" onclick="pkgToggle(this);event.stopPropagation();" style="background:transparent;border-color:#243335;">
               <span class="pkg-toggle-label">Meta Ads</span>
               <div class="pkg-check"><svg width="11" height="8" viewBox="0 0 11 8" fill="none"><path d="M1 4l3 3 6-6" stroke="#060a0b" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
             </div>
-            <div class="pkg-toggle-item" onclick="pkgToggle(this)">
+            <div class="pkg-toggle-item" onclick="pkgToggle(this);event.stopPropagation();" style="background:transparent;border-color:#243335;">
               <span class="pkg-toggle-label">Instagram Ads</span>
               <div class="pkg-check"><svg width="11" height="8" viewBox="0 0 11 8" fill="none"><path d="M1 4l3 3 6-6" stroke="#060a0b" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
             </div>
-            <div class="pkg-toggle-item" onclick="pkgToggle(this)">
+            <div class="pkg-toggle-item" onclick="pkgToggle(this);event.stopPropagation();" style="background:transparent;border-color:#243335;">
               <span class="pkg-toggle-label">Facebook Ads</span>
               <div class="pkg-check"><svg width="11" height="8" viewBox="0 0 11 8" fill="none"><path d="M1 4l3 3 6-6" stroke="#060a0b" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
             </div>
-            <div class="pkg-toggle-item" onclick="pkgToggle(this)">
+            <div class="pkg-toggle-item" onclick="pkgToggle(this);event.stopPropagation();" style="background:transparent;border-color:#243335;">
               <span class="pkg-toggle-label">Google Ads</span>
               <div class="pkg-check"><svg width="11" height="8" viewBox="0 0 11 8" fill="none"><path d="M1 4l3 3 6-6" stroke="#060a0b" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
             </div>
           </div>
         </div>
+      </div>
 
-        <!-- Features -->
-        <div class="pkg-features">
-          <div class="pkg-features-title">Paket Kapsamı</div>
-          <div class="pkg-feature-item"><div class="pkg-feature-dot"></div>Aylık post ve video planlama</div>
-          <div class="pkg-feature-item"><div class="pkg-feature-dot"></div>Reklam yönetimi desteği</div>
-          <div class="pkg-feature-item"><div class="pkg-feature-dot"></div>Daha güçlü dijital görünürlük</div>
-          <div class="pkg-feature-item"><div class="pkg-feature-dot"></div>Performans odaklı iletişim</div>
+      <!-- ─ Website Oluşturma ─ -->
+      <div class="pkg-service-item" id="srv-website" onclick="pkgToggleService('website')">
+        <div class="pkg-service-left">
+          <div class="pkg-service-icon">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#0ecece" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+          </div>
+          <span class="pkg-service-name">Website Tasarımı</span>
         </div>
-
-        <div class="pkg-cta">
-          <a href="#iletisim" class="pkg-btn outline">Teklif Al</a>
+        <svg class="pkg-service-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+      </div>
+      <div class="pkg-expand" id="exp-website">
+        <div style="background:#0d1314;border:1px solid #1e2c2e;border-radius:10px;padding:12px 14px;margin-bottom:2px;">
+          <div class="pkg-toggle-group" style="gap:6px;">
+            <div class="pkg-toggle-item" onclick="pkgToggle(this);event.stopPropagation();" style="background:transparent;border-color:#243335;">
+              <span class="pkg-toggle-label">Tek Sayfalı (Landing)</span>
+              <div class="pkg-check"><svg width="11" height="8" viewBox="0 0 11 8" fill="none"><path d="M1 4l3 3 6-6" stroke="#060a0b" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            </div>
+            <div class="pkg-toggle-item" onclick="pkgToggle(this);event.stopPropagation();" style="background:transparent;border-color:#243335;">
+              <span class="pkg-toggle-label">Kurumsal Web Sitesi</span>
+              <div class="pkg-check"><svg width="11" height="8" viewBox="0 0 11 8" fill="none"><path d="M1 4l3 3 6-6" stroke="#060a0b" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            </div>
+            <div class="pkg-toggle-item" onclick="pkgToggle(this);event.stopPropagation();" style="background:transparent;border-color:#243335;">
+              <span class="pkg-toggle-label">E-Ticaret Sitesi</span>
+              <div class="pkg-check"><svg width="11" height="8" viewBox="0 0 11 8" fill="none"><path d="M1 4l3 3 6-6" stroke="#060a0b" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            </div>
+          </div>
         </div>
       </div>
 
-      <!-- ── PAKET 3: PREMIUM ── -->
-      <div class="pkg-card featured">
-        <div class="pkg-badge">Premium</div>
-        <div class="pkg-name">Sosyal Medya Premium</div>
-        <div class="pkg-desc">İçerik üretimi ve reklam yönetimini daha güçlü bir dijital yapı ile birleştirmek isteyen markalar için premium çözüm.</div>
-        <div class="pkg-price">Aylık Plan &nbsp;<span style="color:#0ecece;">₺ —</span> / aylık</div>
-
-        <!-- Sliders -->
-        <div class="pkg-slider-wrap">
-          <div class="pkg-slider-label">Aylık Post Sayısı <strong id="premium-post-val">16</strong></div>
-          <input type="range" class="pkg-range" min="1" max="20" value="16" oninput="document.getElementById('premium-post-val').textContent=this.value;pkgUpdateRange(this)">
+      <!-- ─ Ekstra Hizmetler ─ -->
+      <div class="pkg-sub-title" style="margin-top:18px;">Ekstra hizmetler</div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;">
+        <div class="pkg-toggle-item" onclick="pkgToggle(this)" style="flex:1;min-width:140px;">
+          <span class="pkg-toggle-label">Kartvizit Tasarımı</span>
+          <div class="pkg-check"><svg width="11" height="8" viewBox="0 0 11 8" fill="none"><path d="M1 4l3 3 6-6" stroke="#060a0b" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
         </div>
-        <div class="pkg-slider-wrap">
-          <div class="pkg-slider-label">Aylık Video Sayısı <strong id="premium-video-val">8</strong></div>
-          <input type="range" class="pkg-range" min="1" max="20" value="8" oninput="document.getElementById('premium-video-val').textContent=this.value;pkgUpdateRange(this)">
+        <div class="pkg-toggle-item" onclick="pkgToggle(this)" style="flex:1;min-width:140px;">
+          <span class="pkg-toggle-label">Logo Tasarımı</span>
+          <div class="pkg-check"><svg width="11" height="8" viewBox="0 0 11 8" fill="none"><path d="M1 4l3 3 6-6" stroke="#060a0b" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
         </div>
-
-        <!-- Reklam kanalları -->
-        <div style="margin-top:4px;">
-          <div class="pkg-sub-title">Reklam Kanalları</div>
-          <div class="pkg-toggle-group">
-            <div class="pkg-toggle-item active" onclick="pkgToggle(this)">
-              <span class="pkg-toggle-label">Meta Ads</span>
-              <div class="pkg-check"><svg width="11" height="8" viewBox="0 0 11 8" fill="none"><path d="M1 4l3 3 6-6" stroke="#060a0b" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-            </div>
-            <div class="pkg-toggle-item active" onclick="pkgToggle(this)">
-              <span class="pkg-toggle-label">Instagram Ads</span>
-              <div class="pkg-check"><svg width="11" height="8" viewBox="0 0 11 8" fill="none"><path d="M1 4l3 3 6-6" stroke="#060a0b" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-            </div>
-            <div class="pkg-toggle-item" onclick="pkgToggle(this)">
-              <span class="pkg-toggle-label">Facebook Ads</span>
-              <div class="pkg-check"><svg width="11" height="8" viewBox="0 0 11 8" fill="none"><path d="M1 4l3 3 6-6" stroke="#060a0b" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-            </div>
-            <div class="pkg-toggle-item" onclick="pkgToggle(this)">
-              <span class="pkg-toggle-label">Google Ads</span>
-              <div class="pkg-check"><svg width="11" height="8" viewBox="0 0 11 8" fill="none"><path d="M1 4l3 3 6-6" stroke="#060a0b" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Features -->
-        <div class="pkg-features">
-          <div class="pkg-features-title">Paket Kapsamı</div>
-          <div class="pkg-feature-item"><div class="pkg-feature-dot"></div>Yoğun içerik üretim desteği</div>
-          <div class="pkg-feature-item"><div class="pkg-feature-dot"></div>Gelişmiş reklam yönetimi</div>
-          <div class="pkg-feature-item"><div class="pkg-feature-dot"></div>Güçlü marka görünürlüğü</div>
-          <div class="pkg-feature-item"><div class="pkg-feature-dot"></div>Daha kurumsal dijital yapı</div>
-          <div class="pkg-feature-item"><div class="pkg-feature-dot" style="opacity:0.9;"></div>Website / dijital altyapı desteği</div>
-        </div>
-
-        <div class="pkg-cta">
-          <a href="#iletisim" class="pkg-btn primary">Hemen Başlayın</a>
+        <div class="pkg-toggle-item" onclick="pkgToggle(this)" style="flex:1;min-width:140px;">
+          <span class="pkg-toggle-label">Marka Kimliği</span>
+          <div class="pkg-check"><svg width="11" height="8" viewBox="0 0 11 8" fill="none"><path d="M1 4l3 3 6-6" stroke="#060a0b" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
         </div>
       </div>
 
-      <!-- ── PAKET 4: ÖZEL ── -->
-      <div class="pkg-card featured" style="border-color:rgba(14,206,206,0.20);box-shadow:0 0 80px rgba(14,206,206,0.05),0 8px 40px rgba(0,0,0,0.6);">
-        <div class="pkg-badge" style="background:transparent;border:1px solid rgba(14,206,206,0.4);color:#0ecece;">Özel</div>
-        <div class="pkg-name">Özel Paket</div>
-        <div class="pkg-desc">Standart paketlerin dışına çıkmak ve hizmetleri tamamen işletmesine göre şekillendirmek isteyen markalar için esnek çözüm.</div>
-        <div class="pkg-price" style="font-size:0.8rem;color:#3d5557;">
-          <span style="font-size:1rem;font-weight:600;color:#9ab0b2;letter-spacing:0;">Seçiminize göre şekillenir</span>
-        </div>
-
-        <!-- Ana hizmetler -->
-        <div class="pkg-sub-title" style="margin-top:0;">Size özel yapılandırın</div>
-
-        <!-- Sosyal Medya İçerik Üretimi -->
-        <div class="pkg-service-item" id="srv-icerik" onclick="pkgToggleService('icerik')">
-          <div class="pkg-service-left">
-            <div class="pkg-service-icon">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#0ecece" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
-            </div>
-            <span class="pkg-service-name">Sosyal Medya İçerik Üretimi</span>
-          </div>
-          <div class="pkg-check"><svg width="11" height="8" viewBox="0 0 11 8" fill="none"><path d="M1 4l3 3 6-6" stroke="#060a0b" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-        </div>
-        <!-- Expandable: icerik sliders -->
-        <div class="pkg-expand" id="expand-icerik">
-          <div style="background:#111a1b;border:1px solid #1e2c2e;border-radius:10px;padding:14px 14px 10px;">
-            <div class="pkg-slider-wrap" style="margin-bottom:14px;">
-              <div class="pkg-slider-label">Aylık Post Sayısı <strong id="ozel-post-val">8</strong></div>
-              <input type="range" class="pkg-range" min="1" max="20" value="8" oninput="document.getElementById('ozel-post-val').textContent=this.value;pkgUpdateRange(this)">
-            </div>
-            <div class="pkg-slider-wrap" style="margin-bottom:4px;">
-              <div class="pkg-slider-label">Aylık Video Sayısı <strong id="ozel-video-val">4</strong></div>
-              <input type="range" class="pkg-range" min="1" max="20" value="4" oninput="document.getElementById('ozel-video-val').textContent=this.value;pkgUpdateRange(this)">
-            </div>
-          </div>
-        </div>
-
-        <!-- Reklam Yönetimi -->
-        <div class="pkg-service-item" id="srv-reklam" onclick="pkgToggleService('reklam')" style="margin-top:6px;">
-          <div class="pkg-service-left">
-            <div class="pkg-service-icon">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#0ecece" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M18 20V10"/><path d="M12 20V4"/><path d="M6 20v-6"/></svg>
-            </div>
-            <span class="pkg-service-name">Reklam Yönetimi</span>
-          </div>
-          <div class="pkg-check"><svg width="11" height="8" viewBox="0 0 11 8" fill="none"><path d="M1 4l3 3 6-6" stroke="#060a0b" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-        </div>
-        <!-- Expandable: reklam channels -->
-        <div class="pkg-expand" id="expand-reklam">
-          <div style="background:#111a1b;border:1px solid #1e2c2e;border-radius:10px;padding:10px;">
-            <div class="pkg-toggle-group" style="gap:6px;">
-              <div class="pkg-toggle-item" onclick="pkgToggle(this)" style="background:transparent;border-color:#243335;">
-                <span class="pkg-toggle-label">Meta Ads</span>
-                <div class="pkg-check"><svg width="11" height="8" viewBox="0 0 11 8" fill="none"><path d="M1 4l3 3 6-6" stroke="#060a0b" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-              </div>
-              <div class="pkg-toggle-item" onclick="pkgToggle(this)" style="background:transparent;border-color:#243335;">
-                <span class="pkg-toggle-label">Instagram Ads</span>
-                <div class="pkg-check"><svg width="11" height="8" viewBox="0 0 11 8" fill="none"><path d="M1 4l3 3 6-6" stroke="#060a0b" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-              </div>
-              <div class="pkg-toggle-item" onclick="pkgToggle(this)" style="background:transparent;border-color:#243335;">
-                <span class="pkg-toggle-label">Facebook Ads</span>
-                <div class="pkg-check"><svg width="11" height="8" viewBox="0 0 11 8" fill="none"><path d="M1 4l3 3 6-6" stroke="#060a0b" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-              </div>
-              <div class="pkg-toggle-item" onclick="pkgToggle(this)" style="background:transparent;border-color:#243335;">
-                <span class="pkg-toggle-label">Google Ads</span>
-                <div class="pkg-check"><svg width="11" height="8" viewBox="0 0 11 8" fill="none"><path d="M1 4l3 3 6-6" stroke="#060a0b" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Website Oluşturma -->
-        <div class="pkg-service-item" id="srv-website" onclick="pkgToggleService('website')" style="margin-top:6px;">
-          <div class="pkg-service-left">
-            <div class="pkg-service-icon">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#0ecece" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
-            </div>
-            <span class="pkg-service-name">Website Oluşturma</span>
-          </div>
-          <div class="pkg-check"><svg width="11" height="8" viewBox="0 0 11 8" fill="none"><path d="M1 4l3 3 6-6" stroke="#060a0b" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-        </div>
-
-        <!-- Ekstra hizmetler -->
-        <div class="pkg-sub-title" style="margin-top:16px;">Ekstra Hizmetler</div>
-        <div style="display:flex;gap:8px;flex-wrap:wrap;">
-          <div class="pkg-toggle-item" onclick="pkgToggle(this)" style="flex:1;min-width:130px;">
-            <span class="pkg-toggle-label">Kartvizit Tasarımı</span>
-            <div class="pkg-check"><svg width="11" height="8" viewBox="0 0 11 8" fill="none"><path d="M1 4l3 3 6-6" stroke="#060a0b" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-          </div>
-          <div class="pkg-toggle-item" onclick="pkgToggle(this)" style="flex:1;min-width:130px;">
-            <span class="pkg-toggle-label">Logo Tasarımı</span>
-            <div class="pkg-check"><svg width="11" height="8" viewBox="0 0 11 8" fill="none"><path d="M1 4l3 3 6-6" stroke="#060a0b" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-          </div>
-        </div>
-
-        <!-- Özel İstek -->
-        <div style="margin-top:14px;">
-          <div class="pkg-sub-title">Özel İstek</div>
-          <textarea class="pkg-textarea" placeholder="İsteğinizi kısaca belirtiniz" rows="3"></textarea>
-        </div>
-
-        <!-- Features -->
-        <div class="pkg-features">
-          <div class="pkg-features-title">Paket Kapsamı</div>
-          <div class="pkg-feature-item"><div class="pkg-feature-dot"></div>İhtiyacınıza göre özelleştirilebilir yapı</div>
-          <div class="pkg-feature-item"><div class="pkg-feature-dot"></div>Hizmetleri tek tek seçebilme</div>
-          <div class="pkg-feature-item"><div class="pkg-feature-dot"></div>Esnek aylık planlama</div>
-          <div class="pkg-feature-item"><div class="pkg-feature-dot"></div>Markanıza özel çözüm oluşturma</div>
-        </div>
-
-        <div class="pkg-cta">
-          <a href="#iletisim" class="pkg-btn primary">Size Özel Teklif Al</a>
-        </div>
+      <!-- ─ Özel İstek ─ -->
+      <div style="margin-top:18px;">
+        <div class="pkg-sub-title">Eklemek istediğiniz bir şey var mı?</div>
+        <textarea class="pkg-textarea" placeholder="İsteğinizi kısaca belirtiniz..." rows="3"></textarea>
       </div>
 
-    </div><!-- /grid -->
+      <!-- ─ Features ─ -->
+      <div class="pkg-features">
+        <div class="pkg-features-title">Her pakette şunlar dahildir</div>
+        <div class="pkg-feature-item"><div class="pkg-feature-dot"></div>Hizmetleri tek tek seçebilme</div>
+        <div class="pkg-feature-item"><div class="pkg-feature-dot"></div>İhtiyacınıza göre özelleştirilebilir yapı</div>
+        <div class="pkg-feature-item"><div class="pkg-feature-dot"></div>Esnek aylık veya yıllık planlama</div>
+        <div class="pkg-feature-item"><div class="pkg-feature-dot"></div>Markanıza özel danışmanlık desteği</div>
+      </div>
+
+      <div class="pkg-cta">
+        <a href="#iletisim" class="pkg-btn primary">Size Özel Teklif Al</a>
+      </div>
+    </div><!-- /card -->
+
   </div>
 </section>
 
@@ -2252,6 +2146,46 @@
     background: #0ecece;
   }
   .pkg-sub-title { font-size: 0.72rem; color: #3d5557; font-weight: 500; letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 8px; margin-top: 14px; }
+  /* iOS-style billing switch */
+  .pkg-switch { position: relative; display: inline-block; width: 46px; height: 27px; cursor: pointer; flex-shrink: 0; }
+  .pkg-switch input { display: none; }
+  .pkg-switch-track {
+    position: absolute; inset: 0; border-radius: 14px;
+    background: #182122; border: 1px solid #2a3a3b;
+    transition: background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+  }
+  .pkg-switch input:checked + .pkg-switch-track {
+    background: #0ecece; border-color: #0ecece;
+    box-shadow: 0 0 14px rgba(14,206,206,0.35);
+  }
+  .pkg-switch-thumb {
+    position: absolute; top: 3px; left: 3px;
+    width: 19px; height: 19px; border-radius: 50%;
+    background: #3d5557;
+    transition: transform 0.22s cubic-bezier(0.34,1.56,0.64,1), background 0.2s ease;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.5);
+  }
+  .pkg-switch input:checked + .pkg-switch-track .pkg-switch-thumb {
+    transform: translateX(19px); background: #060a0b;
+  }
+  .pkg-billing-label { font-size: 0.88rem; font-weight: 500; color: #5e7476; transition: color 0.2s ease; }
+  .pkg-billing-label.active { color: #dff0f0; }
+  .pkg-yearly-badge {
+    font-size: 0.68rem; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase;
+    background: rgba(14,206,206,0.1); border: 1px solid rgba(14,206,206,0.25);
+    color: #0ecece; padding: 3px 9px; border-radius: 20px;
+    opacity: 0; transform: translateY(4px);
+    transition: opacity 0.25s ease, transform 0.25s ease;
+    pointer-events: none;
+  }
+  .pkg-yearly-badge.show { opacity: 1; transform: translateY(0); }
+  /* Expand chevron indicator on service item */
+  .pkg-service-chevron {
+    width: 16px; height: 16px; flex-shrink: 0;
+    color: #3d5557;
+    transition: transform 0.3s cubic-bezier(0.4,0,0.2,1), color 0.2s ease;
+  }
+  .pkg-service-item.active .pkg-service-chevron { transform: rotate(180deg); color: #0ecece; }
 </style>
 
 <!-- ═══════════════════════════════════════════════
@@ -2442,9 +2376,15 @@
   function pkgToggleService(id) {
     const item = document.getElementById('srv-' + id);
     const expand = document.getElementById('exp-' + id);
-    if (!item || !expand) return;
+    if (!item) return;
     const isActive = item.classList.toggle('active');
-    expand.classList.toggle('open', isActive);
+    if (expand) {
+      expand.classList.toggle('open', isActive);
+      // Initialize sliders inside just-opened expand
+      if (isActive) {
+        expand.querySelectorAll('input[type=range].pkg-range').forEach(pkgUpdateRange);
+      }
+    }
   }
 
   function pkgUpdateRange(input) {
@@ -2453,6 +2393,24 @@
     const val = parseFloat(input.value);
     const pct = ((val - min) / (max - min)) * 100;
     input.style.background = `linear-gradient(to right, #0ecece 0%, #0ecece ${pct}%, #182122 ${pct}%, #182122 100%)`;
+  }
+
+  function pkgBillingToggle(input) {
+    const lblAylik = document.getElementById('lbl-aylik');
+    const lblYillik = document.getElementById('lbl-yillik');
+    const badge = document.getElementById('yearly-badge');
+    const priceLabel = document.getElementById('billing-price-label');
+    if (input.checked) {
+      lblAylik.classList.remove('active');
+      lblYillik.classList.add('active');
+      badge.classList.add('show');
+      if (priceLabel) priceLabel.textContent = 'Seçiminize göre fiyatlanır \u00a0·\u00a0 Yıllık';
+    } else {
+      lblAylik.classList.add('active');
+      lblYillik.classList.remove('active');
+      badge.classList.remove('show');
+      if (priceLabel) priceLabel.textContent = 'Seçiminize göre fiyatlanır \u00a0·\u00a0 Aylık';
+    }
   }
 
   // Initialize all range sliders on load
