@@ -1020,7 +1020,7 @@
     </div>
 
     <!-- Single customizable card -->
-    <div class="pkg-card" style="border-color:rgba(14,206,206,0.18);box-shadow:0 0 80px rgba(14,206,206,0.05),0 8px 40px rgba(0,0,0,0.55);">
+    <div class="pkg-card" data-glow style="border-color:rgba(14,206,206,0.18);box-shadow:0 0 80px rgba(14,206,206,0.05),0 8px 40px rgba(0,0,0,0.55);">
 
       <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:6px;">
         <div>
@@ -1154,7 +1154,7 @@
       </div>
 
       <div class="pkg-cta">
-        <a href="#iletisim" class="pkg-btn primary">Size Özel Teklif Al</a>
+        <a href="#iletisim" class="pkg-btn primary" data-glow>Size Özel Teklif Al</a>
       </div>
     </div><!-- /card -->
 
@@ -2146,6 +2146,92 @@
     background: #0ecece;
   }
   .pkg-sub-title { font-size: 0.72rem; color: #3d5557; font-weight: 500; letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 8px; margin-top: 14px; }
+
+  /* ── Spotlight glow effect (ported from React GlowCard) ── */
+  [data-glow] {
+    --gx: -9999;
+    --gy: -9999;
+    --gxp: 0;
+    --gyp: 0;
+    --ghue: 180;
+    --gspread: 22;
+    --gsz: 320;
+    --gbw: 1.5;
+    --gb: calc(var(--gbw) * 1px);
+    --gs: calc(var(--gsz) * 1px);
+    --ghc: calc(var(--ghue) + var(--gxp) * var(--gspread));
+  }
+  /* Surface spotlight on card background */
+  .pkg-card[data-glow] {
+    background:
+      radial-gradient(
+        var(--gs) var(--gs) at calc(var(--gx) * 1px) calc(var(--gy) * 1px),
+        hsl(var(--ghc) 85% 62% / 0.07) 0%, transparent 65%
+      ),
+      #0d1314;
+    background-attachment: fixed, scroll;
+  }
+  /* Shared border-glow pseudo-element base */
+  [data-glow]::before,
+  [data-glow]::after {
+    content: "";
+    pointer-events: none;
+    position: absolute;
+    inset: calc(var(--gb) * -1);
+    border: var(--gb) solid transparent;
+    border-radius: inherit;
+    background-attachment: fixed;
+    background-size: calc(100% + 2 * var(--gb)) calc(100% + 2 * var(--gb));
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    /* Clip to border ring only (standard + webkit) */
+    -webkit-mask: linear-gradient(#0000, #0000), linear-gradient(#fff, #fff);
+    -webkit-mask-clip: padding-box, border-box;
+    -webkit-mask-composite: destination-in;
+    mask: linear-gradient(#0000, #0000), linear-gradient(#fff, #fff);
+    mask-clip: padding-box, border-box;
+    mask-composite: intersect;
+  }
+  /* Teal border glow */
+  [data-glow]::before {
+    background-image: radial-gradient(
+      calc(var(--gs) * 0.8) calc(var(--gs) * 0.8) at calc(var(--gx) * 1px) calc(var(--gy) * 1px),
+      hsl(var(--ghc) 85% 55% / 0.8), transparent 100%
+    );
+    filter: brightness(2);
+  }
+  /* White shimmer on border */
+  [data-glow]::after {
+    background-image: radial-gradient(
+      calc(var(--gs) * 0.5) calc(var(--gs) * 0.5) at calc(var(--gx) * 1px) calc(var(--gy) * 1px),
+      hsl(0 100% 100% / 0.13), transparent 100%
+    );
+  }
+  /* Primary button: white hotspot overlay */
+  .pkg-btn.primary[data-glow] {
+    background-image: radial-gradient(
+      90px 90px at calc(var(--gx) * 1px) calc(var(--gy) * 1px),
+      rgba(255,255,255,0.22) 0%, transparent 70%
+    );
+    background-attachment: fixed;
+  }
+  /* Outline button: teal tinted spotlight */
+  .pkg-btn.outline[data-glow] {
+    background-image: radial-gradient(
+      90px 90px at calc(var(--gx) * 1px) calc(var(--gy) * 1px),
+      hsl(var(--ghc) 85% 62% / 0.10) 0%, transparent 70%
+    );
+    background-attachment: fixed;
+  }
+  /* Disable fixed-attachment effects on touch devices (iOS Safari compat) */
+  @media (hover: none) {
+    [data-glow]::before,
+    [data-glow]::after { display: none; }
+    .pkg-card[data-glow] { background: #0d1314; background-attachment: scroll; }
+    .pkg-btn.primary[data-glow] { background-image: none; background-attachment: scroll; }
+    .pkg-btn.outline[data-glow] { background-image: none; background-attachment: scroll; }
+  }
+
   /* iOS-style billing switch */
   .pkg-switch { position: relative; display: inline-block; width: 46px; height: 27px; cursor: pointer; flex-shrink: 0; }
   .pkg-switch input { display: none; }
@@ -2415,6 +2501,28 @@
 
   // Initialize all range sliders on load
   document.querySelectorAll('input[type=range].pkg-range').forEach(pkgUpdateRange);
+
+  // ── Spotlight glow pointer tracking (RAF-throttled, passive) ──
+  (function() {
+    var _x = -9999, _y = -9999, _pending = false;
+    function applyGlow() {
+      _pending = false;
+      var xp = (_x / window.innerWidth).toFixed(3);
+      var yp = (_y / window.innerHeight).toFixed(3);
+      var els = document.querySelectorAll('[data-glow]');
+      for (var i = 0; i < els.length; i++) {
+        els[i].style.setProperty('--gx', _x);
+        els[i].style.setProperty('--gy', _y);
+        els[i].style.setProperty('--gxp', xp);
+        els[i].style.setProperty('--gyp', yp);
+      }
+    }
+    document.addEventListener('pointermove', function(e) {
+      _x = e.clientX;
+      _y = e.clientY;
+      if (!_pending) { _pending = true; requestAnimationFrame(applyGlow); }
+    }, { passive: true });
+  })();
 </script>
 
 </body>
