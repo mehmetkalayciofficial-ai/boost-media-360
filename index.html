@@ -1679,7 +1679,6 @@
         <form id="contact-form" onsubmit="handleSubmit(event)" class="flex flex-col gap-4">
           <!-- Web3Forms hidden fields -->
           <input type="hidden" name="access_key" value="efa3d2c6-5f66-4573-a56b-da94e929ba25">
-          <input type="hidden" name="cc" value="mehmetkalayci220@gmail.com">
           <input type="hidden" name="subject" value="Yeni Teklif Talebi — BoostMedia360">
           <input type="hidden" name="from_name" value="BoostMedia360 Web Sitesi">
           <input type="hidden" name="redirect" value="false">
@@ -2382,6 +2381,7 @@
         body: formData
       });
       const json = await res.json();
+      console.log('Web3Forms response:', json);
       if (json.success) {
         btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 8l4.5 4.5L14 3.5" stroke="#080c0d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Mesajınız İletildi';
         btn.style.background = '#0ba8a8';
@@ -2391,9 +2391,11 @@
         throw new Error(json.message || 'Gönderim hatası');
       }
     } catch (err) {
-      btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 3v5M8 11v1" stroke="#080c0d" stroke-width="2" stroke-linecap="round"/></svg> Hata — Tekrar Deneyin';
+      console.error('Web3Forms error:', err);
+      btn.innerHTML = '⚠ Hata: ' + err.message;
       btn.style.background = '#c0392b';
-      setTimeout(() => { btn.innerHTML = orig; btn.disabled = false; btn.style.background = ''; }, 3500);
+      btn.style.fontSize = '0.75rem';
+      setTimeout(() => { btn.innerHTML = orig; btn.disabled = false; btn.style.background = ''; btn.style.fontSize = ''; }, 5000);
     }
   }
 
