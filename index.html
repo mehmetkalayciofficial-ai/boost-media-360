@@ -130,6 +130,7 @@
       #navbar {
         height: 64px;
       }
+      #mobile-menu { top: 64px; }
     }
 
     /* Content wrapper */
@@ -619,6 +620,76 @@
     }
     .nav-link:focus-visible { outline: 2px solid #0ecece; outline-offset: 2px; border-radius: 100px; }
 
+    /* ══════════════════════════════════════
+       LANGUAGE SWITCHER
+    ══════════════════════════════════════ */
+    /* Desktop dropdown */
+    .lang-dd { position: relative; flex-shrink: 0; }
+    .lang-dd-btn {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 7px 12px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 100px;
+      color: #9ab0b2;
+      font-family: 'Outfit', sans-serif; font-size: 0.78rem; font-weight: 600; letter-spacing: 0.02em;
+      cursor: pointer;
+      transition: color 0.2s ease, background 0.2s ease, border-color 0.2s ease, transform 0.15s ease;
+    }
+    .lang-dd-btn:hover { color: #e8f2f2; background: rgba(255,255,255,0.07); border-color: rgba(14,206,206,0.30); }
+    .lang-dd-btn:active { transform: translateY(0); }
+    .lang-dd-btn:focus-visible { outline: 2px solid #0ecece; outline-offset: 2px; }
+    .lang-dd-btn .globe { width: 15px; height: 15px; stroke: currentColor; flex-shrink: 0; }
+    .lang-dd-btn .chev  { width: 11px; height: 11px; stroke: currentColor; opacity: 0.65; transition: transform 0.25s ease; }
+    .lang-dd.open .lang-dd-btn { color: #e8f2f2; background: rgba(14,206,206,0.06); border-color: rgba(14,206,206,0.35); }
+    .lang-dd.open .lang-dd-btn .chev { transform: rotate(180deg); }
+    .lang-dd-cur { line-height: 1; }
+
+    .lang-dd-menu {
+      position: absolute; top: calc(100% + 10px); right: 0;
+      min-width: 172px;
+      background: #0d1314; border: 1px solid #1e2c2e; border-radius: 14px;
+      padding: 6px;
+      box-shadow: 0 16px 44px rgba(0,0,0,0.6), 0 0 0 1px rgba(14,206,206,0.04), inset 0 1px 0 rgba(255,255,255,0.03);
+      opacity: 0; transform: translateY(-8px) scale(0.97); transform-origin: top right;
+      pointer-events: none;
+      transition: opacity 0.2s ease, transform 0.2s cubic-bezier(0.16,1,0.3,1);
+    }
+    .lang-dd.open .lang-dd-menu { opacity: 1; transform: translateY(0) scale(1); pointer-events: auto; }
+    .lang-dd-item {
+      display: flex; align-items: center; justify-content: space-between; gap: 16px; width: 100%;
+      padding: 10px 12px; border-radius: 9px;
+      background: transparent; border: none; cursor: pointer; text-align: left;
+      font-family: 'Inter', sans-serif; font-size: 0.86rem; font-weight: 400; color: #9ab0b2;
+      transition: color 0.18s ease, background 0.18s ease;
+    }
+    .lang-dd-item:hover { background: rgba(14,206,206,0.07); color: #e8f2f2; }
+    .lang-dd-item:focus-visible { outline: 2px solid #0ecece; outline-offset: -2px; }
+    .lang-dd-item.active { color: #0ecece; }
+    .lang-dd-check { width: 14px; height: 14px; stroke: #0ecece; flex-shrink: 0; opacity: 0; transition: opacity 0.18s ease; }
+    .lang-dd-item.active .lang-dd-check { opacity: 1; }
+
+    /* Mobile segmented control */
+    .lang-seg {
+      display: flex; gap: 4px; padding: 4px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 100px;
+      margin-bottom: 10px;
+    }
+    .lang-seg-btn {
+      flex: 1; padding: 9px 0; border-radius: 100px; border: none; cursor: pointer;
+      background: transparent; color: #9ab0b2;
+      font-family: 'Outfit', sans-serif; font-size: 0.8rem; font-weight: 600; letter-spacing: 0.03em;
+      transition: color 0.2s ease, background 0.2s ease;
+    }
+    .lang-seg-btn:hover { color: #e8f2f2; background: rgba(255,255,255,0.06); }
+    .lang-seg-btn:focus-visible { outline: 2px solid #0ecece; outline-offset: 2px; }
+    .lang-seg-btn.active { color: #060a0b; background: #0ecece; box-shadow: 0 0 18px rgba(14,206,206,0.30); }
+
+    /* Icon-only switcher on smaller desktop widths to avoid navbar crowding */
+    @media (max-width: 1279px) { .lang-dd-cur { display: none; } }
+
     /* ── Logo image sizing ── */
     .logo-img { height: 36px; width: auto; object-fit: contain; }
 
@@ -711,25 +782,38 @@
     </a>
 
     <!-- Desktop Nav -->
-    <nav class="hidden md:flex items-center">
+    <nav class="hidden lg:flex items-center">
       <div class="nav-pill-container">
         <a href="#hizmetler"   class="nav-link">Hizmetler</a>
         <a href="#paketler"    class="nav-link">Paketler</a>
         <a href="#sektorler"   class="nav-link">Sektörler</a>
         <a href="#referanslar" class="nav-link">Referanslar</a>
         <a href="#egitimler"   class="nav-link">Eğitimler</a>
+        <a href="#amazon"      class="nav-link">Amazon</a>
         <a href="#hakkimizda"  class="nav-link">Hakkımızda</a>
         <a href="#iletisim"    class="nav-link">İletişim</a>
       </div>
     </nav>
 
-    <!-- Desktop CTA -->
-    <div class="hidden md:flex items-center">
+    <!-- Desktop CTA + Language switcher -->
+    <div class="hidden lg:flex items-center gap-3">
+      <div class="lang-dd" id="lang-dd">
+        <button type="button" class="lang-dd-btn" id="lang-dd-btn" aria-haspopup="true" aria-expanded="false" aria-label="Dil / Language" onclick="bmToggleLangDD(event)">
+          <svg class="globe" viewBox="0 0 24 24" fill="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+          <span class="lang-dd-cur" id="lang-dd-current">TR</span>
+          <svg class="chev" viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="lang-dd-menu" id="lang-dd-menu" role="menu">
+          <button type="button" class="lang-dd-item" data-lang="tr" role="menuitem" onclick="bmSetLang('tr')"><span>Türkçe</span><svg class="lang-dd-check" viewBox="0 0 16 16" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 8l4 4 8-8"/></svg></button>
+          <button type="button" class="lang-dd-item" data-lang="en" role="menuitem" onclick="bmSetLang('en')"><span>English</span><svg class="lang-dd-check" viewBox="0 0 16 16" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 8l4 4 8-8"/></svg></button>
+          <button type="button" class="lang-dd-item" data-lang="es" role="menuitem" onclick="bmSetLang('es')"><span>Español</span><svg class="lang-dd-check" viewBox="0 0 16 16" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 8l4 4 8-8"/></svg></button>
+        </div>
+      </div>
       <a href="#iletisim" class="nav-cta">Teklif Alın</a>
     </div>
 
     <!-- Mobile burger -->
-    <button id="burger-btn" aria-label="Menü" class="md:hidden flex flex-col justify-center gap-[5px] p-2" style="background:none; border:none; cursor:pointer;">
+    <button id="burger-btn" aria-label="Menü" class="lg:hidden flex flex-col justify-center gap-[5px] p-2" style="background:none; border:none; cursor:pointer;">
       <span style="display:block;width:22px;height:2px;background:#f2f6f6;border-radius:2px;transition:transform 0.25s ease,opacity 0.25s ease;" id="b1"></span>
       <span style="display:block;width:22px;height:2px;background:#f2f6f6;border-radius:2px;transition:transform 0.25s ease,opacity 0.25s ease;" id="b2"></span>
       <span style="display:block;width:22px;height:2px;background:#f2f6f6;border-radius:2px;transition:transform 0.25s ease,opacity 0.25s ease;" id="b3"></span>
@@ -737,13 +821,19 @@
   </div>
 
   <!-- Mobile dropdown menu -->
-  <div id="mobile-menu" class="hidden md:hidden" style="position:absolute;top:64px;left:12px;right:12px;background:#0d1314;border:1px solid #1e2c2e;border-radius:16px;overflow:hidden;z-index:10;">
+  <div id="mobile-menu" class="hidden lg:hidden" style="position:absolute;top:72px;left:12px;right:12px;background:#0d1314;border:1px solid #1e2c2e;border-radius:16px;overflow:hidden;z-index:10;">
     <nav class="flex flex-col px-5 py-4 gap-0">
+      <div class="lang-seg" role="group" aria-label="Dil / Language">
+        <button type="button" class="lang-seg-btn" data-lang="tr" onclick="bmSetLang('tr')">TR</button>
+        <button type="button" class="lang-seg-btn" data-lang="en" onclick="bmSetLang('en')">EN</button>
+        <button type="button" class="lang-seg-btn" data-lang="es" onclick="bmSetLang('es')">ES</button>
+      </div>
       <a href="#hizmetler"   class="nav-link" style="padding:11px 0;border-bottom:1px solid #182122;" onclick="closeMobile()">Hizmetler</a>
       <a href="#paketler"    class="nav-link" style="padding:11px 0;border-bottom:1px solid #182122;" onclick="closeMobile()">Paketler</a>
       <a href="#sektorler"   class="nav-link" style="padding:11px 0;border-bottom:1px solid #182122;" onclick="closeMobile()">Sektörler</a>
       <a href="#referanslar" class="nav-link" style="padding:11px 0;border-bottom:1px solid #182122;" onclick="closeMobile()">Referanslar</a>
       <a href="#egitimler"   class="nav-link" style="padding:11px 0;border-bottom:1px solid #182122;" onclick="closeMobile()">Eğitimler</a>
+      <a href="#amazon"      class="nav-link" style="padding:11px 0;border-bottom:1px solid #182122;" onclick="closeMobile()">Amazon</a>
       <a href="#hakkimizda"  class="nav-link" style="padding:11px 0;border-bottom:1px solid #182122;" onclick="closeMobile()">Hakkımızda</a>
       <a href="#iletisim"    class="nav-link" style="padding:11px 0;" onclick="closeMobile()">İletişim</a>
       <div style="padding-top:14px;">
@@ -1575,6 +1665,154 @@
 
 
 <!-- ═══════════════════════════════════════════════
+     AMAZON STORE SETUP — Amazon-branded colour island
+═══════════════════════════════════════════════ -->
+<section id="amazon" class="section-py relative z-10">
+  <style>
+    .amazon-panel{
+      position:relative; overflow:hidden;
+      border-radius:28px; padding:56px 48px;
+      background:
+        radial-gradient(120% 95% at 100% 0%, rgba(255,153,0,0.16) 0%, transparent 46%),
+        linear-gradient(158deg, #131921 0%, #18222e 46%, #232f3e 100%);
+      border:1px solid rgba(255,153,0,0.22);
+      box-shadow:0 30px 80px rgba(0,0,0,0.55), 0 0 70px rgba(255,153,0,0.07), inset 0 1px 0 rgba(255,255,255,0.05);
+    }
+    .amazon-panel::before{
+      content:''; position:absolute; top:0; left:7%; right:7%; height:1px;
+      background:linear-gradient(to right, transparent, rgba(255,153,0,0.55), transparent);
+      pointer-events:none;
+    }
+    .amazon-glow{
+      position:absolute; bottom:-130px; left:-90px; width:400px; height:400px;
+      background:radial-gradient(circle, rgba(255,153,0,0.11) 0%, transparent 70%);
+      pointer-events:none; z-index:0;
+    }
+    .amazon-panel > *:not(.amazon-glow){ position:relative; z-index:1; }
+    .amazon-eyebrow{
+      display:inline-flex; align-items:center; gap:9px;
+      font-family:'Outfit',sans-serif; font-size:0.72rem; font-weight:600;
+      letter-spacing:0.18em; text-transform:uppercase; color:#ff9900; margin-bottom:18px;
+    }
+    .amazon-eyebrow-dot{ width:7px; height:7px; border-radius:50%; background:#ff9900; box-shadow:0 0 10px rgba(255,153,0,0.9); }
+    .amazon-title{
+      font-family:'Outfit',sans-serif; font-weight:700;
+      font-size:clamp(1.8rem,3.6vw,2.7rem); letter-spacing:-0.03em; line-height:1.1;
+      color:#f3f6f6; margin-bottom:16px; max-width:640px;
+    }
+    .amazon-accent{ color:#ff9900; }
+    .amazon-smile{ display:block; width:122px; height:22px; margin-top:8px; }
+    .amazon-sub{
+      font-size:0.98rem; font-weight:300; line-height:1.75; color:#aeb9c2; max-width:600px; margin-bottom:40px;
+    }
+    .amazon-grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:14px; margin-bottom:38px; }
+    .amazon-item{
+      display:flex; align-items:flex-start; gap:14px; padding:16px 18px; border-radius:14px;
+      background:rgba(255,255,255,0.025); border:1px solid rgba(255,255,255,0.07);
+      transition:border-color 0.22s ease, background 0.22s ease, transform 0.22s ease;
+    }
+    .amazon-item:hover{ border-color:rgba(255,153,0,0.45); background:rgba(255,153,0,0.06); transform:translateY(-3px); }
+    .amazon-check{
+      flex-shrink:0; width:30px; height:30px; border-radius:9px; margin-top:1px;
+      background:rgba(255,153,0,0.12); border:1px solid rgba(255,153,0,0.32);
+      display:flex; align-items:center; justify-content:center;
+    }
+    .amazon-item-title{ font-family:'Outfit',sans-serif; font-size:0.95rem; font-weight:600; color:#eef2f3; letter-spacing:-0.01em; margin-bottom:3px; }
+    .amazon-item-desc{ font-size:0.8rem; color:#8a98a3; line-height:1.55; font-weight:300; }
+    .amazon-cta-row{ display:flex; flex-wrap:wrap; align-items:center; gap:18px; }
+    .amazon-btn{
+      display:inline-flex; align-items:center; gap:9px; padding:14px 30px; border-radius:100px;
+      background:#ff9900; color:#131921;
+      font-family:'Outfit',sans-serif; font-weight:700; font-size:0.9rem; letter-spacing:0.01em;
+      box-shadow:0 8px 30px rgba(255,153,0,0.32), 0 2px 8px rgba(0,0,0,0.5);
+      transition:background 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+    }
+    .amazon-btn:hover{ background:#ffad33; transform:translateY(-2px); box-shadow:0 12px 38px rgba(255,153,0,0.45), 0 4px 14px rgba(0,0,0,0.5); }
+    .amazon-btn:active{ transform:translateY(0); }
+    .amazon-btn:focus-visible{ outline:2px solid #ff9900; outline-offset:3px; }
+    .amazon-note{ display:inline-flex; align-items:center; gap:8px; font-size:0.85rem; color:#aeb9c2; }
+    .amazon-note svg{ color:#ff9900; flex-shrink:0; }
+    @media (max-width:767px){
+      .amazon-panel{ padding:36px 22px; border-radius:22px; }
+      .amazon-grid{ grid-template-columns:1fr; }
+    }
+  </style>
+
+  <div class="max-w-7xl mx-auto px-6 lg:px-10">
+    <div class="amazon-panel">
+      <div class="amazon-glow"></div>
+
+      <div class="amazon-eyebrow"><span class="amazon-eyebrow-dot"></span>Amazon FBA &amp; E-İhracat</div>
+      <h2 class="amazon-title">
+        <span class="amazon-accent">Amazon</span> Mağaza Kurma Eğitimi
+        <svg class="amazon-smile" viewBox="0 0 122 22" fill="none" aria-hidden="true">
+          <path d="M5 6 C 34 21, 88 21, 114 6" stroke="#ff9900" stroke-width="3" stroke-linecap="round"/>
+          <path d="M114 6 l -10 -0.5" stroke="#ff9900" stroke-width="3" stroke-linecap="round"/>
+          <path d="M114 6 l -4 9" stroke="#ff9900" stroke-width="3" stroke-linecap="round"/>
+        </svg>
+      </h2>
+      <p class="amazon-sub">
+        Şirket kuruluşundan ilk satışınıza kadar tüm Amazon sürecini A'dan Z'ye yönetiyoruz. Eğitim ve birebir danışmanlıkla mağazanızı küresel pazara hazır hâle getiriyoruz.
+      </p>
+
+      <div class="amazon-grid">
+        <div class="amazon-item">
+          <div class="amazon-check"><svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M2 8l4 4 8-8" stroke="#ff9900" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div><div class="amazon-item-title">Şirket Kurulumu</div><div class="amazon-item-desc">Yurt dışı veya Türkiye şirketi kuruluş sürecinin baştan sona yönetimi.</div></div>
+        </div>
+        <div class="amazon-item">
+          <div class="amazon-check"><svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M2 8l4 4 8-8" stroke="#ff9900" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div><div class="amazon-item-title">Vergi Numarası İşlemleri</div><div class="amazon-item-desc">EIN/ITIN ve gerekli vergi numaralarının alınmasında tam rehberlik.</div></div>
+        </div>
+        <div class="amazon-item">
+          <div class="amazon-check"><svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M2 8l4 4 8-8" stroke="#ff9900" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div><div class="amazon-item-title">Amazon Satıcı Hesabı Açılışı</div><div class="amazon-item-desc">Seller Central hesabının doğru ülke ve kategoride güvenle açılması.</div></div>
+        </div>
+        <div class="amazon-item">
+          <div class="amazon-check"><svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M2 8l4 4 8-8" stroke="#ff9900" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div><div class="amazon-item-title">Marka Tescil Desteği</div><div class="amazon-item-desc">Marka başvurusu ve tescil sürecinde uçtan uca destek.</div></div>
+        </div>
+        <div class="amazon-item">
+          <div class="amazon-check"><svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M2 8l4 4 8-8" stroke="#ff9900" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div><div class="amazon-item-title">Brand Registry Kaydı</div><div class="amazon-item-desc">Amazon Brand Registry kaydı ve marka korumasının aktifleştirilmesi.</div></div>
+        </div>
+        <div class="amazon-item">
+          <div class="amazon-check"><svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M2 8l4 4 8-8" stroke="#ff9900" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div><div class="amazon-item-title">Ürün Listeleme ve Optimizasyonu</div><div class="amazon-item-desc">SEO uyumlu başlık, görsel ve içerikle dönüşüm odaklı listeleme.</div></div>
+        </div>
+        <div class="amazon-item">
+          <div class="amazon-check"><svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M2 8l4 4 8-8" stroke="#ff9900" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div><div class="amazon-item-title">FBA Kurulum ve Lojistik Desteği</div><div class="amazon-item-desc">FBA gönderim planı, etiketleme ve depo yönlendirme süreçleri.</div></div>
+        </div>
+        <div class="amazon-item">
+          <div class="amazon-check"><svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M2 8l4 4 8-8" stroke="#ff9900" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div><div class="amazon-item-title">Reklam (PPC) Yönetimi</div><div class="amazon-item-desc">Sponsored Products kampanyalarıyla kârlı ve ölçülebilir reklam yönetimi.</div></div>
+        </div>
+        <div class="amazon-item">
+          <div class="amazon-check"><svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M2 8l4 4 8-8" stroke="#ff9900" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div><div class="amazon-item-title">Hesap Yönetimi ve Destek</div><div class="amazon-item-desc">Düzenli takip, raporlama ve kesintisiz operasyon desteği.</div></div>
+        </div>
+        <div class="amazon-item">
+          <div class="amazon-check"><svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M2 8l4 4 8-8" stroke="#ff9900" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div><div class="amazon-item-title">Ürün Araştırması ve Pazar Analizi</div><div class="amazon-item-desc">Veri odaklı analizle kazançlı ürün ve niş tespiti.</div></div>
+        </div>
+      </div>
+
+      <div class="amazon-cta-row">
+        <a href="#iletisim" class="amazon-btn">Ücretsiz Ön Görüşme Al
+          <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <span class="amazon-note">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+          A'dan Z'ye tam destek ve mentorluk
+        </span>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════
      CTA BAND
 ═══════════════════════════════════════════════ -->
 <section class="relative z-10 overflow-hidden" style="background:#0d1314; border-top:1px solid #182122; border-bottom:1px solid #182122;">
@@ -2377,7 +2615,7 @@
     const form = e.target;
     const btn = form.querySelector('button[type="submit"]');
     const orig = btn.innerHTML;
-    btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="animation:spin 0.8s linear infinite"><circle cx="8" cy="8" r="6" stroke="rgba(8,12,13,0.35)" stroke-width="2"/><path d="M8 2a6 6 0 0 1 6 6" stroke="#080c0d" stroke-width="2" stroke-linecap="round"/></svg> Gönderiliyor...';
+    btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="animation:spin 0.8s linear infinite"><circle cx="8" cy="8" r="6" stroke="rgba(8,12,13,0.35)" stroke-width="2"/><path d="M8 2a6 6 0 0 1 6 6" stroke="#080c0d" stroke-width="2" stroke-linecap="round"/></svg> ' + bmT('sending');
     btn.disabled = true;
     try {
       const templateParams = {
@@ -2389,13 +2627,13 @@
         message:    form.querySelector('[name="mesaj"]').value || '—',
       };
       await emailjs.send('service_rrtje99', 'template_pcs6zft', templateParams);
-      btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 8l4.5 4.5L14 3.5" stroke="#080c0d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Mesajınız İletildi';
+      btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 8l4.5 4.5L14 3.5" stroke="#080c0d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> ' + bmT('sent');
       btn.style.background = '#0ba8a8';
       pkgClearSummary();
       setTimeout(() => { btn.innerHTML = orig; btn.disabled = false; btn.style.background = ''; form.reset(); }, 4000);
     } catch (err) {
       console.error('EmailJS error:', err);
-      btn.innerHTML = '⚠ Hata — Tekrar Deneyin';
+      btn.innerHTML = bmT('error');
       btn.style.background = '#c0392b';
       setTimeout(() => { btn.innerHTML = orig; btn.disabled = false; btn.style.background = ''; }, 4000);
     }
@@ -2541,9 +2779,9 @@
     if (srvIcerik && srvIcerik.classList.contains('active')) {
       var posts = document.getElementById('ozel-post-val');
       var videos = document.getElementById('ozel-video-val');
-      lines.push('✓ Sosyal Medya İçerik Üretimi — ' +
-        (posts ? posts.textContent : '?') + ' post / ' +
-        (videos ? videos.textContent : '?') + ' video (aylık)');
+      lines.push('✓ ' + bmT('smContent') + ' — ' +
+        (posts ? posts.textContent : '?') + ' ' + bmT('postWord') + ' / ' +
+        (videos ? videos.textContent : '?') + ' ' + bmT('videoMonthly'));
     }
 
     // Reklam Yönetimi
@@ -2553,7 +2791,7 @@
       document.querySelectorAll('#exp-reklam .pkg-toggle-item.active .pkg-toggle-label').forEach(function(el) {
         channels.push(el.textContent.trim());
       });
-      lines.push('✓ Reklam Yönetimi' + (channels.length ? ' — ' + channels.join(', ') : ''));
+      lines.push('✓ ' + bmT('ads') + (channels.length ? ' — ' + channels.join(', ') : ''));
     }
 
     // Website Tasarımı
@@ -2563,7 +2801,7 @@
       document.querySelectorAll('#exp-website .pkg-toggle-item.active .pkg-toggle-label').forEach(function(el) {
         types.push(el.textContent.trim());
       });
-      lines.push('✓ Website Tasarımı' + (types.length ? ' — ' + types.join(', ') : ''));
+      lines.push('✓ ' + bmT('website') + (types.length ? ' — ' + types.join(', ') : ''));
     }
 
     // Ekstra hizmetler (card içindeki, expand dışındaki toggle'lar)
@@ -2574,17 +2812,17 @@
         if (lbl) extras.push(lbl.textContent.trim());
       }
     });
-    if (extras.length) lines.push('✓ Ekstra hizmetler — ' + extras.join(', '));
+    if (extras.length) lines.push('✓ ' + bmT('extras') + ' — ' + extras.join(', '));
 
     // Özel not
     var customNote = document.querySelector('#paketler .pkg-textarea');
     if (customNote && customNote.value.trim()) {
-      lines.push('📝 Özel not: ' + customNote.value.trim());
+      lines.push('📝 ' + bmT('note') + ' ' + customNote.value.trim());
     }
 
     // Hiçbir şey seçilmemişse bilgi ver
     if (!lines.length) {
-      lines.push('(Henüz hizmet seçilmedi — lütfen mesajınıza ekleyin)');
+      lines.push(bmT('nothing'));
     }
 
     var summaryText = lines.join('\n');
@@ -2600,7 +2838,7 @@
     // Mesaj textarea'sını doldur
     var msg = document.getElementById('contact-message');
     if (msg) {
-      msg.value = '--- Paket Yapılandırmam ---\n' + summaryText + '\n\n';
+      msg.value = bmT('header') + '\n' + summaryText + '\n\n';
       msg.focus();
     }
 
@@ -2617,7 +2855,7 @@
     var box = document.getElementById('pkg-summary-box');
     if (box) box.style.display = 'none';
     var msg = document.getElementById('contact-message');
-    if (msg && msg.value.startsWith('--- Paket')) msg.value = '';
+    if (msg && msg.value.startsWith('--- ')) msg.value = '';
     var select = document.querySelector('#contact-form select[name="hizmet"]');
     if (select && select.value === 'paket-yapilandirmasi') select.value = '';
   }
@@ -2647,6 +2885,604 @@
       if (!_pending) { _pending = true; requestAnimationFrame(applyGlow); }
     }, { passive: true });
   })();
+</script>
+
+<!-- ═══════════════════════════════════════════════
+     I18N — TR / EN / ES language system
+     • Click a language → instant, accurate translation
+     • Auto-detects on first visit (browser language, then IP location)
+     • Remembers the visitor's manual choice (localStorage)
+═══════════════════════════════════════════════ -->
+<script>
+(function(){
+  'use strict';
+
+  /* ─────────── Body text translations (key = Turkish source) ─────────── */
+  var T = {
+    en: {
+      "Hizmetler":"Services",
+      "Mağaza Kurma Eğitimi":"Store Setup Training",
+      "Amazon FBA & E-İhracat":"Amazon FBA & E-Export",
+      "Şirket kuruluşundan ilk satışınıza kadar tüm Amazon sürecini A'dan Z'ye yönetiyoruz. Eğitim ve birebir danışmanlıkla mağazanızı küresel pazara hazır hâle getiriyoruz.":"From company formation to your first sale, we manage the entire Amazon process from A to Z. With training and one-on-one consulting, we get your store ready for the global market.",
+      "Şirket Kurulumu":"Company Setup",
+      "Yurt dışı veya Türkiye şirketi kuruluş sürecinin baştan sona yönetimi.":"End-to-end management of your company formation, abroad or in Turkey.",
+      "Vergi Numarası İşlemleri":"Tax Number Procedures",
+      "EIN/ITIN ve gerekli vergi numaralarının alınmasında tam rehberlik.":"Full guidance on obtaining EIN/ITIN and the required tax numbers.",
+      "Amazon Satıcı Hesabı Açılışı":"Amazon Seller Account Setup",
+      "Seller Central hesabının doğru ülke ve kategoride güvenle açılması.":"Securely opening your Seller Central account in the right country and category.",
+      "Marka Tescil Desteği":"Trademark Registration Support",
+      "Marka başvurusu ve tescil sürecinde uçtan uca destek.":"End-to-end support through the trademark application and registration process.",
+      "Brand Registry Kaydı":"Brand Registry Enrollment",
+      "Amazon Brand Registry kaydı ve marka korumasının aktifleştirilmesi.":"Amazon Brand Registry enrollment and activating brand protection.",
+      "Ürün Listeleme ve Optimizasyonu":"Product Listing & Optimization",
+      "SEO uyumlu başlık, görsel ve içerikle dönüşüm odaklı listeleme.":"Conversion-focused listings with SEO-friendly titles, images and copy.",
+      "FBA Kurulum ve Lojistik Desteği":"FBA Setup & Logistics Support",
+      "FBA gönderim planı, etiketleme ve depo yönlendirme süreçleri.":"FBA shipment plans, labeling and warehouse routing.",
+      "Reklam (PPC) Yönetimi":"Advertising (PPC) Management",
+      "Sponsored Products kampanyalarıyla kârlı ve ölçülebilir reklam yönetimi.":"Profitable, measurable ad management with Sponsored Products campaigns.",
+      "Hesap Yönetimi ve Destek":"Account Management & Support",
+      "Düzenli takip, raporlama ve kesintisiz operasyon desteği.":"Ongoing monitoring, reporting and uninterrupted operations support.",
+      "Ürün Araştırması ve Pazar Analizi":"Product Research & Market Analysis",
+      "Veri odaklı analizle kazançlı ürün ve niş tespiti.":"Data-driven analysis to identify profitable products and niches.",
+      "Ücretsiz Ön Görüşme Al":"Get a Free Consultation",
+      "A'dan Z'ye tam destek ve mentorluk":"Full A-to-Z support and mentorship",
+      "Paketler":"Packages",
+      "Sektörler":"Sectors",
+      "Referanslar":"References",
+      "Eğitimler":"Training",
+      "Hakkımızda":"About",
+      "İletişim":"Contact",
+      "Teklif Alın":"Get a Quote",
+      "Dijital Pazarlama & Sosyal Medya":"Digital Marketing & Social Media",
+      "Markanızı":"Your brand",
+      "dijitalde":"in digital,",
+      "güçlendiriyoruz.":"amplified.",
+      "Strateji, içerik ve tasarımı bir araya getirerek markanızı dijitalde kalıcı bir etkiyle konumlandırıyoruz.":"We bring strategy, content and design together to position your brand in the digital world with lasting impact.",
+      "Hizmetlerimizi Keşfedin":"Explore Our Services",
+      "Sosyal Medya Yönetimi":"Social Media Management",
+      "Dijital Reklam":"Digital Advertising",
+      "İçerik Üretimi":"Content Production",
+      "Markalama":"Branding",
+      "Strateji & Danışmanlık":"Strategy & Consulting",
+      "Kreatif Tasarım":"Creative Design",
+      "Performans Reklamcılığı":"Performance Advertising",
+      "Marka Kimliği":"Brand Identity",
+      "12+ Ülke Deneyimi":"12+ Countries of Experience",
+      "1400+ Müşteri":"1400+ Clients",
+      "Müşteri Portföyü":"Client Portfolio",
+      "Farklı sektörden marka ile çalıştık":"Brands from different sectors we've worked with",
+      "Global Erişim":"Global Reach",
+      "+ ülke":"+ countries",
+      "Uluslararası kampanya deneyimi":"International campaign experience",
+      "Memnuniyet Skoru":"Satisfaction Score",
+      "Müşteri ve ekip memnuniyeti":"Client and team satisfaction",
+      "Tüm projeler":"All projects",
+      "başarıyla tamamlandı":"completed successfully",
+      "Dijitalde ihtiyacınız olan":"Everything you need",
+      "her şey, tek bir çatıda.":"in digital, under one roof.",
+      "Strateji, yaratıcı içerik, reklam yönetimi ve marka kimliğini bir arada ele alarak dijital sürecinizi profesyonelce yönetiyoruz.":"By bringing together strategy, creative content, ad management and brand identity, we manage your digital process professionally.",
+      "Markanızın dijital dünyada güçlü, güven veren ve ayırt edilebilir bir kimlik kazanması için stratejik bir temel oluşturuyoruz. İletişim dili, görsel bütünlük ve dijital duruş gibi temel unsurları bir araya getiriyoruz.":"We build a strategic foundation so your brand gains a strong, trustworthy and distinctive identity in the digital world. We bring together core elements such as tone of voice, visual consistency and digital presence.",
+      "Kreatif":"Creative",
+      "Markanızı dijitalde fark ettiren yaratıcı fikirler ve görsel yaklaşımlar geliştiriyoruz. Hedef kitlenizin dikkatini çeken, marka algınızı güçlendiren modern kreatif çözümler sunuyoruz.":"We develop creative ideas and visual approaches that make your brand stand out in digital. We deliver modern creative solutions that capture your audience's attention and strengthen your brand perception.",
+      "Markanızın hikayesini dijital mecralara uygun, estetik ve planlı bir içerik yapısıyla sunuyoruz. Görsel tasarım, metin dili, içerik akışı ve platform uyumunu birlikte ele alıyoruz.":"We present your brand's story with an aesthetic, well-planned content structure suited to digital channels. We address visual design, copy, content flow and platform fit together.",
+      "Sosyal medya hesaplarınızı yalnızca aktif tutmakla kalmıyor; markanızın hedeflerine uygun şekilde planlıyoruz. İçerik takvimi, iletişim dili ve topluluk etkileşimini yönetiyoruz.":"We don't just keep your social media accounts active; we plan them in line with your brand's goals. We manage the content calendar, tone of voice and community engagement.",
+      "Reklam Yönetimi":"Ad Management",
+      "Dijital reklam süreçlerini hedef kitle, bütçe, platform ve performans dengesiyle yönetiyoruz. Markanızın doğru kişilere, doğru zamanda ve doğru mesajla ulaşması için reklam kampanyalarınızı stratejik olarak kurguluyoruz.":"We manage digital advertising with the right balance of audience, budget, platform and performance. We build your ad campaigns strategically so your brand reaches the right people, at the right time, with the right message.",
+      "Markanızın mevcut durumunu analiz ederek daha sağlam bir dijital yol haritası oluşturuyoruz. Büyüme hedefleri, içerik yapısı, reklam yaklaşımı ve marka algısını bir bütün olarak değerlendiriyoruz.":"We analyze your brand's current position to build a more solid digital roadmap. We evaluate growth goals, content structure, advertising approach and brand perception as a whole.",
+      "Fiyatlandırma":"Pricing",
+      "Paketinizi Özelleştirin":"Customize Your Package",
+      "İhtiyacınıza göre hizmetleri seçin, miktarları belirleyin ve markanıza özel bir dijital plan oluşturun.":"Choose services to fit your needs, set the quantities, and build a digital plan tailored to your brand.",
+      "Hizmetleri seçin, miktarları ayarlayın — size özel teklif oluşturalım.":"Select services, adjust the quantities — let's create a custom quote for you.",
+      "Esnek":"Flexible",
+      "Seçiminize göre fiyatlanır":"Priced based on your selection",
+      "Hizmetleri yapılandırın":"Configure services",
+      "Sosyal Medya İçerik Üretimi":"Social Media Content Production",
+      "Aylık Post Sayısı":"Monthly Posts",
+      "Aylık Video Sayısı":"Monthly Videos",
+      "Website Tasarımı":"Website Design",
+      "Tek Sayfalı (Landing)":"Single Page (Landing)",
+      "Kurumsal Web Sitesi":"Corporate Website",
+      "E-Ticaret Sitesi":"E-Commerce Site",
+      "Ekstra hizmetler":"Extra services",
+      "Kartvizit Tasarımı":"Business Card Design",
+      "Logo Tasarımı":"Logo Design",
+      "Eklemek istediğiniz bir şey var mı?":"Anything you'd like to add?",
+      "Her pakette şunlar dahildir":"Included in every package",
+      "Hizmetleri tek tek seçebilme":"Pick services one by one",
+      "İhtiyacınıza göre özelleştirilebilir yapı":"A structure customizable to your needs",
+      "Esnek aylık veya yıllık planlama":"Flexible monthly or yearly planning",
+      "Markanıza özel danışmanlık desteği":"Consulting support tailored to your brand",
+      "Size Özel Teklif Al":"Get Your Custom Quote",
+      "Sektörel Deneyim":"Sector Experience",
+      "Deneyim Gösterdiğimiz Sektörler":"Sectors We've Worked In",
+      "Farklı sektörlerde edindiğimiz deneyim sayesinde her markanın dinamiklerine, hedef kitlesine ve iletişim ihtiyacına uygun dijital çözümler geliştiriyoruz.":"Thanks to the experience we've gained across different sectors, we develop digital solutions suited to each brand's dynamics, audience and communication needs.",
+      "Perakende & E-ticaret":"Retail & E-Commerce",
+      "Dönüşüm odaklı kampanyalar":"Conversion-focused campaigns",
+      "Güzellik & Sağlık":"Beauty & Wellness",
+      "Premium marka algısı":"Premium brand perception",
+      "Turizm & Konaklama":"Tourism & Hospitality",
+      "Görünürlük ve rezervasyon":"Visibility and bookings",
+      "Yiyecek & İçecek":"Food & Beverage",
+      "Marka ve müşteri bağı":"Brand and customer connection",
+      "Emlak & Gayrimenkul":"Real Estate & Property",
+      "Güven ve prestij iletişimi":"Trust and prestige communication",
+      "Eğitim & Danışmanlık":"Education & Consulting",
+      "Uzmanlık ve otorite":"Expertise and authority",
+      "Neden Biz":"Why Us",
+      "Neden Boost":"Why Boost",
+      "Markanızın ihtiyacını derinlemesine anlayıp, sonuç odaklı bir yaklaşımla dijital sürecinizi yönetiyoruz.":"We deeply understand your brand's needs and manage your digital process with a results-driven approach.",
+      "Bizimle Çalışın":"Work With Us",
+      "Strateji ile tasarımı aynı çizgide buluşturan ajans yaklaşımı":"An agency approach that aligns strategy and design",
+      "Yaratıcı düşünce ve stratejik bakış açısı bir arada.":"Creative thinking and strategic vision, together.",
+      "Farklı sektörlerde deneyimli, çok yönlü ekip yapısı":"A versatile team experienced across different sectors",
+      "6 farklı sektörde kanıtlanmış kampanya deneyimi.":"Proven campaign experience across 6 different sectors.",
+      "Markaya özel çözüm geliştiren esnek çalışma modeli":"A flexible working model that builds brand-specific solutions",
+      "Hazır kalıp yok; her marka için özgün strateji.":"No templates; an original strategy for every brand.",
+      "Görünürlüğe değil, marka algısı ve süreçlere odaklanma":"Focusing on brand perception and process, not just visibility",
+      "Sadece takipçi değil; gerçek marka değeri.":"Not just followers; real brand value.",
+      "Planlı, tutarlı ve profesyonel iletişim anlayışı":"A planned, consistent and professional communication approach",
+      "Her adımda ölçülebilir, şeffaf ve güvenilir süreç.":"A measurable, transparent and reliable process at every step.",
+      "Projeler & İş Birlikleri":"Projects & Collaborations",
+      "Farklı sektörlerde yürüttüğümüz dijital reklam, sosyal medya ve yaratıcı içerik projeleriyle markalara görünürlük, algı ve iletişim gücü kazandırıyoruz.":"Through digital advertising, social media and creative content projects across different sectors, we give brands visibility, perception and communication power.",
+      "Sosyal Medya":"Social Media",
+      "Perakende & E-ticaret Markaları":"Retail & E-Commerce Brands",
+      "Ürün odaklı içerik yönetimi, reklam kampanyaları ve marka kimliği çalışmaları.":"Product-focused content management, ad campaigns and brand identity work.",
+      "Referans Talep Et":"Request References",
+      "12+ ülkede yürütülen uluslararası kampanyalar ve çok dilli içerik stratejileri.":"International campaigns run in 12+ countries and multilingual content strategies.",
+      "Güzellik & Sağlık Markaları":"Beauty & Wellness Brands",
+      "Premium görsel kimlik, içerik üretimi ve hedef kitle odaklı dijital iletişim yönetimi.":"Premium visual identity, content production and audience-focused digital communication management.",
+      "Daha fazla referans için bizimle iletişime geçin.":"Contact us for more references.",
+      "Sektörünüze özel örnek çalışmalarımızı paylaşalım.":"Let us share case studies specific to your sector.",
+      "Referans Talep Edin":"Request References",
+      "Sosyal medyayı":"Turn social media",
+      "bir marka aracına":"into a powerful",
+      "dönüştürün.":"brand tool.",
+      "Boost Media 360 sosyal medya eğitimleri; markaların, ekiplerin ve bireysel katılımcıların dijital iletişim süreçlerini daha bilinçli, daha planlı ve daha etkili yönetebilmeleri için tasarlanmıştır.":"Boost Media 360's social media trainings are designed to help brands, teams and individual participants manage their digital communication processes more consciously, more deliberately and more effectively.",
+      "Eğitimler; yalnızca içerik üretimini değil, markanın dijitalde nasıl konumlanacağını, hangi hedeflere göre hareket edeceğini ve hangi ölçümlerle ilerlemesi gerektiğini de kapsar. Sosyal medya, ölçülebilir ve yönetilebilir bir marka aracına dönüşür.":"The trainings cover not only content production but also how a brand should position itself in digital, which goals to act on and which metrics to track. Social media becomes a measurable and manageable brand tool.",
+      "Eğitim Bilgisi Alın":"Get Training Info",
+      "Sosyal Medya Stratejisi Oluşturma":"Building a Social Media Strategy",
+      "Marka hedeflerine uygun sosyal medya çizgisi kurma ve platform seçimi.":"Establishing a social media direction aligned with brand goals and choosing the right platforms.",
+      "Hedef Kitle Analizi":"Audience Analysis",
+      "Kitlenin davranışlarını, beklentilerini ve iletişim dilini doğru analiz etme.":"Correctly analyzing the audience's behavior, expectations and communication style.",
+      "Hedef Belirleme & KPI Planlama":"Goal Setting & KPI Planning",
+      "Sosyal medya sürecini ölçülebilir kılmak için hedef ve performans göstergeleri.":"Goals and performance indicators to make the social media process measurable.",
+      "İçerik Üretimi & Yönetimi":"Content Production & Management",
+      "Planlı, tutarlı ve marka kimliğiyle uyumlu içerik akışları oluşturma.":"Creating planned, consistent content flows aligned with brand identity.",
+      "Görsel İçerik Tasarımı":"Visual Content Design",
+      "Dijital mecralarda dikkat çeken, estetik ve profesyonel görsel yapılar.":"Eye-catching, aesthetic and professional visuals for digital channels.",
+      "Video İçerik Üretimi":"Video Content Production",
+      "Platform dinamiklerine uygun kısa format video içerik mantığı.":"Short-form video content logic suited to platform dynamics.",
+      "Dijital reklam kampanyalarının hedef kitle ve bütçe bazlı planlanması.":"Planning digital ad campaigns based on audience and budget.",
+      "Reklam Türleri, Hedefleme & Bütçe":"Ad Types, Targeting & Budget",
+      "Doğru reklam modelini seçme ve bütçeyi verimli kullanma.":"Choosing the right ad model and using the budget efficiently.",
+      "Reklam Performans Analizi":"Ad Performance Analysis",
+      "Kampanyaların sonuç odaklı değerlendirilmesi ve optimizasyon mantığı.":"Results-focused evaluation of campaigns and optimization logic.",
+      "Analitik & Raporlama":"Analytics & Reporting",
+      "Veriye dayalı karar almak için temel metrikleri okuma ve yorumlama.":"Reading and interpreting key metrics to make data-driven decisions.",
+      "Performans Takibi":"Performance Tracking",
+      "Yapılan çalışmaların etkisini sürekli izleme ve gelişim alanlarını belirleme.":"Continuously monitoring the impact of your work and identifying areas to improve.",
+      "Araçlar & Kaynaklar":"Tools & Resources",
+      "Dijital araçlar, içerik planlama sistemleri ve temel iş akışı kaynakları.":"Digital tools, content planning systems and core workflow resources.",
+      "Başlayalım":"Let's Begin",
+      "Markanız için doğru dijital yapıyı birlikte oluşturalım.":"Let's build the right digital structure for your brand together.",
+      "Dijitalde daha güçlü, daha planlı ve daha profesyonel bir görünüm için bize ulaşın. İhtiyacınıza uygun çözümleri birlikte değerlendirelim.":"Get in touch for a stronger, more deliberate and more professional presence in digital. Let's evaluate the solutions that fit your needs together.",
+      "İletişime Geçin":"Get in Touch",
+      "Strateji, tasarım ve":"Strategy, design and",
+      "içeriği tek çatıda":"content, united",
+      "birleştiren ajans.":"under one roof.",
+      "Boost Media 360, markaların dijital potansiyelini ortaya çıkarmak için strateji, reklam, tasarım ve içeriği tek çatı altında buluşturan yaratıcı bir ajanstır. Her markanın ihtiyacı, hedef kitlesi ve iletişim dili farklıdır.":"Boost Media 360 is a creative agency that brings strategy, advertising, design and content under one roof to unlock the digital potential of brands. Every brand's needs, audience and communication style are different.",
+      "Bu nedenle hazır kalıplarla değil; markaya özel, planlı ve güçlü çözümlerle ilerleriz. Amacımız, markaları dijitalde yalnızca görünür kılmak değil; doğru algı ve doğru iletişimle kalıcı bir etki oluşturmaktır.":"That's why we work not with ready-made templates but with brand-specific, planned and powerful solutions. Our goal is not just to make brands visible in digital, but to create lasting impact through the right perception and the right communication.",
+      "Vizyon":"Vision",
+      "Yenilikçi ve güvenilir çözümlerle dijital iletişimde uzun vadeli değer üreten öncü ajans.":"A pioneering agency creating long-term value in digital communication through innovative and reliable solutions.",
+      "Misyon":"Mission",
+      "Her markanın özgün yapısını doğru stratejiyle ele alarak dijitalde güçlü bir duruş kazandırmak.":"To give every brand a strong digital presence by addressing its unique character with the right strategy.",
+      "\"Ne yaptığını bilen, süreci yönetebilen, tasarım ve stratejiyi bir arada düşünebilen profesyonel bir ekip.\"":"\"A professional team that knows what it's doing, can manage the process, and thinks about design and strategy together.\"",
+      "Konum":"Location",
+      "İzmir, Türkiye":"İzmir, Turkey",
+      "Çalışma Saatleri":"Working Hours",
+      "Pzt–Cum: 09:00–00:00":"Mon–Fri: 09:00–00:00",
+      "Cts–Pzr: 09:00–23:00":"Sat–Sun: 09:00–23:00",
+      "Bizimle İletişime Geçin":"Get in Touch With Us",
+      "Markanız için doğru dijital stratejiyi birlikte kuralım. Hizmetlerimiz, çalışma modelimiz ve eğitimlerimiz hakkında detaylı bilgi almak için formu doldurun.":"Let's build the right digital strategy for your brand together. Fill out the form to get detailed information about our services, working model and trainings.",
+      "Seçilen Paket Özeti":"Selected Package Summary",
+      "Temizle ×":"Clear ×",
+      "Ad Soyad":"Full Name",
+      "Marka / Şirket":"Brand / Company",
+      "Telefon":"Phone",
+      "E-posta":"Email",
+      "Hizmet Türü":"Service Type",
+      "Hizmet seçin...":"Select a service...",
+      "📦 Paket Yapılandırması":"📦 Package Configuration",
+      "Eğitim":"Training",
+      "Mesaj":"Message",
+      "Mesaj Gönder":"Send Message",
+      "İletişim Bilgileri":"Contact Information",
+      "Pazartesi – Cuma":"Monday – Friday",
+      "Cumartesi":"Saturday",
+      "Pazar":"Sunday",
+      "Şu an müsait":"Available now",
+      "Hızlı Menü":"Quick Menu",
+      "Dijital reklam, sosyal medya ve yaratıcı içerik çözümleri. İzmir merkezli, global deneyimli ajans.":"Digital advertising, social media and creative content solutions. İzmir-based agency with global experience.",
+      "© 2026 Boost Media 360. Tüm hakları saklıdır.":"© 2026 Boost Media 360. All rights reserved.",
+      "İzmir, Türkiye — Dijital Reklam & Sosyal Medya Ajansı":"İzmir, Turkey — Digital Advertising & Social Media Agency"
+    },
+    es: {
+      "Hizmetler":"Servicios",
+      "Mağaza Kurma Eğitimi":"Formación para Crear tu Tienda",
+      "Amazon FBA & E-İhracat":"Amazon FBA y E-Exportación",
+      "Şirket kuruluşundan ilk satışınıza kadar tüm Amazon sürecini A'dan Z'ye yönetiyoruz. Eğitim ve birebir danışmanlıkla mağazanızı küresel pazara hazır hâle getiriyoruz.":"Desde la constitución de la empresa hasta tu primera venta, gestionamos todo el proceso de Amazon de la A a la Z. Con formación y consultoría personalizada, dejamos tu tienda lista para el mercado global.",
+      "Şirket Kurulumu":"Constitución de Empresa",
+      "Yurt dışı veya Türkiye şirketi kuruluş sürecinin baştan sona yönetimi.":"Gestión integral del proceso de constitución de tu empresa, en el extranjero o en Turquía.",
+      "Vergi Numarası İşlemleri":"Trámites de Número Fiscal",
+      "EIN/ITIN ve gerekli vergi numaralarının alınmasında tam rehberlik.":"Asesoramiento completo para obtener el EIN/ITIN y los números fiscales necesarios.",
+      "Amazon Satıcı Hesabı Açılışı":"Apertura de Cuenta de Vendedor Amazon",
+      "Seller Central hesabının doğru ülke ve kategoride güvenle açılması.":"Apertura segura de tu cuenta de Seller Central en el país y la categoría correctos.",
+      "Marka Tescil Desteği":"Soporte de Registro de Marca",
+      "Marka başvurusu ve tescil sürecinde uçtan uca destek.":"Soporte integral durante el proceso de solicitud y registro de marca.",
+      "Brand Registry Kaydı":"Alta en Brand Registry",
+      "Amazon Brand Registry kaydı ve marka korumasının aktifleştirilmesi.":"Alta en Amazon Brand Registry y activación de la protección de marca.",
+      "Ürün Listeleme ve Optimizasyonu":"Listado y Optimización de Productos",
+      "SEO uyumlu başlık, görsel ve içerikle dönüşüm odaklı listeleme.":"Listados orientados a conversión con títulos, imágenes y textos optimizados para SEO.",
+      "FBA Kurulum ve Lojistik Desteği":"Configuración FBA y Soporte Logístico",
+      "FBA gönderim planı, etiketleme ve depo yönlendirme süreçleri.":"Planes de envío FBA, etiquetado y enrutamiento de almacén.",
+      "Reklam (PPC) Yönetimi":"Gestión de Publicidad (PPC)",
+      "Sponsored Products kampanyalarıyla kârlı ve ölçülebilir reklam yönetimi.":"Gestión de anuncios rentable y medible con campañas de Sponsored Products.",
+      "Hesap Yönetimi ve Destek":"Gestión de Cuenta y Soporte",
+      "Düzenli takip, raporlama ve kesintisiz operasyon desteği.":"Seguimiento continuo, informes y soporte de operaciones ininterrumpido.",
+      "Ürün Araştırması ve Pazar Analizi":"Investigación de Productos y Análisis de Mercado",
+      "Veri odaklı analizle kazançlı ürün ve niş tespiti.":"Análisis basado en datos para identificar productos y nichos rentables.",
+      "Ücretsiz Ön Görüşme Al":"Solicita una Consulta Gratuita",
+      "A'dan Z'ye tam destek ve mentorluk":"Soporte y mentoría completos de la A a la Z",
+      "Paketler":"Paquetes",
+      "Sektörler":"Sectores",
+      "Referanslar":"Referencias",
+      "Eğitimler":"Formación",
+      "Hakkımızda":"Nosotros",
+      "İletişim":"Contacto",
+      "Teklif Alın":"Solicitar Oferta",
+      "Dijital Pazarlama & Sosyal Medya":"Marketing Digital y Redes Sociales",
+      "Markanızı":"Tu marca",
+      "dijitalde":"en digital,",
+      "güçlendiriyoruz.":"potenciada.",
+      "Strateji, içerik ve tasarımı bir araya getirerek markanızı dijitalde kalıcı bir etkiyle konumlandırıyoruz.":"Unimos estrategia, contenido y diseño para posicionar tu marca en el mundo digital con un impacto duradero.",
+      "Hizmetlerimizi Keşfedin":"Descubre Nuestros Servicios",
+      "Sosyal Medya Yönetimi":"Gestión de Redes Sociales",
+      "Dijital Reklam":"Publicidad Digital",
+      "İçerik Üretimi":"Producción de Contenido",
+      "Markalama":"Branding",
+      "Strateji & Danışmanlık":"Estrategia y Consultoría",
+      "Kreatif Tasarım":"Diseño Creativo",
+      "Performans Reklamcılığı":"Publicidad de Resultados",
+      "Marka Kimliği":"Identidad de Marca",
+      "12+ Ülke Deneyimi":"Experiencia en 12+ Países",
+      "1400+ Müşteri":"1400+ Clientes",
+      "Müşteri Portföyü":"Cartera de Clientes",
+      "Farklı sektörden marka ile çalıştık":"Marcas de diferentes sectores con las que trabajamos",
+      "Global Erişim":"Alcance Global",
+      "+ ülke":"+ países",
+      "Uluslararası kampanya deneyimi":"Experiencia en campañas internacionales",
+      "Memnuniyet Skoru":"Índice de Satisfacción",
+      "Müşteri ve ekip memnuniyeti":"Satisfacción de clientes y equipo",
+      "Tüm projeler":"Todos los proyectos",
+      "başarıyla tamamlandı":"completados con éxito",
+      "Dijitalde ihtiyacınız olan":"Todo lo que necesitas",
+      "her şey, tek bir çatıda.":"en digital, bajo un solo techo.",
+      "Strateji, yaratıcı içerik, reklam yönetimi ve marka kimliğini bir arada ele alarak dijital sürecinizi profesyonelce yönetiyoruz.":"Integrando estrategia, contenido creativo, gestión de anuncios e identidad de marca, gestionamos tu proceso digital de forma profesional.",
+      "Markanızın dijital dünyada güçlü, güven veren ve ayırt edilebilir bir kimlik kazanması için stratejik bir temel oluşturuyoruz. İletişim dili, görsel bütünlük ve dijital duruş gibi temel unsurları bir araya getiriyoruz.":"Construimos una base estratégica para que tu marca logre una identidad fuerte, confiable y distintiva en el mundo digital. Reunimos elementos clave como el tono de comunicación, la coherencia visual y la presencia digital.",
+      "Kreatif":"Creatividad",
+      "Markanızı dijitalde fark ettiren yaratıcı fikirler ve görsel yaklaşımlar geliştiriyoruz. Hedef kitlenizin dikkatini çeken, marka algınızı güçlendiren modern kreatif çözümler sunuyoruz.":"Desarrollamos ideas creativas y enfoques visuales que hacen que tu marca destaque en lo digital. Ofrecemos soluciones creativas modernas que captan la atención de tu público y refuerzan la percepción de tu marca.",
+      "Markanızın hikayesini dijital mecralara uygun, estetik ve planlı bir içerik yapısıyla sunuyoruz. Görsel tasarım, metin dili, içerik akışı ve platform uyumunu birlikte ele alıyoruz.":"Presentamos la historia de tu marca con una estructura de contenido estética y planificada, adaptada a los canales digitales. Abordamos en conjunto el diseño visual, el lenguaje del texto, el flujo de contenido y la adaptación a cada plataforma.",
+      "Sosyal medya hesaplarınızı yalnızca aktif tutmakla kalmıyor; markanızın hedeflerine uygun şekilde planlıyoruz. İçerik takvimi, iletişim dili ve topluluk etkileşimini yönetiyoruz.":"No solo mantenemos activas tus cuentas de redes sociales; las planificamos según los objetivos de tu marca. Gestionamos el calendario de contenido, el tono de comunicación y la interacción con la comunidad.",
+      "Reklam Yönetimi":"Gestión de Anuncios",
+      "Dijital reklam süreçlerini hedef kitle, bütçe, platform ve performans dengesiyle yönetiyoruz. Markanızın doğru kişilere, doğru zamanda ve doğru mesajla ulaşması için reklam kampanyalarınızı stratejik olarak kurguluyoruz.":"Gestionamos los procesos de publicidad digital con el equilibrio adecuado entre público, presupuesto, plataforma y rendimiento. Diseñamos tus campañas de forma estratégica para que tu marca llegue a las personas correctas, en el momento correcto y con el mensaje correcto.",
+      "Markanızın mevcut durumunu analiz ederek daha sağlam bir dijital yol haritası oluşturuyoruz. Büyüme hedefleri, içerik yapısı, reklam yaklaşımı ve marka algısını bir bütün olarak değerlendiriyoruz.":"Analizamos la situación actual de tu marca para crear una hoja de ruta digital más sólida. Evaluamos en conjunto los objetivos de crecimiento, la estructura de contenido, el enfoque publicitario y la percepción de marca.",
+      "Fiyatlandırma":"Precios",
+      "Paketinizi Özelleştirin":"Personaliza Tu Paquete",
+      "İhtiyacınıza göre hizmetleri seçin, miktarları belirleyin ve markanıza özel bir dijital plan oluşturun.":"Elige los servicios según tus necesidades, define las cantidades y crea un plan digital a medida para tu marca.",
+      "Hizmetleri seçin, miktarları ayarlayın — size özel teklif oluşturalım.":"Selecciona servicios, ajusta las cantidades — creemos una oferta personalizada para ti.",
+      "Esnek":"Flexible",
+      "Seçiminize göre fiyatlanır":"Precio según tu selección",
+      "Hizmetleri yapılandırın":"Configura los servicios",
+      "Sosyal Medya İçerik Üretimi":"Producción de Contenido para Redes",
+      "Aylık Post Sayısı":"Publicaciones Mensuales",
+      "Aylık Video Sayısı":"Videos Mensuales",
+      "Website Tasarımı":"Diseño Web",
+      "Tek Sayfalı (Landing)":"Una Página (Landing)",
+      "Kurumsal Web Sitesi":"Sitio Web Corporativo",
+      "E-Ticaret Sitesi":"Tienda Online",
+      "Ekstra hizmetler":"Servicios extra",
+      "Kartvizit Tasarımı":"Diseño de Tarjeta de Visita",
+      "Logo Tasarımı":"Diseño de Logo",
+      "Eklemek istediğiniz bir şey var mı?":"¿Algo que quieras añadir?",
+      "Her pakette şunlar dahildir":"Incluido en cada paquete",
+      "Hizmetleri tek tek seçebilme":"Selección de servicios uno por uno",
+      "İhtiyacınıza göre özelleştirilebilir yapı":"Una estructura personalizable según tus necesidades",
+      "Esnek aylık veya yıllık planlama":"Planificación flexible mensual o anual",
+      "Markanıza özel danışmanlık desteği":"Soporte de consultoría a medida para tu marca",
+      "Size Özel Teklif Al":"Obtén Tu Oferta Personalizada",
+      "Sektörel Deneyim":"Experiencia Sectorial",
+      "Deneyim Gösterdiğimiz Sektörler":"Sectores en los que Tenemos Experiencia",
+      "Farklı sektörlerde edindiğimiz deneyim sayesinde her markanın dinamiklerine, hedef kitlesine ve iletişim ihtiyacına uygun dijital çözümler geliştiriyoruz.":"Gracias a la experiencia adquirida en distintos sectores, desarrollamos soluciones digitales adaptadas a la dinámica, el público y las necesidades de comunicación de cada marca.",
+      "Perakende & E-ticaret":"Retail y E-Commerce",
+      "Dönüşüm odaklı kampanyalar":"Campañas orientadas a conversión",
+      "Güzellik & Sağlık":"Belleza y Salud",
+      "Premium marka algısı":"Percepción de marca premium",
+      "Turizm & Konaklama":"Turismo y Hostelería",
+      "Görünürlük ve rezervasyon":"Visibilidad y reservas",
+      "Yiyecek & İçecek":"Alimentos y Bebidas",
+      "Marka ve müşteri bağı":"Vínculo entre marca y cliente",
+      "Emlak & Gayrimenkul":"Inmobiliaria y Bienes Raíces",
+      "Güven ve prestij iletişimi":"Comunicación de confianza y prestigio",
+      "Eğitim & Danışmanlık":"Educación y Consultoría",
+      "Uzmanlık ve otorite":"Especialización y autoridad",
+      "Neden Biz":"Por Qué Nosotros",
+      "Neden Boost":"¿Por qué Boost",
+      "Markanızın ihtiyacını derinlemesine anlayıp, sonuç odaklı bir yaklaşımla dijital sürecinizi yönetiyoruz.":"Entendemos a fondo las necesidades de tu marca y gestionamos tu proceso digital con un enfoque orientado a resultados.",
+      "Bizimle Çalışın":"Trabaja Con Nosotros",
+      "Strateji ile tasarımı aynı çizgide buluşturan ajans yaklaşımı":"Un enfoque de agencia que alinea estrategia y diseño",
+      "Yaratıcı düşünce ve stratejik bakış açısı bir arada.":"Pensamiento creativo y visión estratégica, juntos.",
+      "Farklı sektörlerde deneyimli, çok yönlü ekip yapısı":"Un equipo versátil con experiencia en distintos sectores",
+      "6 farklı sektörde kanıtlanmış kampanya deneyimi.":"Experiencia comprobada en campañas en 6 sectores diferentes.",
+      "Markaya özel çözüm geliştiren esnek çalışma modeli":"Un modelo de trabajo flexible que crea soluciones a medida para cada marca",
+      "Hazır kalıp yok; her marka için özgün strateji.":"Sin plantillas; una estrategia original para cada marca.",
+      "Görünürlüğe değil, marka algısı ve süreçlere odaklanma":"Enfoque en la percepción de marca y los procesos, no solo en la visibilidad",
+      "Sadece takipçi değil; gerçek marka değeri.":"No solo seguidores; valor de marca real.",
+      "Planlı, tutarlı ve profesyonel iletişim anlayışı":"Una comunicación planificada, coherente y profesional",
+      "Her adımda ölçülebilir, şeffaf ve güvenilir süreç.":"Un proceso medible, transparente y fiable en cada paso.",
+      "Projeler & İş Birlikleri":"Proyectos y Colaboraciones",
+      "Farklı sektörlerde yürüttüğümüz dijital reklam, sosyal medya ve yaratıcı içerik projeleriyle markalara görünürlük, algı ve iletişim gücü kazandırıyoruz.":"A través de proyectos de publicidad digital, redes sociales y contenido creativo en distintos sectores, aportamos a las marcas visibilidad, percepción y poder de comunicación.",
+      "Sosyal Medya":"Redes Sociales",
+      "Perakende & E-ticaret Markaları":"Marcas de Retail y E-Commerce",
+      "Ürün odaklı içerik yönetimi, reklam kampanyaları ve marka kimliği çalışmaları.":"Gestión de contenido orientada al producto, campañas publicitarias y trabajo de identidad de marca.",
+      "Referans Talep Et":"Solicitar Referencias",
+      "12+ ülkede yürütülen uluslararası kampanyalar ve çok dilli içerik stratejileri.":"Campañas internacionales realizadas en más de 12 países y estrategias de contenido multilingüe.",
+      "Güzellik & Sağlık Markaları":"Marcas de Belleza y Salud",
+      "Premium görsel kimlik, içerik üretimi ve hedef kitle odaklı dijital iletişim yönetimi.":"Identidad visual premium, producción de contenido y gestión de comunicación digital orientada al público.",
+      "Daha fazla referans için bizimle iletişime geçin.":"Contáctanos para ver más referencias.",
+      "Sektörünüze özel örnek çalışmalarımızı paylaşalım.":"Compartamos casos de estudio específicos para tu sector.",
+      "Referans Talep Edin":"Solicitar Referencias",
+      "Sosyal medyayı":"Convierte las redes",
+      "bir marka aracına":"sociales en una",
+      "dönüştürün.":"herramienta de marca.",
+      "Boost Media 360 sosyal medya eğitimleri; markaların, ekiplerin ve bireysel katılımcıların dijital iletişim süreçlerini daha bilinçli, daha planlı ve daha etkili yönetebilmeleri için tasarlanmıştır.":"Las formaciones en redes sociales de Boost Media 360 están diseñadas para que marcas, equipos y participantes individuales gestionen sus procesos de comunicación digital de forma más consciente, planificada y eficaz.",
+      "Eğitimler; yalnızca içerik üretimini değil, markanın dijitalde nasıl konumlanacağını, hangi hedeflere göre hareket edeceğini ve hangi ölçümlerle ilerlemesi gerektiğini de kapsar. Sosyal medya, ölçülebilir ve yönetilebilir bir marka aracına dönüşür.":"Las formaciones abarcan no solo la producción de contenido, sino también cómo debe posicionarse una marca en lo digital, según qué objetivos actuar y con qué métricas avanzar. Las redes sociales se convierten en una herramienta de marca medible y gestionable.",
+      "Eğitim Bilgisi Alın":"Solicitar Información de Formación",
+      "Sosyal Medya Stratejisi Oluşturma":"Creación de una Estrategia de Redes Sociales",
+      "Marka hedeflerine uygun sosyal medya çizgisi kurma ve platform seçimi.":"Definir una línea de redes sociales acorde a los objetivos de marca y elegir las plataformas.",
+      "Hedef Kitle Analizi":"Análisis del Público Objetivo",
+      "Kitlenin davranışlarını, beklentilerini ve iletişim dilini doğru analiz etme.":"Analizar correctamente el comportamiento, las expectativas y el lenguaje de comunicación del público.",
+      "Hedef Belirleme & KPI Planlama":"Definición de Objetivos y Planificación de KPI",
+      "Sosyal medya sürecini ölçülebilir kılmak için hedef ve performans göstergeleri.":"Objetivos e indicadores de rendimiento para hacer medible el proceso en redes sociales.",
+      "İçerik Üretimi & Yönetimi":"Producción y Gestión de Contenido",
+      "Planlı, tutarlı ve marka kimliğiyle uyumlu içerik akışları oluşturma.":"Crear flujos de contenido planificados, coherentes y alineados con la identidad de marca.",
+      "Görsel İçerik Tasarımı":"Diseño de Contenido Visual",
+      "Dijital mecralarda dikkat çeken, estetik ve profesyonel görsel yapılar.":"Estructuras visuales atractivas, estéticas y profesionales para los canales digitales.",
+      "Video İçerik Üretimi":"Producción de Contenido en Video",
+      "Platform dinamiklerine uygun kısa format video içerik mantığı.":"Lógica de contenido de video de formato corto adaptada a la dinámica de cada plataforma.",
+      "Dijital reklam kampanyalarının hedef kitle ve bütçe bazlı planlanması.":"Planificación de campañas de publicidad digital según público y presupuesto.",
+      "Reklam Türleri, Hedefleme & Bütçe":"Tipos de Anuncios, Segmentación y Presupuesto",
+      "Doğru reklam modelini seçme ve bütçeyi verimli kullanma.":"Elegir el modelo de anuncio correcto y usar el presupuesto de forma eficiente.",
+      "Reklam Performans Analizi":"Análisis del Rendimiento de Anuncios",
+      "Kampanyaların sonuç odaklı değerlendirilmesi ve optimizasyon mantığı.":"Evaluación de campañas orientada a resultados y lógica de optimización.",
+      "Analitik & Raporlama":"Analítica e Informes",
+      "Veriye dayalı karar almak için temel metrikleri okuma ve yorumlama.":"Leer e interpretar las métricas clave para tomar decisiones basadas en datos.",
+      "Performans Takibi":"Seguimiento del Rendimiento",
+      "Yapılan çalışmaların etkisini sürekli izleme ve gelişim alanlarını belirleme.":"Monitorear continuamente el impacto del trabajo e identificar áreas de mejora.",
+      "Araçlar & Kaynaklar":"Herramientas y Recursos",
+      "Dijital araçlar, içerik planlama sistemleri ve temel iş akışı kaynakları.":"Herramientas digitales, sistemas de planificación de contenido y recursos básicos de flujo de trabajo.",
+      "Başlayalım":"Empecemos",
+      "Markanız için doğru dijital yapıyı birlikte oluşturalım.":"Construyamos juntos la estructura digital adecuada para tu marca.",
+      "Dijitalde daha güçlü, daha planlı ve daha profesyonel bir görünüm için bize ulaşın. İhtiyacınıza uygun çözümleri birlikte değerlendirelim.":"Contáctanos para lograr una presencia digital más fuerte, planificada y profesional. Evaluemos juntos las soluciones que se ajusten a tus necesidades.",
+      "İletişime Geçin":"Ponte en Contacto",
+      "Strateji, tasarım ve":"Estrategia, diseño y",
+      "içeriği tek çatıda":"contenido, unidos",
+      "birleştiren ajans.":"bajo un mismo techo.",
+      "Boost Media 360, markaların dijital potansiyelini ortaya çıkarmak için strateji, reklam, tasarım ve içeriği tek çatı altında buluşturan yaratıcı bir ajanstır. Her markanın ihtiyacı, hedef kitlesi ve iletişim dili farklıdır.":"Boost Media 360 es una agencia creativa que reúne estrategia, publicidad, diseño y contenido bajo un mismo techo para revelar el potencial digital de las marcas. Cada marca tiene necesidades, un público y un lenguaje de comunicación distintos.",
+      "Bu nedenle hazır kalıplarla değil; markaya özel, planlı ve güçlü çözümlerle ilerleriz. Amacımız, markaları dijitalde yalnızca görünür kılmak değil; doğru algı ve doğru iletişimle kalıcı bir etki oluşturmaktır.":"Por eso no trabajamos con plantillas predefinidas, sino con soluciones a medida, planificadas y potentes. Nuestro objetivo no es solo hacer visibles a las marcas en lo digital, sino crear un impacto duradero con la percepción y la comunicación correctas.",
+      "Vizyon":"Visión",
+      "Yenilikçi ve güvenilir çözümlerle dijital iletişimde uzun vadeli değer üreten öncü ajans.":"Una agencia pionera que genera valor a largo plazo en la comunicación digital mediante soluciones innovadoras y fiables.",
+      "Misyon":"Misión",
+      "Her markanın özgün yapısını doğru stratejiyle ele alarak dijitalde güçlü bir duruş kazandırmak.":"Dar a cada marca una posición sólida en lo digital, abordando su carácter único con la estrategia adecuada.",
+      "\"Ne yaptığını bilen, süreci yönetebilen, tasarım ve stratejiyi bir arada düşünebilen profesyonel bir ekip.\"":"\"Un equipo profesional que sabe lo que hace, gestiona el proceso y piensa el diseño y la estrategia en conjunto.\"",
+      "Konum":"Ubicación",
+      "İzmir, Türkiye":"İzmir, Turquía",
+      "Çalışma Saatleri":"Horario de Atención",
+      "Pzt–Cum: 09:00–00:00":"Lun–Vie: 09:00–00:00",
+      "Cts–Pzr: 09:00–23:00":"Sáb–Dom: 09:00–23:00",
+      "Bizimle İletişime Geçin":"Ponte en Contacto con Nosotros",
+      "Markanız için doğru dijital stratejiyi birlikte kuralım. Hizmetlerimiz, çalışma modelimiz ve eğitimlerimiz hakkında detaylı bilgi almak için formu doldurun.":"Construyamos juntos la estrategia digital adecuada para tu marca. Completa el formulario para obtener información detallada sobre nuestros servicios, modelo de trabajo y formaciones.",
+      "Seçilen Paket Özeti":"Resumen del Paquete Seleccionado",
+      "Temizle ×":"Borrar ×",
+      "Ad Soyad":"Nombre Completo",
+      "Marka / Şirket":"Marca / Empresa",
+      "Telefon":"Teléfono",
+      "E-posta":"Correo electrónico",
+      "Hizmet Türü":"Tipo de Servicio",
+      "Hizmet seçin...":"Selecciona un servicio...",
+      "📦 Paket Yapılandırması":"📦 Configuración de Paquete",
+      "Eğitim":"Formación",
+      "Mesaj":"Mensaje",
+      "Mesaj Gönder":"Enviar Mensaje",
+      "İletişim Bilgileri":"Información de Contacto",
+      "Pazartesi – Cuma":"Lunes – Viernes",
+      "Cumartesi":"Sábado",
+      "Pazar":"Domingo",
+      "Şu an müsait":"Disponible ahora",
+      "Hızlı Menü":"Menú Rápido",
+      "Dijital reklam, sosyal medya ve yaratıcı içerik çözümleri. İzmir merkezli, global deneyimli ajans.":"Soluciones de publicidad digital, redes sociales y contenido creativo. Agencia con sede en İzmir y experiencia global.",
+      "© 2026 Boost Media 360. Tüm hakları saklıdır.":"© 2026 Boost Media 360. Todos los derechos reservados.",
+      "İzmir, Türkiye — Dijital Reklam & Sosyal Medya Ajansı":"İzmir, Turquía — Agencia de Publicidad Digital y Redes Sociales"
+    }
+  };
+
+  /* ─────────── Placeholder (attribute) translations ─────────── */
+  var A = {
+    en: {
+      "Adınız Soyadınız":"Your Full Name",
+      "Şirket veya Marka Adı":"Company or Brand Name",
+      "ornek@sirket.com":"name@company.com",
+      "Projeniz veya markanız hakkında kısaca bilgi verin...":"Tell us briefly about your project or brand...",
+      "İsteğinizi kısaca belirtiniz...":"Briefly describe your request..."
+    },
+    es: {
+      "Adınız Soyadınız":"Tu Nombre Completo",
+      "Şirket veya Marka Adı":"Nombre de Empresa o Marca",
+      "ornek@sirket.com":"nombre@empresa.com",
+      "Projeniz veya markanız hakkında kısaca bilgi verin...":"Cuéntanos brevemente sobre tu proyecto o marca...",
+      "İsteğinizi kısaca belirtiniz...":"Describe brevemente tu solicitud..."
+    }
+  };
+
+  /* ─────────── <title> + meta description ─────────── */
+  var META = {
+    title: {
+      tr: "Boost Media 360 — Dijital Reklam & Sosyal Medya Ajansı",
+      en: "Boost Media 360 — Digital Advertising & Social Media Agency",
+      es: "Boost Media 360 — Agencia de Publicidad Digital y Redes Sociales"
+    },
+    desc: {
+      tr: "Boost Media 360 — Dijital reklam, sosyal medya yönetimi ve yaratıcı içerik çözümleri. İzmir merkezli, 12+ ülkede deneyimli stratejik dijital ajans.",
+      en: "Boost Media 360 — Digital advertising, social media management and creative content solutions. İzmir-based strategic digital agency with experience in 12+ countries.",
+      es: "Boost Media 360 — Publicidad digital, gestión de redes sociales y soluciones de contenido creativo. Agencia digital estratégica con sede en İzmir y experiencia en más de 12 países."
+    }
+  };
+
+  /* ─────────── Dynamic strings used by JS (form / package builder) ─────────── */
+  var D = {
+    tr: { smContent:"Sosyal Medya İçerik Üretimi", ads:"Reklam Yönetimi", website:"Website Tasarımı", extras:"Ekstra hizmetler", postWord:"post", videoMonthly:"video (aylık)", note:"Özel not:", nothing:"(Henüz hizmet seçilmedi — lütfen mesajınıza ekleyin)", header:"--- Paket Yapılandırmam ---", sending:"Gönderiliyor...", sent:"Mesajınız İletildi", error:"⚠ Hata — Tekrar Deneyin" },
+    en: { smContent:"Social Media Content Production", ads:"Ad Management", website:"Website Design", extras:"Extra services", postWord:"posts", videoMonthly:"videos (monthly)", note:"Custom note:", nothing:"(No service selected yet — please add it to your message)", header:"--- My Package Configuration ---", sending:"Sending...", sent:"Message Sent", error:"⚠ Error — Try Again" },
+    es: { smContent:"Producción de Contenido para Redes", ads:"Gestión de Anuncios", website:"Diseño Web", extras:"Servicios extra", postWord:"publicaciones", videoMonthly:"videos (mensual)", note:"Nota personalizada:", nothing:"(Aún no se ha seleccionado ningún servicio — por favor añádelo a tu mensaje)", header:"--- Mi Configuración de Paquete ---", sending:"Enviando...", sent:"Mensaje Enviado", error:"⚠ Error — Inténtalo de nuevo" }
+  };
+
+  /* ─────────── Engine ─────────── */
+  var LANGS = ['tr','en','es'];
+  function norm(s){ return (s==null?'':String(s)).replace(/\s+/g,' ').trim(); }
+
+  var _nodes = null;
+  function collect(){
+    _nodes = [];
+    var walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, {
+      acceptNode: function(n){
+        var p = n.parentNode;
+        if(!p) return NodeFilter.FILTER_REJECT;
+        var tag = p.nodeName;
+        if(tag==='SCRIPT'||tag==='STYLE'||tag==='NOSCRIPT'||tag==='TEXTAREA') return NodeFilter.FILTER_REJECT;
+        if(p.closest && p.closest('#lang-dd, .lang-seg')) return NodeFilter.FILTER_REJECT;
+        if(!n.nodeValue || !n.nodeValue.trim()) return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    });
+    var node;
+    while((node = walker.nextNode())){
+      var o = node.nodeValue;
+      _nodes.push({ n:node, o:o, k:norm(o),
+        l:(o.match(/^\s*/)||[''])[0], t:(o.match(/\s*$/)||[''])[0] });
+    }
+  }
+
+  function applyText(lang){
+    if(!_nodes) collect();
+    var dict = (lang==='tr') ? null : T[lang];
+    for(var i=0;i<_nodes.length;i++){
+      var it = _nodes[i];
+      if(!dict){ if(it.n.nodeValue!==it.o) it.n.nodeValue = it.o; continue; }
+      var tr = dict[it.k];
+      if(tr!=null){ var v = it.l + tr + it.t; if(it.n.nodeValue!==v) it.n.nodeValue = v; }
+      else if(it.n.nodeValue!==it.o){ it.n.nodeValue = it.o; }
+    }
+  }
+
+  function applyAttrs(lang){
+    var ph = document.querySelectorAll('[placeholder]');
+    for(var i=0;i<ph.length;i++){
+      var el = ph[i];
+      if(el.getAttribute('data-ph0')===null) el.setAttribute('data-ph0', el.getAttribute('placeholder')||'');
+      var base = el.getAttribute('data-ph0');
+      if(lang==='tr'){ el.setAttribute('placeholder', base); }
+      else { var k = norm(base); var v = (A[lang] && A[lang][k]!=null) ? A[lang][k] : base; el.setAttribute('placeholder', v); }
+    }
+    var burger = document.getElementById('burger-btn');
+    if(burger){ burger.setAttribute('aria-label', ({tr:'Menü',en:'Menu',es:'Menú'})[lang] || 'Menü'); }
+    document.title = META.title[lang] || META.title.tr;
+    var md = document.querySelector('meta[name="description"]');
+    if(md) md.setAttribute('content', META.desc[lang] || META.desc.tr);
+  }
+
+  function updateUI(lang){
+    var btns = document.querySelectorAll('[data-lang]');
+    for(var i=0;i<btns.length;i++){ btns[i].classList.toggle('active', btns[i].getAttribute('data-lang')===lang); }
+    var cur = document.getElementById('lang-dd-current');
+    if(cur) cur.textContent = lang.toUpperCase();
+  }
+
+  window.bmGetLang = function(){ return window.__BM_LANG || 'tr'; };
+  window.bmT = function(k){ var l = window.__BM_LANG || 'tr'; return (D[l] && D[l][k]!=null) ? D[l][k] : (D.tr[k]!=null ? D.tr[k] : k); };
+
+  window.bmSetLang = function(lang, silent){
+    if(LANGS.indexOf(lang) < 0) lang = 'tr';
+    window.__BM_LANG = lang;
+    document.documentElement.setAttribute('lang', lang);
+    applyText(lang); applyAttrs(lang); updateUI(lang);
+    if(!silent){ try{ localStorage.setItem('bm_lang', lang); }catch(e){} }
+    var dd = document.getElementById('lang-dd'); if(dd) dd.classList.remove('open');
+    var ddb = document.getElementById('lang-dd-btn'); if(ddb) ddb.setAttribute('aria-expanded','false');
+  };
+
+  /* Dropdown open/close */
+  window.bmToggleLangDD = function(e){
+    if(e && e.stopPropagation) e.stopPropagation();
+    var dd = document.getElementById('lang-dd'); if(!dd) return;
+    var open = dd.classList.toggle('open');
+    var b = document.getElementById('lang-dd-btn'); if(b) b.setAttribute('aria-expanded', open?'true':'false');
+  };
+  document.addEventListener('click', function(e){
+    var dd = document.getElementById('lang-dd');
+    if(dd && !dd.contains(e.target)){ dd.classList.remove('open'); var b=document.getElementById('lang-dd-btn'); if(b) b.setAttribute('aria-expanded','false'); }
+  });
+  document.addEventListener('keydown', function(e){
+    if(e.key==='Escape' || e.keyCode===27){
+      var dd = document.getElementById('lang-dd');
+      if(dd && dd.classList.contains('open')){ dd.classList.remove('open'); var b=document.getElementById('lang-dd-btn'); if(b){ b.setAttribute('aria-expanded','false'); b.focus(); } }
+    }
+  });
+
+  /* ─────────── Auto-detection ─────────── */
+  function browserGuess(){
+    var ls = (navigator.languages && navigator.languages.length) ? navigator.languages : [navigator.language || navigator.userLanguage || ''];
+    for(var i=0;i<ls.length;i++){
+      var c = (ls[i]||'').toLowerCase().slice(0,2);
+      if(c==='tr') return 'tr';
+      if(c==='es') return 'es';
+      if(c==='en') return 'en';
+    }
+    return null;
+  }
+  var ES_CC = ['ES','MX','AR','CO','CL','PE','VE','EC','GT','CU','BO','DO','HN','PY','SV','NI','CR','PA','UY','GQ','PR'];
+  function ccToLang(cc){ cc=(cc||'').toUpperCase(); if(cc==='TR') return 'tr'; if(ES_CC.indexOf(cc)>-1) return 'es'; return 'en'; }
+
+  function init(){
+    collect();
+    var saved = null; try{ saved = localStorage.getItem('bm_lang'); }catch(e){}
+    if(saved && LANGS.indexOf(saved) > -1){ bmSetLang(saved, true); return; }
+
+    var guess = browserGuess();
+    if(guess){ bmSetLang(guess, true); return; }   // browser language is one we support → trust it
+
+    // Browser language not TR/EN/ES → show English now, then refine by IP location
+    bmSetLang('en', true);
+    try{
+      fetch('https://ipapi.co/json/').then(function(r){ return (r && r.ok) ? r.json() : null; }).then(function(d){
+        if(d && d.country_code){
+          var s=null; try{ s=localStorage.getItem('bm_lang'); }catch(e){}
+          if(!s) bmSetLang(ccToLang(d.country_code), true);
+        }
+      }).catch(function(){});
+    }catch(e){}
+  }
+
+  if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+  else init();
+})();
 </script>
 
 </body>
