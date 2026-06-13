@@ -789,7 +789,7 @@
         <a href="#sektorler"   class="nav-link">Sektörler</a>
         <a href="#referanslar" class="nav-link">Referanslar</a>
         <a href="#egitimler"   class="nav-link">Eğitimler</a>
-        <a href="#amazon"      class="nav-link nav-link-amazon">Amazon</a>
+        <a href="#amazon"      class="nav-link">Amazon</a>
         <a href="#hakkimizda"  class="nav-link">Hakkımızda</a>
         <a href="#iletisim"    class="nav-link">İletişim</a>
       </div>
@@ -833,7 +833,7 @@
       <a href="#sektorler"   class="nav-link" style="padding:11px 0;border-bottom:1px solid #182122;" onclick="closeMobile()">Sektörler</a>
       <a href="#referanslar" class="nav-link" style="padding:11px 0;border-bottom:1px solid #182122;" onclick="closeMobile()">Referanslar</a>
       <a href="#egitimler"   class="nav-link" style="padding:11px 0;border-bottom:1px solid #182122;" onclick="closeMobile()">Eğitimler</a>
-      <a href="#amazon"      class="nav-link nav-link-amazon" style="padding:11px 0;border-bottom:1px solid #182122;" onclick="closeMobile()">Amazon</a>
+      <a href="#amazon"      class="nav-link" style="padding:11px 0;border-bottom:1px solid #182122;" onclick="closeMobile()">Amazon</a>
       <a href="#hakkimizda"  class="nav-link" style="padding:11px 0;border-bottom:1px solid #182122;" onclick="closeMobile()">Hakkımızda</a>
       <a href="#iletisim"    class="nav-link" style="padding:11px 0;" onclick="closeMobile()">İletişim</a>
       <div style="padding-top:14px;">
@@ -1688,7 +1688,7 @@
       background:radial-gradient(circle, rgba(255,153,0,0.11) 0%, transparent 70%);
       pointer-events:none; z-index:0;
     }
-    .amazon-panel > *{ position:relative; z-index:1; }
+    .amazon-panel > *:not(.amazon-glow){ position:relative; z-index:1; }
     .amazon-eyebrow{
       display:inline-flex; align-items:center; gap:9px;
       font-family:'Outfit',sans-serif; font-size:0.72rem; font-weight:600;
@@ -1732,9 +1732,6 @@
     .amazon-btn:focus-visible{ outline:2px solid #ff9900; outline-offset:3px; }
     .amazon-note{ display:inline-flex; align-items:center; gap:8px; font-size:0.85rem; color:#aeb9c2; }
     .amazon-note svg{ color:#ff9900; flex-shrink:0; }
-    /* Orange nav entry for the Amazon section */
-    .nav-link-amazon{ color:#ff9900; }
-    .nav-link-amazon:hover{ color:#ffb84d; background:rgba(255,153,0,0.10); }
     @media (max-width:767px){
       .amazon-panel{ padding:36px 22px; border-radius:22px; }
       .amazon-grid{ grid-template-columns:1fr; }
