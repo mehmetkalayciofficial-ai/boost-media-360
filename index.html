@@ -744,6 +744,306 @@
       }
     }
 
+    /* ══════════════════════════════════════
+       VİTRİN — Referans siteler (mac pencere kartları)
+       Masaüstü: tek sıra sonsuz kayan şerit
+       Mobil: sağa/sola kaydırmalı kart dizisi
+    ══════════════════════════════════════ */
+    #vitrin {
+      position: relative;
+      z-index: 10;
+      padding: 64px 0 76px;
+      background: linear-gradient(to bottom, #080c0d, #090e0f 50%, #080c0d);
+      border-top: 1px solid #182122;
+      border-bottom: 1px solid #182122;
+    }
+    @media (min-width: 640px) { #vitrin { padding: 80px 0 92px; } }
+
+    .bmv-head { max-width: 80rem; margin: 0 auto; padding: 0 24px; text-align: center; }
+    @media (min-width: 1024px) { .bmv-head { padding: 0 40px; } }
+    .bmv-head .section-label { justify-content: center; }
+    .bmv-title {
+      margin-top: 14px;
+      font-family: 'Outfit', sans-serif;
+      font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      color: #f2f6f6;
+    }
+    .bmv-hl { color: #0ecece; text-shadow: 0 0 32px rgba(14,206,206,0.30); }
+
+    /* ── Kayan şerit ── */
+    .bmv-rows { margin-top: 36px; }
+    @media (min-width: 640px) { .bmv-rows { margin-top: 48px; } }
+    .bmv-marquee { overflow: hidden; }
+    .bmv-mask {
+      -webkit-mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent);
+              mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent);
+    }
+    .bmv-track {
+      display: flex;
+      width: max-content;
+      animation: bmv-marquee-x var(--bmv-duration, 60s) linear infinite;
+    }
+    .bmv-copy { display: flex; flex: none; }
+    .bmv-copy > * { flex: none; margin-right: var(--bmv-gap, 1.25rem); }
+    @keyframes bmv-marquee-x {
+      from { transform: translate3d(0, 0, 0); }
+      to   { transform: translate3d(-50%, 0, 0); }
+    }
+    /* Görüş alanı dışındayken ve satırın üzerine gelindiğinde dur */
+    .bmv-rows[data-paused="true"] .bmv-track { animation-play-state: paused !important; }
+    @media (hover: hover) {
+      .bmv-row:hover .bmv-track { animation-play-state: paused; }
+    }
+
+    /* ── Mac pencere kartı ── */
+    .bmv-card { position: relative; min-width: 0; width: 352px; }
+    @media (min-width: 1024px) { .bmv-card { width: 404px; } }
+    .bmv-open {
+      display: block; width: 100%; text-align: left;
+      background: none; border: 0; padding: 0; margin: 0;
+      font: inherit; color: inherit; cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .bmv-open:focus-visible { outline: 2px solid #0ecece; outline-offset: 4px; border-radius: 20px; }
+
+    .bmv-frame {
+      position: relative;
+      overflow: hidden;
+      border-radius: 18px;
+      border: 1px solid #182122;
+      background: #0d1314;
+      box-shadow: 0 2px 24px rgba(0,0,0,0.5), 0 1px 0 rgba(255,255,255,0.03);
+      transition: transform 0.4s cubic-bezier(0.22,1,0.36,1),
+                  box-shadow 0.4s ease-out,
+                  border-color 0.4s ease-out;
+    }
+    @media (hover: hover) {
+      .bmv-card:hover .bmv-frame {
+        transform: translateY(-4px);
+        border-color: #24393b;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.55),
+                    0 28px 56px -22px rgba(0,0,0,0.85),
+                    0 0 0 1px rgba(14,206,206,0.16),
+                    0 0 44px rgba(14,206,206,0.10);
+      }
+    }
+
+    .bmv-bar {
+      display: flex; align-items: center; gap: 8px;
+      border-bottom: 1px solid #182122;
+      background: #0d1314;
+      padding: 8px 12px;
+    }
+    .bmv-dots { display: flex; gap: 6px; flex: none; }
+    .bmv-dots i { display: block; width: 8px; height: 8px; border-radius: 999px; }
+    .bmv-url {
+      margin: 0 auto; max-width: 70%;
+      overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+      border-radius: 999px; background: #060a0b;
+      padding: 2px 10px;
+      font-family: 'Inter', sans-serif;
+      font-size: 10.5px; line-height: 1.6; color: #9ab0b2;
+    }
+    .bmv-ext { width: 12px; height: 12px; flex: none; color: #5e7476; transition: color 0.3s ease; }
+    @media (hover: hover) { .bmv-card:hover .bmv-ext { color: #0ecece; } }
+
+    /* ── Ekran görüntüsü penceresi (kendi içinde kayan) ── */
+    .bmv-vp {
+      position: relative;
+      overflow: hidden;
+      container-type: size;
+      background: #060a0b;
+      aspect-ratio: 16 / 10;
+    }
+    .bmv-img {
+      position: absolute; top: 0; left: 0; right: 0;
+      width: 100%; height: auto;
+      transform: translateY(0);
+      transition: transform 0.6s cubic-bezier(0.22,1,0.36,1);
+    }
+    .bmv-vp[data-playing="true"] .bmv-img {
+      transition: transform var(--bmv-scroll, 6s) cubic-bezier(0.4, 0, 0.55, 1);
+      transform: translateY(calc(100cqh - 100%));
+    }
+
+    /* ── Mobil kaydırmalı dizi ── */
+    .bmv-mobile { margin-top: 36px; }
+    .bmv-swipe { overflow: hidden; padding-inline: 7.5%; touch-action: pan-y; }
+    .bmv-strack {
+      display: flex;
+      width: 500%;
+      touch-action: pan-y;
+      transform: translate3d(-40%, 0, 0);
+    }
+    .bmv-slide {
+      flex: none; width: 20%;
+      opacity: 0.42;
+      transform: translate(5.5%) scale(0.89);
+      will-change: transform, opacity;
+    }
+    .bmv-slide:nth-child(n+4) { transform: translate(-5.5%) scale(0.89); }
+    .bmv-slide:nth-child(3) { opacity: 1; transform: none; }
+    .bmv-slide-pad { padding: 0 6px; }
+    .bmv-slide .bmv-bar { padding: 10px 12px; }
+    .bmv-slide .bmv-dots i { width: 10px; height: 10px; }
+    .bmv-slide .bmv-url { max-width: 75%; padding: 2px 12px; font-size: 11px; }
+    .bmv-slide .bmv-vp { aspect-ratio: 3 / 4.4; background: #0d1314; }
+
+    .bmv-shot-scroll .bmv-img {
+      animation: bmv-shot-scroll var(--bmv-scroll, 12s) cubic-bezier(0.5, 0, 0.85, 0.75) 0.7s forwards;
+    }
+    @keyframes bmv-shot-scroll {
+      from { transform: translateY(0); }
+      to   { transform: translateY(calc(100cqh - 100%)); }
+    }
+
+    .bmv-logo-row { margin-top: 16px; height: 32px; display: flex; align-items: center; justify-content: center; }
+    .bmv-logo-row img { max-height: 100%; width: auto; max-width: 8.5rem; object-fit: contain; opacity: 0.9; }
+    .bmv-sector {
+      margin-top: 6px; text-align: center;
+      font-family: 'Inter', sans-serif; font-size: 13px; color: #9ab0b2;
+    }
+    .bmv-incele {
+      margin-top: 8px;
+      display: flex; align-items: center; justify-content: center; gap: 6px;
+      font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 500; color: #0ecece;
+    }
+    .bmv-incele svg { width: 14px; height: 14px; }
+
+    .bmv-nav { margin-top: 20px; display: flex; align-items: center; justify-content: center; gap: 12px; }
+    .bmv-nav-btn {
+      display: grid; place-items: center;
+      width: 36px; height: 36px; border-radius: 999px;
+      border: 1px solid #182122; background: none; color: #9ab0b2;
+      cursor: pointer; padding: 0;
+      transition: border-color 0.25s ease, color 0.25s ease, background-color 0.25s ease;
+    }
+    .bmv-nav-btn:hover { border-color: #24393b; color: #f2f6f6; background: rgba(14,206,206,0.06); }
+    .bmv-nav-btn:focus-visible { outline: 2px solid #0ecece; outline-offset: 3px; }
+    .bmv-nav-btn svg { width: 16px; height: 16px; }
+    .bmv-count { font-family: 'Inter', sans-serif; font-size: 13px; color: #9ab0b2; font-variant-numeric: tabular-nums; }
+
+    .bmv-hint-touch {
+      max-width: 80rem; margin: 28px auto 0; padding: 0 24px;
+      text-align: center; font-family: 'Inter', sans-serif; font-size: 13px; color: #5e7476;
+    }
+    .bmv-hint-hover { display: none; margin-top: 32px; justify-content: center; padding: 0 24px; }
+    .bmv-hint-hover p {
+      display: inline-flex; align-items: center; gap: 8px;
+      border: 1px solid #182122; background: #0d1314;
+      border-radius: 16px; padding: 8px 16px;
+      font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 500; color: #dff0f0;
+    }
+    .bmv-hint-hover svg { width: 16px; height: 16px; flex: none; color: #0ecece; }
+    @media (hover: hover) {
+      .bmv-hint-touch { display: none; }
+      .bmv-hint-hover { display: flex; }
+    }
+
+    /* Masaüstü şerit yalnızca ≥640px, mobil dizi yalnızca <640px */
+    .bmv-rows { display: none; }
+    @media (min-width: 640px) {
+      .bmv-rows { display: block; }
+      .bmv-mobile { display: none; }
+    }
+
+    .bmv-sr {
+      position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+      overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+    }
+
+    /* ══ Tam ekran önizleme penceresi ══ */
+    .bmv-modal {
+      position: fixed; inset: 0; z-index: 500;
+      background: rgba(6,10,11,0.78);
+      -webkit-backdrop-filter: blur(24px); backdrop-filter: blur(24px);
+      opacity: 1;
+      transition: opacity 0.2s ease;
+    }
+    .bmv-modal[data-closing] { opacity: 0; }
+    .bmv-modal-inner {
+      margin: 0 auto; display: flex; flex-direction: column;
+      height: 100%; width: 100%; max-width: 1440px;
+      gap: 16px; padding: 16px;
+      transform: translateY(0);
+      transition: transform 0.2s ease;
+    }
+    .bmv-modal[data-closing] .bmv-modal-inner { transform: translateY(8px); }
+    @media (min-width: 640px) { .bmv-modal-inner { padding: 24px; } }
+    @media (min-width: 1024px) { .bmv-modal-inner { flex-direction: row; gap: 40px; padding: 36px; } }
+
+    .bmv-side { display: flex; flex-direction: column; flex: none; }
+    @media (min-width: 1024px) { .bmv-side { width: 330px; } }
+    @media (min-width: 1280px) { .bmv-side { width: 380px; } }
+    .bmv-side-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+    .bmv-side-idx { font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 500; color: #5e7476; font-variant-numeric: tabular-nums; }
+    .bmv-side-btns { display: flex; align-items: center; gap: 8px; }
+    .bmv-rbtn {
+      display: grid; place-items: center;
+      width: 36px; height: 36px; border-radius: 999px;
+      border: 1px solid #182122; background: none; color: #dff0f0;
+      cursor: pointer; padding: 0;
+      transition: border-color 0.25s ease, background-color 0.25s ease;
+    }
+    .bmv-rbtn:hover { border-color: #24393b; background: #0d1314; }
+    .bmv-rbtn:focus-visible { outline: 2px solid #0ecece; outline-offset: 3px; }
+    .bmv-rbtn svg { width: 16px; height: 16px; }
+    @media (min-width: 1024px) { .bmv-rbtn-m { display: none; } }
+    .bmv-modal-h3 {
+      margin-top: 16px;
+      font-family: 'Outfit', sans-serif;
+      font-size: clamp(1.6rem, 5vw, 2.6rem); font-weight: 700;
+      letter-spacing: -0.03em; line-height: 1.1; color: #f2f6f6;
+    }
+    .bmv-modal-sector { margin-top: 10px; }
+    .bmv-modal-detail { display: none; margin-top: 16px; max-width: 60ch; font-family: 'Inter', sans-serif; font-size: 15px; line-height: 1.7; color: #9ab0b2; }
+    .bmv-modal-scope { display: none; margin-top: 20px; flex-wrap: wrap; gap: 8px; list-style: none; padding: 0; }
+    @media (min-width: 640px) { .bmv-modal-detail { display: block; } .bmv-modal-scope { display: flex; } }
+    .bmv-modal-scope li {
+      border: 1px solid #182122; border-radius: 999px;
+      padding: 4px 12px; font-family: 'Inter', sans-serif; font-size: 12.5px; color: #9ab0b2;
+    }
+    .bmv-side-foot { display: none; margin-top: auto; padding-top: 32px; }
+    @media (min-width: 1024px) { .bmv-side-foot { display: block; } }
+    .bmv-side-foot .btn-primary { width: 100%; justify-content: center; }
+    .bmv-btn-ico { width: 15px; height: 15px; flex: none; }
+    .bmv-modal:focus { outline: none; }
+    .bmv-side-host { margin-top: 12px; text-align: center; font-family: 'Inter', sans-serif; font-size: 12.5px; color: #5e7476; }
+
+    .bmv-stage { position: relative; min-height: 0; flex: 1 1 auto; }
+    .bmv-close-lg { display: none; position: absolute; top: -4px; right: 0; z-index: 10; width: 40px; height: 40px; background: #060a0b; }
+    @media (min-width: 1024px) { .bmv-close-lg { display: grid; } }
+    .bmv-stage-in { display: flex; height: 100%; align-items: flex-start; justify-content: center; overflow: hidden; }
+    .bmv-bigframe { display: flex; flex-direction: column; height: 100%; width: 100%; }
+    .bmv-bigframe .bmv-bar { flex: none; padding: 10px 16px; }
+    .bmv-bigframe .bmv-dots i { width: 10px; height: 10px; }
+    .bmv-bigframe .bmv-url { max-width: 60%; padding: 4px 12px; font-size: 11.5px; }
+    .bmv-scrollbox {
+      min-height: 0; flex: 1 1 auto;
+      overflow-y: auto; overscroll-behavior: contain;
+      background: #060a0b;
+    }
+    .bmv-scrollbox img { display: block; width: 100%; height: auto; }
+    .bmv-bigfoot {
+      flex: none; border-top: 1px solid #182122; background: #0d1314;
+      padding: 8px 0; text-align: center;
+      font-family: 'Inter', sans-serif; font-size: 12px; color: #5e7476;
+    }
+    .bmv-modal-foot { display: flex; flex: none; align-items: center; gap: 12px; }
+    @media (min-width: 1024px) { .bmv-modal-foot { display: none; } }
+    .bmv-modal-foot .btn-primary { flex: 1; justify-content: center; padding-top: 13px; padding-bottom: 13px; }
+
+    html.bmv-locked #floating-cta { opacity: 0 !important; pointer-events: none !important; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .bmv-track { animation: none !important; }
+      .bmv-shot-scroll .bmv-img { animation: none !important; }
+      .bmv-vp[data-playing="true"] .bmv-img { transform: none !important; }
+    }
+
     /* ── Mobile form improvements ── */
     @media (max-width: 640px) {
       .form-input {
@@ -952,6 +1252,47 @@
   <div style="position:absolute; inset:0; pointer-events:none; z-index:6;
     background: linear-gradient(to bottom, rgba(6,10,11,0.7) 0%, transparent 12%, transparent 80%, rgba(6,10,11,0.5) 100%);
   "></div>
+
+</section>
+
+
+<!-- ═══════════════════════════════════════════════
+     VİTRİN — Referans siteler (mac pencere kartları)
+═══════════════════════════════════════════════ -->
+<section id="vitrin" aria-labelledby="vitrin-baslik">
+
+  <div class="bmv-head">
+    <div class="section-label">Boost Media 360 ile yayında</div>
+    <h2 id="vitrin-baslik" class="bmv-title">Dünya Standartlarında <span class="bmv-hl">İmza Sitelerimiz</span></h2>
+  </div>
+
+  <!-- Masaüstü: tek sıra sonsuz şerit -->
+  <div class="bmv-rows" data-paused="false">
+    <div class="bmv-row">
+      <div class="bmv-marquee bmv-mask">
+        <div class="bmv-track" style="--bmv-duration:73.9s; --bmv-gap:1.25rem;">
+          <div class="bmv-copy"><div class="bmv-card"><button type="button" class="bmv-open" data-bmv-slug="saatciplus" aria-label="Saatçi Plus sitesinin önizlemesini aç"><div class="bmv-frame"><div class="bmv-bar"><span class="bmv-dots"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i></span><span class="bmv-url">www.saatciplus.com</span><svg class="bmv-ext" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></div><div class="bmv-vp" style="--bmv-scroll:12.3s"><img src="assets/shots/saatciplus-c600.webp" width="600" height="3708" alt="Saatçi Plus" class="bmv-img" loading="lazy" decoding="async" draggable="false" /></div></div></button></div><div class="bmv-card"><button type="button" class="bmv-open" data-bmv-slug="oguzcan" aria-label="Oğuzcan Yöresel sitesinin önizlemesini aç"><div class="bmv-frame"><div class="bmv-bar"><span class="bmv-dots"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i></span><span class="bmv-url">www.oguzcanyoreselmarket.com</span><svg class="bmv-ext" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></div><div class="bmv-vp" style="--bmv-scroll:10.0s"><img src="assets/shots/oguzcan-c600.webp" width="600" height="3083" alt="Oğuzcan Yöresel" class="bmv-img" loading="lazy" decoding="async" draggable="false" /></div></div></button></div><div class="bmv-card"><button type="button" class="bmv-open" data-bmv-slug="narlight" aria-label="Narlight sitesinin önizlemesini aç"><div class="bmv-frame"><div class="bmv-bar"><span class="bmv-dots"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i></span><span class="bmv-url">narlight.vercel.app</span><svg class="bmv-ext" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></div><div class="bmv-vp" style="--bmv-scroll:13.9s"><img src="assets/shots/narlight-c600.webp" width="600" height="4122" alt="Narlight" class="bmv-img" loading="lazy" decoding="async" draggable="false" /></div></div></button></div><div class="bmv-card"><button type="button" class="bmv-open" data-bmv-slug="dedecorba" aria-label="Dede Çorba sitesinin önizlemesini aç"><div class="bmv-frame"><div class="bmv-bar"><span class="bmv-dots"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i></span><span class="bmv-url">www.dedecorba.com.tr</span><svg class="bmv-ext" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></div><div class="bmv-vp" style="--bmv-scroll:13.1s"><img src="assets/shots/dedecorba-c600.webp" width="600" height="3911" alt="Dede Çorba" class="bmv-img" loading="lazy" decoding="async" draggable="false" /></div></div></button></div><div class="bmv-card"><button type="button" class="bmv-open" data-bmv-slug="hasburak" aria-label="Hasburak Sarrafiye sitesinin önizlemesini aç"><div class="bmv-frame"><div class="bmv-bar"><span class="bmv-dots"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i></span><span class="bmv-url">www.hasburaksarrafiye.com</span><svg class="bmv-ext" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></div><div class="bmv-vp" style="--bmv-scroll:8.0s"><img src="assets/shots/hasburak-c600.webp" width="600" height="2546" alt="Hasburak Sarrafiye" class="bmv-img" loading="lazy" decoding="async" draggable="false" /></div></div></button></div><div class="bmv-card"><button type="button" class="bmv-open" data-bmv-slug="ilmaevents" aria-label="ILMA Events sitesinin önizlemesini aç"><div class="bmv-frame"><div class="bmv-bar"><span class="bmv-dots"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i></span><span class="bmv-url">www.ilmaevents.com</span><svg class="bmv-ext" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></div><div class="bmv-vp" style="--bmv-scroll:16.0s"><img src="assets/shots/ilmaevents-c600.webp" width="600" height="4871" alt="ILMA Events" class="bmv-img" loading="lazy" decoding="async" draggable="false" /></div></div></button></div><div class="bmv-card"><button type="button" class="bmv-open" data-bmv-slug="egekozalak" aria-label="Ege Kozalak Anaokulu sitesinin önizlemesini aç"><div class="bmv-frame"><div class="bmv-bar"><span class="bmv-dots"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i></span><span class="bmv-url">www.ozelegekozalakanaokulu.com</span><svg class="bmv-ext" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></div><div class="bmv-vp" style="--bmv-scroll:9.9s"><img src="assets/shots/egekozalak-c600.webp" width="600" height="3057" alt="Ege Kozalak Anaokulu" class="bmv-img" loading="lazy" decoding="async" draggable="false" /></div></div></button></div></div>
+          <div class="bmv-copy" aria-hidden="true"><div class="bmv-card"><button type="button" class="bmv-open" data-bmv-slug="saatciplus" tabindex="-1" aria-label="Saatçi Plus sitesinin önizlemesini aç"><div class="bmv-frame"><div class="bmv-bar"><span class="bmv-dots"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i></span><span class="bmv-url">www.saatciplus.com</span><svg class="bmv-ext" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></div><div class="bmv-vp" style="--bmv-scroll:12.3s"><img src="assets/shots/saatciplus-c600.webp" width="600" height="3708" alt="Saatçi Plus" class="bmv-img" loading="lazy" decoding="async" draggable="false" /></div></div></button></div><div class="bmv-card"><button type="button" class="bmv-open" data-bmv-slug="oguzcan" tabindex="-1" aria-label="Oğuzcan Yöresel sitesinin önizlemesini aç"><div class="bmv-frame"><div class="bmv-bar"><span class="bmv-dots"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i></span><span class="bmv-url">www.oguzcanyoreselmarket.com</span><svg class="bmv-ext" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></div><div class="bmv-vp" style="--bmv-scroll:10.0s"><img src="assets/shots/oguzcan-c600.webp" width="600" height="3083" alt="Oğuzcan Yöresel" class="bmv-img" loading="lazy" decoding="async" draggable="false" /></div></div></button></div><div class="bmv-card"><button type="button" class="bmv-open" data-bmv-slug="narlight" tabindex="-1" aria-label="Narlight sitesinin önizlemesini aç"><div class="bmv-frame"><div class="bmv-bar"><span class="bmv-dots"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i></span><span class="bmv-url">narlight.vercel.app</span><svg class="bmv-ext" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></div><div class="bmv-vp" style="--bmv-scroll:13.9s"><img src="assets/shots/narlight-c600.webp" width="600" height="4122" alt="Narlight" class="bmv-img" loading="lazy" decoding="async" draggable="false" /></div></div></button></div><div class="bmv-card"><button type="button" class="bmv-open" data-bmv-slug="dedecorba" tabindex="-1" aria-label="Dede Çorba sitesinin önizlemesini aç"><div class="bmv-frame"><div class="bmv-bar"><span class="bmv-dots"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i></span><span class="bmv-url">www.dedecorba.com.tr</span><svg class="bmv-ext" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></div><div class="bmv-vp" style="--bmv-scroll:13.1s"><img src="assets/shots/dedecorba-c600.webp" width="600" height="3911" alt="Dede Çorba" class="bmv-img" loading="lazy" decoding="async" draggable="false" /></div></div></button></div><div class="bmv-card"><button type="button" class="bmv-open" data-bmv-slug="hasburak" tabindex="-1" aria-label="Hasburak Sarrafiye sitesinin önizlemesini aç"><div class="bmv-frame"><div class="bmv-bar"><span class="bmv-dots"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i></span><span class="bmv-url">www.hasburaksarrafiye.com</span><svg class="bmv-ext" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></div><div class="bmv-vp" style="--bmv-scroll:8.0s"><img src="assets/shots/hasburak-c600.webp" width="600" height="2546" alt="Hasburak Sarrafiye" class="bmv-img" loading="lazy" decoding="async" draggable="false" /></div></div></button></div><div class="bmv-card"><button type="button" class="bmv-open" data-bmv-slug="ilmaevents" tabindex="-1" aria-label="ILMA Events sitesinin önizlemesini aç"><div class="bmv-frame"><div class="bmv-bar"><span class="bmv-dots"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i></span><span class="bmv-url">www.ilmaevents.com</span><svg class="bmv-ext" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></div><div class="bmv-vp" style="--bmv-scroll:16.0s"><img src="assets/shots/ilmaevents-c600.webp" width="600" height="4871" alt="ILMA Events" class="bmv-img" loading="lazy" decoding="async" draggable="false" /></div></div></button></div><div class="bmv-card"><button type="button" class="bmv-open" data-bmv-slug="egekozalak" tabindex="-1" aria-label="Ege Kozalak Anaokulu sitesinin önizlemesini aç"><div class="bmv-frame"><div class="bmv-bar"><span class="bmv-dots"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i></span><span class="bmv-url">www.ozelegekozalakanaokulu.com</span><svg class="bmv-ext" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></div><div class="bmv-vp" style="--bmv-scroll:9.9s"><img src="assets/shots/egekozalak-c600.webp" width="600" height="3057" alt="Ege Kozalak Anaokulu" class="bmv-img" loading="lazy" decoding="async" draggable="false" /></div></div></button></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobil: sağa/sola kaydırmalı dizi -->
+  <div class="bmv-mobile" data-bmv-dyn>
+    <div class="bmv-swipe">
+      <div class="bmv-strack"><div class="bmv-slide"><div class="bmv-slide-pad"><button type="button" class="bmv-open" data-bmv-slug=""><div class="bmv-frame"><div class="bmv-bar"><span class="bmv-dots"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i></span><span class="bmv-url"></span></div><div class="bmv-vp"><img class="bmv-img" alt="" decoding="async" draggable="false" /></div></div><div class="bmv-logo-row"><img alt="" decoding="async" /></div><p class="bmv-sector"></p><span class="bmv-incele"><span class="bmv-incele-t"></span><svg fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></span></button></div></div><div class="bmv-slide"><div class="bmv-slide-pad"><button type="button" class="bmv-open" data-bmv-slug=""><div class="bmv-frame"><div class="bmv-bar"><span class="bmv-dots"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i></span><span class="bmv-url"></span></div><div class="bmv-vp"><img class="bmv-img" alt="" decoding="async" draggable="false" /></div></div><div class="bmv-logo-row"><img alt="" decoding="async" /></div><p class="bmv-sector"></p><span class="bmv-incele"><span class="bmv-incele-t"></span><svg fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></span></button></div></div><div class="bmv-slide"><div class="bmv-slide-pad"><button type="button" class="bmv-open" data-bmv-slug=""><div class="bmv-frame"><div class="bmv-bar"><span class="bmv-dots"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i></span><span class="bmv-url"></span></div><div class="bmv-vp"><img class="bmv-img" alt="" decoding="async" draggable="false" /></div></div><div class="bmv-logo-row"><img alt="" decoding="async" /></div><p class="bmv-sector"></p><span class="bmv-incele"><span class="bmv-incele-t"></span><svg fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></span></button></div></div><div class="bmv-slide"><div class="bmv-slide-pad"><button type="button" class="bmv-open" data-bmv-slug=""><div class="bmv-frame"><div class="bmv-bar"><span class="bmv-dots"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i></span><span class="bmv-url"></span></div><div class="bmv-vp"><img class="bmv-img" alt="" decoding="async" draggable="false" /></div></div><div class="bmv-logo-row"><img alt="" decoding="async" /></div><p class="bmv-sector"></p><span class="bmv-incele"><span class="bmv-incele-t"></span><svg fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></span></button></div></div><div class="bmv-slide"><div class="bmv-slide-pad"><button type="button" class="bmv-open" data-bmv-slug=""><div class="bmv-frame"><div class="bmv-bar"><span class="bmv-dots"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i></span><span class="bmv-url"></span></div><div class="bmv-vp"><img class="bmv-img" alt="" decoding="async" draggable="false" /></div></div><div class="bmv-logo-row"><img alt="" decoding="async" /></div><p class="bmv-sector"></p><span class="bmv-incele"><span class="bmv-incele-t"></span><svg fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></span></button></div></div></div>
+    </div>
+    <div class="bmv-nav">
+      <button type="button" class="bmv-nav-btn bmv-prev" aria-label="Önceki site"><svg fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12H4M10 6l-6 6 6 6"/></svg></button>
+      <span class="bmv-count"><span class="bmv-count-cur">1</span> / 7</span>
+      <button type="button" class="bmv-nav-btn bmv-next" aria-label="Sonraki site"><svg fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h16M14 6l6 6-6 6"/></svg></button>
+    </div>
+    <p class="bmv-sr bmv-live" aria-live="polite"></p>
+  </div>
+
+  <p class="bmv-hint-touch">Yana kaydırarak gezebilir, dokunarak tam ekran inceleyebilirsiniz.</p>
+  <div class="bmv-hint-hover"><p><svg fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3.5H3.5V9M15 3.5h5.5V9M9 20.5H3.5V15M15 20.5h5.5V15"/></svg>Bir siteye tıklayarak tam ekran inceleyebilirsiniz.</p></div>
 
 </section>
 
@@ -2900,6 +3241,11 @@
   /* ─────────── Body text translations (key = Turkish source) ─────────── */
   var T = {
     en: {
+      "Boost Media 360 ile yayında":"Live with Boost Media 360",
+      "Dünya Standartlarında":"World-Class",
+      "İmza Sitelerimiz":"Signature Sites",
+      "Yana kaydırarak gezebilir, dokunarak tam ekran inceleyebilirsiniz.":"Swipe to browse, tap to view any site full screen.",
+      "Bir siteye tıklayarak tam ekran inceleyebilirsiniz.":"Click any site to view it full screen.",
       "Hizmetler":"Services",
       "Danışmanlığı":"Consulting",
       "Amazon FBA & E-İhracat":"Amazon FBA & E-Export",
@@ -3107,6 +3453,11 @@
       "İzmir, Türkiye — Dijital Reklam & Sosyal Medya Ajansı":"İzmir, Turkey — Digital Advertising & Social Media Agency"
     },
     es: {
+      "Boost Media 360 ile yayında":"En vivo con Boost Media 360",
+      "Dünya Standartlarında":"Sitios Insignia",
+      "İmza Sitelerimiz":"de Clase Mundial",
+      "Yana kaydırarak gezebilir, dokunarak tam ekran inceleyebilirsiniz.":"Desliza para navegar y toca para ver un sitio en pantalla completa.",
+      "Bir siteye tıklayarak tam ekran inceleyebilirsiniz.":"Haz clic en un sitio para verlo en pantalla completa.",
       "Hizmetler":"Servicios",
       "Danışmanlığı":"Consultoría",
       "Amazon FBA & E-İhracat":"Amazon FBA y E-Exportación",
@@ -3367,7 +3718,7 @@
         if(!p) return NodeFilter.FILTER_REJECT;
         var tag = p.nodeName;
         if(tag==='SCRIPT'||tag==='STYLE'||tag==='NOSCRIPT'||tag==='TEXTAREA') return NodeFilter.FILTER_REJECT;
-        if(p.closest && p.closest('#lang-dd, .lang-seg')) return NodeFilter.FILTER_REJECT;
+        if(p.closest && p.closest('#lang-dd, .lang-seg, [data-bmv-dyn]')) return NodeFilter.FILTER_REJECT;
         if(!n.nodeValue || !n.nodeValue.trim()) return NodeFilter.FILTER_REJECT;
         return NodeFilter.FILTER_ACCEPT;
       }
@@ -3482,6 +3833,814 @@
 
   if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
   else init();
+})();
+</script>
+
+<script>
+/* ═══════════════════════════════════════════════
+   VİTRİN — Referans siteler
+   • Masaüstü: sonsuz kayan şerit, karta gelince ekran görüntüsü kayar
+   • Mobil: sağa/sola kaydırmalı kart dizisi (yay fiziği + fiske)
+   • Karta tıklayınca tam ekran önizleme penceresi
+═══════════════════════════════════════════════ */
+(function () {
+  'use strict';
+
+  var PROJECTS = [
+    {
+        "slug": "saatciplus",
+        "name": "Saatçi Plus",
+        "url": "https://saatciplus.com",
+        "display": "www.saatciplus.com",
+        "shot": "assets/shots/saatciplus-c600.webp",
+        "big": "assets/shots/saatciplus-d1280.webp",
+        "logo": "assets/logos/saatciplus.webp",
+        "cw": 600,
+        "ch": 3708,
+        "bw": 1280,
+        "bh": 7910,
+        "mDur": 10.0,
+        "sector": {
+            "tr": "Saat & Aksesuar E-ticaret",
+            "en": "Watches & Accessories E-commerce",
+            "es": "Relojes y Accesorios · E-commerce"
+        },
+        "detail": {
+            "tr": "Premium saat, gözlük, parfüm ve cüzdan koleksiyonunu tek vitrinde topladık. Koyu lacivert bir sahne, kategori bazlı gezinme ve WhatsApp ile tek dokunuşla tamamlanan sipariş akışı kurduk.",
+            "en": "We brought the premium watch, eyewear, fragrance and wallet collection into a single storefront: a deep navy stage, category-based browsing and an order flow completed with one tap on WhatsApp.",
+            "es": "Reunimos la colección premium de relojes, gafas, perfumes y carteras en un solo escaparate: un escenario azul profundo, navegación por categorías y pedidos que se completan con un toque en WhatsApp."
+        },
+        "scope": {
+            "tr": [
+                "E-ticaret Vitrini",
+                "WhatsApp Sipariş",
+                "Mobil Uyum"
+            ],
+            "en": [
+                "E-commerce Storefront",
+                "WhatsApp Ordering",
+                "Mobile Optimization"
+            ],
+            "es": [
+                "Escaparate E-commerce",
+                "Pedidos por WhatsApp",
+                "Optimización Móvil"
+            ]
+        }
+    },
+    {
+        "slug": "oguzcan",
+        "name": "Oğuzcan Yöresel",
+        "url": "https://oguzcanyoreselmarket.com",
+        "display": "www.oguzcanyoreselmarket.com",
+        "shot": "assets/shots/oguzcan-c600.webp",
+        "big": "assets/shots/oguzcan-d1280.webp",
+        "logo": "assets/logos/oguzcan.webp",
+        "cw": 600,
+        "ch": 3083,
+        "bw": 1280,
+        "bh": 6576,
+        "mDur": 10.0,
+        "sector": {
+            "tr": "Gıda & Yöresel Ürün",
+            "en": "Food & Local Produce",
+            "es": "Alimentación y Producto Local"
+        },
+        "detail": {
+            "tr": "Gaziantep'in katkısız yöresel lezzetlerini anlatan bir e-ticaret vitrini. Üretim hikâyesini, ürün kataloğunu ve güvenli ödeme altyapısını sıcak bir renk dünyasında birleştirdik.",
+            "en": "An e-commerce storefront that tells the story of Gaziantep's additive-free local flavours. We combined the production story, the product catalogue and a secure payment setup in one warm colour world.",
+            "es": "Un escaparate de e-commerce que cuenta la historia de los sabores locales sin aditivos de Gaziantep. Unimos la historia de producción, el catálogo y un pago seguro en un mundo de color cálido."
+        },
+        "scope": {
+            "tr": [
+                "E-ticaret",
+                "Ürün Kataloğu",
+                "Güvenli Ödeme"
+            ],
+            "en": [
+                "E-commerce",
+                "Product Catalogue",
+                "Secure Payment"
+            ],
+            "es": [
+                "E-commerce",
+                "Catálogo de Productos",
+                "Pago Seguro"
+            ]
+        }
+    },
+    {
+        "slug": "narlight",
+        "name": "Narlight",
+        "url": "https://narlight.vercel.app",
+        "display": "narlight.vercel.app",
+        "shot": "assets/shots/narlight-c600.webp",
+        "big": "assets/shots/narlight-d1280.webp",
+        "logo": "assets/logos/narlight.webp",
+        "cw": 600,
+        "ch": 4122,
+        "bw": 1280,
+        "bh": 8794,
+        "mDur": 10.0,
+        "sector": {
+            "tr": "Aydınlatma & E-ticaret",
+            "en": "Lighting & E-commerce",
+            "es": "Iluminación y E-commerce"
+        },
+        "detail": {
+            "tr": "Aydınlatma markası için karanlıktan aydınlığa geçen bir anlatı kurduk. Proje galerileri, ürün kataloğu ve referans yapılar; hepsi kaydırmaya bağlı animasyonlarla akan hızlı bir sitede.",
+            "en": "For a lighting brand we built a narrative that moves from dark to light: project galleries, a product catalogue and reference buildings, all in a fast site driven by scroll-based animation.",
+            "es": "Para una marca de iluminación creamos una narrativa que va de la oscuridad a la luz: galerías de proyectos, catálogo y obras de referencia, en un sitio rápido con animaciones al desplazar."
+        },
+        "scope": {
+            "tr": [
+                "Ürün Kataloğu",
+                "Proje Galerisi",
+                "Animasyon"
+            ],
+            "en": [
+                "Product Catalogue",
+                "Project Gallery",
+                "Animation"
+            ],
+            "es": [
+                "Catálogo de Productos",
+                "Galería de Proyectos",
+                "Animación"
+            ]
+        }
+    },
+    {
+        "slug": "dedecorba",
+        "name": "Dede Çorba",
+        "url": "https://dedecorba.com.tr",
+        "display": "www.dedecorba.com.tr",
+        "shot": "assets/shots/dedecorba-c600.webp",
+        "big": "assets/shots/dedecorba-d1280.webp",
+        "logo": "assets/logos/dedecorba.webp",
+        "cw": 600,
+        "ch": 3911,
+        "bw": 1280,
+        "bh": 8343,
+        "mDur": 10.0,
+        "sector": {
+            "tr": "Restoran & Gıda",
+            "en": "Restaurant & Food",
+            "es": "Restaurante y Comida"
+        },
+        "detail": {
+            "tr": "Geleneksel bir çorba markasını dijitale taşıdık: menü vitrini, şube haritası, franchise başvuru akışı ve sipariş yönlendirmesini tek sayfada topladık. Sıcak, iştah açıcı bir renk dünyası kurduk.",
+            "en": "We moved a traditional soup brand into digital: menu showcase, branch map, franchise application flow and order routing gathered on a single page, in a warm and appetising colour world.",
+            "es": "Llevamos una marca tradicional de sopas a lo digital: escaparate del menú, mapa de sucursales, solicitud de franquicia y derivación de pedidos en una sola página, con un color cálido y apetitoso."
+        },
+        "scope": {
+            "tr": [
+                "Kurumsal Site",
+                "Menü Vitrini",
+                "Franchise Akışı"
+            ],
+            "en": [
+                "Corporate Site",
+                "Menu Showcase",
+                "Franchise Flow"
+            ],
+            "es": [
+                "Sitio Corporativo",
+                "Escaparate de Menú",
+                "Flujo de Franquicia"
+            ]
+        }
+    },
+    {
+        "slug": "hasburak",
+        "name": "Hasburak Sarrafiye",
+        "url": "https://hasburaksarrafiye.com",
+        "display": "www.hasburaksarrafiye.com",
+        "shot": "assets/shots/hasburak-c600.webp",
+        "big": "assets/shots/hasburak-d1280.webp",
+        "logo": "assets/logos/hasburak.webp",
+        "cw": 600,
+        "ch": 2546,
+        "bw": 1280,
+        "bh": 5431,
+        "mDur": 10.0,
+        "sector": {
+            "tr": "Kuyum & Sarrafiye",
+            "en": "Jewellery & Bullion",
+            "es": "Joyería y Orfebrería"
+        },
+        "detail": {
+            "tr": "Yerel bir sarrafiyeyi butik bir mücevher markası gibi konumlandırdık. Koyu zemin üzerinde altın vurgular, serif tipografi ve yüksek çözünürlüklü ürün vitrinleriyle güven veren bir kurumsal sayfa.",
+            "en": "We positioned a local bullion dealer like a boutique jewellery brand: gold accents on a dark ground, serif typography and high-resolution product showcases on a corporate page that inspires trust.",
+            "es": "Posicionamos a un joyero local como una marca boutique: acentos dorados sobre fondo oscuro, tipografía serif y escaparates de producto en alta resolución en una página que transmite confianza."
+        },
+        "scope": {
+            "tr": [
+                "Kurumsal Site",
+                "Ürün Vitrini",
+                "Mobil Uyum"
+            ],
+            "en": [
+                "Corporate Site",
+                "Product Showcase",
+                "Mobile Optimization"
+            ],
+            "es": [
+                "Sitio Corporativo",
+                "Escaparate de Producto",
+                "Optimización Móvil"
+            ]
+        }
+    },
+    {
+        "slug": "ilmaevents",
+        "name": "ILMA Events",
+        "url": "https://ilmaevents.com",
+        "display": "www.ilmaevents.com",
+        "shot": "assets/shots/ilmaevents-c600.webp",
+        "big": "assets/shots/ilmaevents-d1280.webp",
+        "logo": "assets/logos/ilmaevents.webp",
+        "cw": 600,
+        "ch": 4871,
+        "bw": 1280,
+        "bh": 10391,
+        "mDur": 12.1,
+        "sector": {
+            "tr": "Organizasyon & Düğün",
+            "en": "Events & Weddings",
+            "es": "Eventos y Bodas"
+        },
+        "detail": {
+            "tr": "İstanbul ve Dubai'de çalışan bir etkinlik mimarı için sinematik bir vitrin. Tam ekran görseller, katmanlı hizmet anlatımı ve gerçek anlardan seçkilerle duyguyu öne çıkardık.",
+            "en": "A cinematic showcase for an event architect working in Istanbul and Dubai. Full-screen visuals, layered service storytelling and selections from real moments put emotion first.",
+            "es": "Un escaparate cinematográfico para un arquitecto de eventos que trabaja en Estambul y Dubái. Imágenes a pantalla completa, servicios en capas y momentos reales ponen la emoción por delante."
+        },
+        "scope": {
+            "tr": [
+                "Sinematik Vitrin",
+                "Hizmet Mimarisi",
+                "Galeri"
+            ],
+            "en": [
+                "Cinematic Showcase",
+                "Service Architecture",
+                "Gallery"
+            ],
+            "es": [
+                "Escaparate Cinematográfico",
+                "Arquitectura de Servicios",
+                "Galería"
+            ]
+        }
+    },
+    {
+        "slug": "egekozalak",
+        "name": "Ege Kozalak Anaokulu",
+        "url": "https://ozelegekozalakanaokulu.com",
+        "display": "www.ozelegekozalakanaokulu.com",
+        "shot": "assets/shots/egekozalak-c600.webp",
+        "big": "assets/shots/egekozalak-d1280.webp",
+        "logo": "assets/logos/egekozalak.webp",
+        "cw": 600,
+        "ch": 3057,
+        "bw": 1280,
+        "bh": 6521,
+        "mDur": 10.0,
+        "sector": {
+            "tr": "Eğitim & Anaokulu",
+            "en": "Education & Preschool",
+            "es": "Educación y Preescolar"
+        },
+        "detail": {
+            "tr": "Anaokulu için velinin aradığı her bilgiyi ilk ekrandan ulaşılabilir kıldık: eğitim programı, günlük akış, aktivite galerileri ve iletişim. Çocuksu ama dağınık olmayan bir görsel dil kurduk.",
+            "en": "For a preschool we made everything a parent looks for reachable from the first screen: curriculum, daily flow, activity galleries and contact — in a playful but never cluttered visual language.",
+            "es": "Para un preescolar hicimos accesible desde la primera pantalla todo lo que busca una familia: programa, rutina diaria, galerías de actividades y contacto, con un lenguaje visual alegre pero ordenado."
+        },
+        "scope": {
+            "tr": [
+                "Kurumsal Site",
+                "Galeri",
+                "İletişim Akışı"
+            ],
+            "en": [
+                "Corporate Site",
+                "Gallery",
+                "Contact Flow"
+            ],
+            "es": [
+                "Sitio Corporativo",
+                "Galería",
+                "Flujo de Contacto"
+            ]
+        }
+    }
+];
+  var NP = PROJECTS.length;
+
+  var STR = {
+    tr: {
+      open: 'Siteyi Aç',
+      scrollHint: 'Kaydırarak sitenin tamamını gezebilirsin',
+      close: 'Kapat',
+      prevProject: 'Önceki proje',
+      nextProject: 'Sonraki proje',
+      prevSite: 'Önceki site',
+      nextSite: 'Sonraki site',
+      previewOf: '{ad} sitesinin önizlemesini aç',
+      dialogOf: '{ad} önizlemesi',
+      review: 'İncele'
+    },
+    en: {
+      open: 'Open Site',
+      scrollHint: 'Scroll to explore the whole site',
+      close: 'Close',
+      prevProject: 'Previous project',
+      nextProject: 'Next project',
+      prevSite: 'Previous site',
+      nextSite: 'Next site',
+      previewOf: 'Open the preview of {ad}',
+      dialogOf: '{ad} preview',
+      review: 'View'
+    },
+    es: {
+      open: 'Abrir Sitio',
+      scrollHint: 'Desplázate para explorar todo el sitio',
+      close: 'Cerrar',
+      prevProject: 'Proyecto anterior',
+      nextProject: 'Proyecto siguiente',
+      prevSite: 'Sitio anterior',
+      nextSite: 'Sitio siguiente',
+      previewOf: 'Abrir la vista previa de {ad}',
+      dialogOf: 'Vista previa de {ad}',
+      review: 'Ver'
+    }
+  };
+
+  function lang() {
+    var l = (typeof window.bmGetLang === 'function') ? window.bmGetLang() : 'tr';
+    return STR[l] ? l : 'tr';
+  }
+  function S(k, ad) {
+    var v = STR[lang()][k];
+    if (v == null) v = STR.tr[k];
+    return ad == null ? v : v.replace('{ad}', ad);
+  }
+  function F(p, f) {
+    var o = p[f];
+    return (o && (o[lang()] || o.tr)) || '';
+  }
+  function esc(s) {
+    return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  }
+
+  var ICON = {
+    upRight: '<path d="M7 17 17 7M8 7h9v9"/>',
+    left: '<path d="M20 12H4M10 6l-6 6 6 6"/>',
+    right: '<path d="M4 12h16M14 6l6 6-6 6"/>',
+    close: '<path d="M6 6l12 12M18 6L6 18"/>'
+  };
+  function svg(path, cls) {
+    return '<svg class="' + cls + '" fill="none" stroke="currentColor" stroke-width="1.6" ' +
+      'stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" aria-hidden="true">' + path + '</svg>';
+  }
+
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  var hoverNone = window.matchMedia('(hover: none)');
+
+  /* ─────────── 1. Masaüstü şerit: karta gelince ekran görüntüsünü kaydır ─────────── */
+  var ptrX = -1, ptrY = -1, ptrHooked = false;
+
+  function initHoverPlay() {
+    if (reduceMotion.matches || hoverNone.matches) return;
+    if (!ptrHooked) {
+      ptrHooked = true;
+      document.addEventListener('pointermove', function (e) { ptrX = e.clientX; ptrY = e.clientY; }, { passive: true });
+    }
+    var cards = document.querySelectorAll('#vitrin .bmv-rows .bmv-card');
+    for (var i = 0; i < cards.length; i++) {
+      (function (card) {
+        var vp = card.querySelector('.bmv-vp');
+        if (!vp) return;
+        card.addEventListener('pointermove', function (e) {
+          if (e.pointerType !== 'mouse') return;
+          if (e.clientX === ptrX && e.clientY === ptrY) return;   // imleç gerçekten hareket etmediyse oynatma
+          if (vp.dataset.playing) return;
+          vp.setAttribute('data-playing', 'true');
+        });
+        card.addEventListener('pointerleave', function () { vp.removeAttribute('data-playing'); });
+      })(cards[i]);
+    }
+  }
+
+  /* ─────────── 2. Görüş alanı dışındayken şeridi durdur ─────────── */
+  function initInViewPause() {
+    var rows = document.querySelector('#vitrin .bmv-rows');
+    if (!rows || !('IntersectionObserver' in window)) return;
+    new IntersectionObserver(function (entries) {
+      for (var i = 0; i < entries.length; i++) {
+        rows.dataset.paused = entries[i].isIntersecting ? 'false' : 'true';
+      }
+    }, { threshold: 0, rootMargin: '120px' }).observe(rows);
+  }
+
+  /* ─────────── 3. Mobil kaydırmalı dizi ─────────── */
+  var swipe = null;
+
+  function initSwipe() {
+    var root = document.querySelector('#vitrin .bmv-mobile');
+    if (!root) return;
+    var track = root.querySelector('.bmv-strack');
+    var viewport = root.querySelector('.bmv-swipe');
+    var counter = root.querySelector('.bmv-count-cur');
+    var live = root.querySelector('.bmv-live');
+    if (!track || !viewport) return;
+
+    var idx = 0;            // merkezdeki projenin sırası
+    var pos = 0;            // pikselde anlık kayma
+    var vel = 0;            // hız
+    var target = 0;         // yayın hedefi
+    var pending = 0;        // uygulanacak adım
+    var queued = 0;         // sırada bekleyen adım
+    var raf = 0, lastT = 0, slideW = 0;
+    var drag = { on: false, x0: 0, y0: 0, base: 0, axis: null, moved: false };
+    var samples = [];
+
+    function item(i) { return PROJECTS[((i % NP) + NP) % NP]; }
+
+    function measure() {
+      var w = track.getBoundingClientRect().width / 5;
+      if (w > 0) slideW = w;
+      return slideW || 1;
+    }
+
+    function styleSlides(e) {
+      var r = slideW || 1, kids = track.children;
+      for (var i = 0; i < kids.length; i++) {
+        var s = i - 2 - e;
+        var l = Math.min(1, Math.abs(s));
+        var sc = 1 - 0.11 * l;
+        var off = -((1 - sc) * r * (s > 0 ? 1 : s < 0 ? -1 : 0)) / 2;
+        kids[i].style.transform = 'translate3d(' + off.toFixed(2) + 'px, 0, 0) scale(' + sc + ')';
+        kids[i].style.opacity = String(1 - 0.58 * l);
+      }
+    }
+
+    function apply() {
+      track.style.transform = 'translate3d(calc(-40% + ' + pos + 'px), 0, 0)';
+      styleSlides(-pos / (slideW || 1));
+    }
+
+    function restartShot() {
+      var mid = track.children[2];
+      var img = mid && mid.querySelector('.bmv-img');
+      if (img) { img.style.animation = 'none'; void img.offsetWidth; img.style.animation = ''; }
+    }
+
+    function stop() { if (raf) cancelAnimationFrame(raf); raf = 0; }
+
+    function run() {
+      if (raf) return;
+      lastT = performance.now();
+      raf = requestAnimationFrame(function step(now) {
+        var dt = Math.min(0.032, Math.max(0.001, (now - lastT) / 1000));
+        lastT = now;
+        var d = pos - target;
+        vel += (-300 * d - 28.5 * vel) * dt;
+        pos += vel * dt;
+        var lim = 1.45 * (slideW || 1);
+        if (pos > lim || pos < -lim) { pos = Math.max(-lim, Math.min(lim, pos)); vel = 0; }
+
+        if (!(Math.abs(pos - target) < 0.5 && Math.abs(vel) < 28)) {
+          apply();
+          raf = requestAnimationFrame(step);
+          return;
+        }
+        pos = target; vel = 0; raf = 0;
+
+        var n = pending;
+        if (n) {
+          pending = 0;
+          var t0 = target;
+          idx = idx + n;
+          renderSlides();
+          pos -= t0;
+          target = 0;
+          if (drag.on) drag.base -= t0;
+          apply();
+          restartShot();
+          if (queued && !drag.on) {
+            var sgn = queued > 0 ? 1 : -1;
+            queued -= sgn;
+            pending = sgn;
+            target = -sgn * (slideW || 1);
+            run();
+          }
+        } else {
+          target = 0;
+          apply();
+        }
+      });
+    }
+
+    function move(dir) {
+      if (pending !== 0) { queued = Math.max(-3, Math.min(3, queued + dir)); return; }
+      pending = dir;
+      target = -dir * measure();
+      run();
+    }
+
+    function rubber(x, r) {
+      if (!r) return x;
+      var a = Math.abs(x);
+      if (a <= r) return x;
+      var t = a - r, i = 0.45 * r;
+      return (x < 0 ? -1 : 1) * (r + i * t / (t + i));
+    }
+
+    function release() {
+      if (!drag.on) return;
+      drag.on = false;
+      var r = measure(), v = 0;
+      if (drag.axis === 'x' && samples.length) {
+        var last = samples[samples.length - 1], first = last;
+        for (var i = 0; i < samples.length; i++) {
+          if (last.t - samples[i].t <= 90) { first = samples[i]; break; }
+        }
+        v = (first === last) ? 0 : (last.x - first.x) / Math.max(8, last.t - first.t) * 1000;
+        v = Math.max(-4200, Math.min(4200, v));
+      }
+      vel = v;
+      var t = -(pos + 0.085 * v) / r;
+      var dir = Math.abs(t) > 0.24 ? (t > 0 ? 1 : -1) : 0;
+      pending = dir;
+      target = -dir * r;
+      run();
+    }
+
+    viewport.addEventListener('pointerdown', function (e) {
+      stop(); measure();
+      drag.on = true; drag.x0 = e.clientX; drag.y0 = e.clientY; drag.base = pos;
+      drag.axis = null; drag.moved = false;
+      vel = 0; pending = 0; target = 0; queued = 0;
+      samples = [{ t: performance.now(), x: e.clientX }];
+    });
+
+    viewport.addEventListener('pointermove', function (e) {
+      if (!drag.on) return;
+      var dx = e.clientX - drag.x0, dy = e.clientY - drag.y0;
+      if (!drag.axis) {
+        if (Math.abs(dx) < 6 && Math.abs(dy) < 6) return;
+        drag.axis = Math.abs(dx) > Math.abs(dy) ? 'x' : 'y';
+        if (drag.axis !== 'x') return;
+        try { e.currentTarget.setPointerCapture(e.pointerId); } catch (err) {}
+        drag.x0 = e.clientX;
+        return;
+      }
+      if (drag.axis !== 'x') return;
+      drag.moved = true;
+      samples.push({ t: performance.now(), x: e.clientX });
+      if (samples.length > 6) samples.shift();
+      pos = rubber(drag.base + dx, slideW);
+      apply();
+    });
+
+    viewport.addEventListener('pointerup', release);
+    viewport.addEventListener('pointercancel', release);
+    viewport.addEventListener('click', function (e) {
+      if (drag.moved) { e.preventDefault(); e.stopPropagation(); }
+    }, true);
+
+    function renderSlides() {
+      var kids = track.children;
+      for (var i = 0; i < 5; i++) {
+        var p = item(idx + i - 2);
+        var active = (i === 2);
+        var el = kids[i];
+        var btn = el.querySelector('.bmv-open');
+        var vp = el.querySelector('.bmv-vp');
+        var img = el.querySelector('.bmv-img');
+        var logo = el.querySelector('.bmv-logo-row img');
+
+        btn.setAttribute('data-bmv-slug', p.slug);
+        btn.setAttribute('aria-label', S('previewOf', p.name));
+        btn.setAttribute('tabindex', active ? '0' : '-1');
+        el.querySelector('.bmv-url').textContent = p.display;
+        vp.style.setProperty('--bmv-scroll', p.mDur + 's');
+        vp.classList.toggle('bmv-shot-scroll', active);
+        if (img.getAttribute('src') !== p.shot) {
+          img.setAttribute('src', p.shot);
+          img.setAttribute('width', p.cw);
+          img.setAttribute('height', p.ch);
+        }
+        img.setAttribute('alt', p.name);
+        img.setAttribute('fetchpriority', active ? 'high' : (Math.abs(i - 2) > 1 ? 'low' : 'auto'));
+        if (logo.getAttribute('src') !== p.logo) logo.setAttribute('src', p.logo);
+        logo.setAttribute('alt', p.name);
+        el.querySelector('.bmv-sector').textContent = F(p, 'sector');
+        el.querySelector('.bmv-incele-t').textContent = S('review');
+      }
+      var cur = ((idx % NP) + NP) % NP;
+      if (counter) counter.textContent = String(cur + 1);
+      if (live) live.textContent = item(idx).name;
+    }
+
+    var prev = root.querySelector('.bmv-prev');
+    var next = root.querySelector('.bmv-next');
+    if (prev) prev.addEventListener('click', function () { move(-1); });
+    if (next) next.addEventListener('click', function () { move(1); });
+
+    window.addEventListener('resize', function () { measure(); apply(); });
+
+    swipe = {
+      refresh: function () {
+        renderSlides();
+        if (prev) prev.setAttribute('aria-label', S('prevSite'));
+        if (next) next.setAttribute('aria-label', S('nextSite'));
+      }
+    };
+
+    measure();
+    renderSlides();
+    apply();
+  }
+
+  /* ─────────── 4. Tam ekran önizleme penceresi ─────────── */
+  var modal = null, modalIdx = null, closeTimer = 0;
+
+  function buildModal() {
+    var el = document.createElement('div');
+    el.className = 'bmv-modal';
+    el.setAttribute('role', 'dialog');
+    el.setAttribute('aria-modal', 'true');
+    el.setAttribute('data-bmv-dyn', '');
+    el.setAttribute('tabindex', '-1');
+    el.innerHTML =
+      '<div class="bmv-modal-inner">' +
+        '<div class="bmv-side">' +
+          '<div class="bmv-side-top">' +
+            '<span class="bmv-side-idx"></span>' +
+            '<div class="bmv-side-btns">' +
+              '<button type="button" class="bmv-rbtn bmv-m-prev">' + svg(ICON.left, '') + '</button>' +
+              '<button type="button" class="bmv-rbtn bmv-m-next">' + svg(ICON.right, '') + '</button>' +
+              '<button type="button" class="bmv-rbtn bmv-rbtn-m bmv-m-close">' + svg(ICON.close, '') + '</button>' +
+            '</div>' +
+          '</div>' +
+          '<h3 class="bmv-modal-h3"></h3>' +
+          '<div class="section-label bmv-modal-sector"></div>' +
+          '<p class="bmv-modal-detail"></p>' +
+          '<ul class="bmv-modal-scope"></ul>' +
+          '<div class="bmv-side-foot">' +
+            '<a class="btn-primary bmv-m-open" target="_blank" rel="noreferrer noopener"><span class="bmv-m-open-t"></span>' + svg(ICON.upRight, 'bmv-btn-ico') + '</a>' +
+            '<p class="bmv-side-host"></p>' +
+          '</div>' +
+        '</div>' +
+        '<div class="bmv-stage">' +
+          '<button type="button" class="bmv-rbtn bmv-close-lg bmv-m-close">' + svg(ICON.close, '') + '</button>' +
+          '<div class="bmv-stage-in">' +
+            '<div class="bmv-frame bmv-bigframe">' +
+              '<div class="bmv-bar">' +
+                '<span class="bmv-dots"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i></span>' +
+                '<span class="bmv-url"></span>' +
+              '</div>' +
+              '<div class="bmv-scrollbox"><img alt="" decoding="async" /></div>' +
+              '<p class="bmv-bigfoot"></p>' +
+            '</div>' +
+          '</div>' +
+        '</div>' +
+        '<div class="bmv-modal-foot">' +
+          '<a class="btn-primary bmv-m-open" target="_blank" rel="noreferrer noopener"><span class="bmv-m-open-t"></span>' + svg(ICON.upRight, 'bmv-btn-ico') + '</a>' +
+        '</div>' +
+      '</div>';
+
+    el.addEventListener('click', function (e) { if (e.target === el) closeModal(); });
+    var closers = el.querySelectorAll('.bmv-m-close');
+    for (var i = 0; i < closers.length; i++) closers[i].addEventListener('click', closeModal);
+    el.querySelector('.bmv-m-prev').addEventListener('click', function () { step(-1); });
+    el.querySelector('.bmv-m-next').addEventListener('click', function () { step(1); });
+    document.body.appendChild(el);
+    return el;
+  }
+
+  function fillModal() {
+    if (modalIdx == null || !modal) return;
+    var p = PROJECTS[modalIdx];
+    modal.setAttribute('aria-label', S('dialogOf', p.name));
+    modal.querySelector('.bmv-side-idx').textContent =
+      (modalIdx + 1 < 10 ? '0' : '') + (modalIdx + 1) + ' / ' + NP;
+    modal.querySelector('.bmv-modal-h3').textContent = p.name;
+    modal.querySelector('.bmv-modal-sector').textContent = F(p, 'sector');
+    modal.querySelector('.bmv-modal-detail').textContent = F(p, 'detail');
+
+    var ul = modal.querySelector('.bmv-modal-scope'), sc = p.scope[lang()] || p.scope.tr, h = '';
+    for (var i = 0; i < sc.length; i++) h += '<li>' + esc(sc[i]) + '</li>';
+    ul.innerHTML = h;
+
+    var opens = modal.querySelectorAll('.bmv-m-open');
+    for (var j = 0; j < opens.length; j++) {
+      opens[j].setAttribute('href', p.url);
+      opens[j].querySelector('.bmv-m-open-t').textContent = S('open');
+    }
+    modal.querySelector('.bmv-side-host').textContent = p.display;
+    modal.querySelector('.bmv-url').textContent = p.display;
+
+    var img = modal.querySelector('.bmv-scrollbox img');
+    if (img.getAttribute('src') !== p.big) {
+      img.setAttribute('src', p.big);
+      img.setAttribute('width', p.bw);
+      img.setAttribute('height', p.bh);
+    }
+    img.setAttribute('alt', p.name + ' — ' + p.display);
+    modal.querySelector('.bmv-scrollbox').scrollTop = 0;
+    modal.querySelector('.bmv-bigfoot').textContent = S('scrollHint');
+
+    modal.querySelector('.bmv-m-prev').setAttribute('aria-label', S('prevProject'));
+    modal.querySelector('.bmv-m-next').setAttribute('aria-label', S('nextProject'));
+    var cl = modal.querySelectorAll('.bmv-m-close');
+    for (var k = 0; k < cl.length; k++) cl[k].setAttribute('aria-label', S('close'));
+  }
+
+  function onKey(e) {
+    if (e.key === 'Escape') closeModal();
+    else if (e.key === 'ArrowRight') step(1);
+    else if (e.key === 'ArrowLeft') step(-1);
+  }
+
+  function step(d) {
+    if (modalIdx == null) return;
+    modalIdx = (modalIdx + d + NP) % NP;
+    fillModal();
+  }
+
+  function openModal(slug) {
+    var i = -1;
+    for (var k = 0; k < NP; k++) if (PROJECTS[k].slug === slug) { i = k; break; }
+    if (i < 0) return;
+    clearTimeout(closeTimer);
+    if (!modal) modal = buildModal();
+    modal.removeAttribute('data-closing');
+    modal.style.display = '';
+    modalIdx = i;
+    fillModal();
+    document.documentElement.classList.add('bmv-locked');
+    document.documentElement.style.overflow = 'hidden';
+    window.addEventListener('keydown', onKey);
+    modal.focus({ preventScroll: true });
+  }
+
+  function closeModal() {
+    if (!modal || modalIdx == null) return;
+    modal.setAttribute('data-closing', '');
+    window.removeEventListener('keydown', onKey);
+    document.documentElement.style.overflow = '';
+    document.documentElement.classList.remove('bmv-locked');
+    closeTimer = setTimeout(function () {
+      modal.style.display = 'none';
+      modal.removeAttribute('data-closing');
+      modalIdx = null;
+    }, 200);
+  }
+
+  document.addEventListener('click', function (e) {
+    var b = e.target.closest ? e.target.closest('.bmv-open') : null;
+    if (!b) return;
+    var slide = b.closest('.bmv-slide');
+    if (slide && slide.parentNode.children[2] !== slide) { e.preventDefault(); return; }
+    var slug = b.getAttribute('data-bmv-slug');
+    if (slug) { e.preventDefault(); openModal(slug); }
+  });
+
+  /* ─────────── 5. Dil değişince yeniden yaz ─────────── */
+  function refreshLang() {
+    var cards = document.querySelectorAll('#vitrin .bmv-rows .bmv-open');
+    for (var i = 0; i < cards.length; i++) {
+      var slug = cards[i].getAttribute('data-bmv-slug');
+      for (var j = 0; j < NP; j++) {
+        if (PROJECTS[j].slug === slug) { cards[i].setAttribute('aria-label', S('previewOf', PROJECTS[j].name)); break; }
+      }
+    }
+    if (swipe) swipe.refresh();
+    if (modalIdx != null) fillModal();
+  }
+
+  function hookLang() {
+    var orig = window.bmSetLang;
+    if (typeof orig !== 'function') return;
+    window.bmSetLang = function (l, silent) {
+      orig(l, silent);
+      try { refreshLang(); } catch (e) {}
+    };
+  }
+
+  function boot() {
+    initHoverPlay();
+    initInViewPause();
+    initSwipe();
+    refreshLang();
+  }
+
+  hookLang();
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
+  else boot();
 })();
 </script>
 
