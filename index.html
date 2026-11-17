@@ -1060,6 +1060,58 @@
         right: 20px;
       }
     }
+
+    /* ═══════════ REFERANSLAR — güncel liste (web + instagram) ═══════════ */
+    .bmr-stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-bottom: 36px; }
+    @media (min-width: 640px) { .bmr-stats { gap: 20px; } }
+    .bmr-stat {
+      border: 1px solid rgba(14,206,206,0.14); border-radius: 16px; padding: 18px 10px 16px; text-align: center;
+      background: linear-gradient(160deg, rgba(14,206,206,0.05) 0%, rgba(14,206,206,0.01) 100%);
+    }
+    .bmr-stat b { display: block; font-family: 'Outfit', sans-serif; font-weight: 800; font-size: clamp(1.6rem, 3vw, 2.3rem);
+      letter-spacing: -0.04em; line-height: 1; color: #0ecece; text-shadow: 0 0 24px rgba(14,206,206,0.25); }
+    .bmr-stat span { display: block; margin-top: 8px; font-size: 0.7rem; line-height: 1.35; letter-spacing: 0.08em;
+      text-transform: uppercase; color: #5e7476; }
+    .bmr-tabs { display: inline-flex; gap: 4px; padding: 4px; margin-bottom: 18px; border-radius: 100px;
+      border: 1px solid rgba(255,255,255,0.08); background: rgba(255,255,255,0.03); max-width: 100%; }
+    .bmr-tab { display: inline-flex; align-items: center; gap: 8px; padding: 10px 18px; border-radius: 100px; border: 0;
+      background: transparent; color: #9ab0b2; font-family: 'Outfit', sans-serif; font-weight: 600; font-size: 0.875rem;
+      cursor: pointer; transition: background 0.2s ease, color 0.2s ease; white-space: nowrap; }
+    .bmr-tab svg { width: 16px; height: 16px; flex: none; }
+    .bmr-tab:hover { color: #dff0f0; }
+    .bmr-tab[aria-selected="true"] { background: #0ecece; color: #041414; }
+    .bmr-tab:focus-visible { outline: 2px solid #0ecece; outline-offset: 3px; }
+    .bmr-n { font-size: 0.72rem; font-weight: 700; padding: 2px 8px; border-radius: 100px; background: rgba(14,206,206,0.12); color: #0ecece; }
+    .bmr-tab[aria-selected="true"] .bmr-n { background: rgba(4,20,20,0.16); color: #041414; }
+    .bmr-note { font-size: 0.85rem; color: #5e7476; margin-bottom: 22px; line-height: 1.6; }
+    .bmr-cols { columns: 1; column-gap: 20px; }
+    @media (min-width: 640px) { .bmr-cols { columns: 2; } }
+    @media (min-width: 1024px) { .bmr-cols { columns: 3; } }
+    .bmr-group {
+      display: inline-block; width: 100%; break-inside: avoid; margin-bottom: 20px; padding: 18px 12px 12px;
+      border-radius: 18px; border: 1px solid rgba(255,255,255,0.065);
+      background: linear-gradient(160deg, #0e1718 0%, #0b1314 100%);
+      box-shadow: 0 4px 32px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.04);
+    }
+    .bmr-sector { display: flex; align-items: center; gap: 8px; padding: 0 10px 10px; font-size: 0.7rem; font-weight: 600;
+      letter-spacing: 0.12em; text-transform: uppercase; color: #0ecece; }
+    .bmr-sector::before { content: ''; width: 14px; height: 1.5px; background: #0ecece; border-radius: 2px; flex: none; }
+    .bmr-item { display: flex; align-items: center; gap: 12px; padding: 10px; border-radius: 12px; color: inherit;
+      text-decoration: none; transition: background 0.2s ease; }
+    .bmr-item + .bmr-item { margin-top: 2px; }
+    .bmr-item:hover { background: rgba(14,206,206,0.06); }
+    .bmr-item:focus-visible { outline: 2px solid #0ecece; outline-offset: 1px; }
+    .bmr-txt { min-width: 0; flex: 1; }
+    .bmr-name { font-family: 'Outfit', sans-serif; font-weight: 600; font-size: 0.95rem; color: #dff0f0; letter-spacing: -0.01em; }
+    .bmr-url { display: block; margin-top: 2px; font-size: 0.78rem; color: #5e7476; overflow: hidden; text-overflow: ellipsis;
+      white-space: nowrap; transition: color 0.2s ease; }
+    .bmr-badge { display: inline-block; margin-left: 8px; padding: 1px 8px; border-radius: 100px; vertical-align: 2px;
+      font-size: 0.62rem; font-weight: 600; letter-spacing: 0.04em; color: #f5a623; background: rgba(245,166,35,0.10);
+      border: 1px solid rgba(245,166,35,0.25); white-space: nowrap; }
+    .bmr-arrow { width: 12px; height: 12px; flex: none; color: #3d5557; transition: color 0.2s ease, transform 0.2s ease; }
+    .bmr-item:hover .bmr-url { color: #9ab0b2; }
+    .bmr-item:hover .bmr-arrow { color: #0ecece; transform: translate(1px, -1px); }
+    @media (max-width: 380px) { .bmr-tab { padding: 9px 13px; } }
   </style>
 </head>
 
@@ -1790,50 +1842,176 @@
       </p>
     </div>
 
-    <!-- Project category cards -->
-    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 mb-10">
-      <div class="service-card flex flex-col justify-between" style="min-height:180px;">
-        <div>
-          <div class="section-label mb-3" style="font-size:0.7rem;">Sosyal Medya</div>
-          <h3 class="font-display" style="font-size:1rem; font-weight:700; color:#dff0f0; margin-bottom:8px; letter-spacing:-0.02em;">Perakende &amp; E-ticaret Markaları</h3>
-          <p style="font-size:0.82rem; color:#3d5557; line-height:1.6;">Ürün odaklı içerik yönetimi, reklam kampanyaları ve marka kimliği çalışmaları.</p>
-        </div>
-        <div class="mt-6">
-          <a href="#iletisim" style="font-size:0.8rem; color:#0ecece; font-weight:500; display:inline-flex; align-items:center; gap:6px; transition:gap 0.2s;" onmouseover="this.style.gap='10px'" onmouseout="this.style.gap='6px'">
-            Referans Talep Et
-            <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </a>
-        </div>
-      </div>
+    <!-- Güncel referans listesi (Kasım 2026) -->
+    <div class="bmr-stats">
+      <div class="bmr-stat"><b>26</b><span>Web Sitesi</span></div>
+      <div class="bmr-stat"><b>24</b><span>Instagram Markası</span></div>
+      <div class="bmr-stat"><b>15</b><span>Farklı Sektörde Web Projesi</span></div>
+    </div>
 
-      <div class="service-card flex flex-col justify-between" style="min-height:180px;">
-        <div>
-          <div class="section-label mb-3" style="font-size:0.7rem;">Dijital Reklam</div>
-          <h3 class="font-display" style="font-size:1rem; font-weight:700; color:#dff0f0; margin-bottom:8px; letter-spacing:-0.02em;">Turizm &amp; Konaklama</h3>
-          <p style="font-size:0.82rem; color:#3d5557; line-height:1.6;">12+ ülkede yürütülen uluslararası kampanyalar ve çok dilli içerik stratejileri.</p>
-        </div>
-        <div class="mt-6">
-          <a href="#iletisim" style="font-size:0.8rem; color:#0ecece; font-weight:500; display:inline-flex; align-items:center; gap:6px; transition:gap 0.2s;" onmouseover="this.style.gap='10px'" onmouseout="this.style.gap='6px'">
-            Referans Talep Et
-            <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </a>
-        </div>
-      </div>
+    <div class="bmr-tabs" role="tablist">
+      <button type="button" role="tab" class="bmr-tab" id="bmr-tab-web" aria-controls="bmr-web" aria-selected="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.7 3.8 5.7 3.8 9s-1.3 6.3-3.8 9c-2.5-2.7-3.8-5.7-3.8-9S9.5 5.7 12 3z"/></svg><span>Web Siteleri</span><span class="bmr-n">26</span></button>
+      <button type="button" role="tab" class="bmr-tab" id="bmr-tab-ig" aria-controls="bmr-ig" aria-selected="false" tabindex="-1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.6" fill="currentColor"/></svg><span>Instagram</span><span class="bmr-n">24</span></button>
+    </div>
 
-      <div class="service-card flex flex-col justify-between" style="min-height:180px;">
-        <div>
-          <div class="section-label mb-3" style="font-size:0.7rem;">Marka Kimliği</div>
-          <h3 class="font-display" style="font-size:1rem; font-weight:700; color:#dff0f0; margin-bottom:8px; letter-spacing:-0.02em;">Güzellik &amp; Sağlık Markaları</h3>
-          <p style="font-size:0.82rem; color:#3d5557; line-height:1.6;">Premium görsel kimlik, içerik üretimi ve hedef kitle odaklı dijital iletişim yönetimi.</p>
+    <div class="bmr-panel" id="bmr-web" role="tabpanel" aria-labelledby="bmr-tab-web">
+      <p class="bmr-note">Son yaptığımız web sitesi projeleri. Siteyi açmak için tıklayın.</p>
+      <div class="bmr-cols">
+        <div class="bmr-group">
+          <div class="bmr-sector">Gıda &amp; Restoran</div>
+          <a class="bmr-item" href="https://dedecorba.com.tr" target="_blank" rel="noopener"><span class="bmr-txt"><span class="bmr-name">Dede Çorba</span><span class="bmr-url">dedecorba.com.tr</span></span><svg class="bmr-arrow" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M4 2.5h5.5V8M9.5 2.5 2.5 9.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <a class="bmr-item" href="https://gurmeenginar.com" target="_blank" rel="noopener"><span class="bmr-txt"><span class="bmr-name">Gurme Enginar</span><span class="bmr-url">gurmeenginar.com</span></span><svg class="bmr-arrow" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M4 2.5h5.5V8M9.5 2.5 2.5 9.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <a class="bmr-item" href="https://oguzcanyoreselmarket.com" target="_blank" rel="noopener"><span class="bmr-txt"><span class="bmr-name">Oğuzcan Yöresel</span><span class="bmr-url">oguzcanyoreselmarket.com</span></span><svg class="bmr-arrow" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M4 2.5h5.5V8M9.5 2.5 2.5 9.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <a class="bmr-item" href="https://cevizz-icli-kofte.vercel.app" target="_blank" rel="noopener"><span class="bmr-txt"><span class="bmr-name">Cevizz İçli Köfte</span><span class="bmr-url">cevizz-icli-kofte.vercel.app</span></span><svg class="bmr-arrow" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M4 2.5h5.5V8M9.5 2.5 2.5 9.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
         </div>
-        <div class="mt-6">
-          <a href="#iletisim" style="font-size:0.8rem; color:#0ecece; font-weight:500; display:inline-flex; align-items:center; gap:6px; transition:gap 0.2s;" onmouseover="this.style.gap='10px'" onmouseout="this.style.gap='6px'">
-            Referans Talep Et
-            <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </a>
+        <div class="bmr-group">
+          <div class="bmr-sector">Mobilya, Ev &amp; Dekorasyon</div>
+          <a class="bmr-item" href="https://umarahome.com" target="_blank" rel="noopener"><span class="bmr-txt"><span class="bmr-name">Umara Home</span><span class="bmr-url">umarahome.com</span></span><svg class="bmr-arrow" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M4 2.5h5.5V8M9.5 2.5 2.5 9.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <a class="bmr-item" href="https://amyshophome.com" target="_blank" rel="noopener"><span class="bmr-txt"><span class="bmr-name">AmyShop Home</span><span class="bmr-url">amyshophome.com</span></span><svg class="bmr-arrow" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M4 2.5h5.5V8M9.5 2.5 2.5 9.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <a class="bmr-item" href="https://kabanlar-yapay-dekorasyon.vercel.app" target="_blank" rel="noopener"><span class="bmr-txt"><span class="bmr-name">Kabanlar Yapay Dekorasyon</span><span class="bmr-url">kabanlar-yapay-dekorasyon.vercel.app</span></span><svg class="bmr-arrow" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M4 2.5h5.5V8M9.5 2.5 2.5 9.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+        <div class="bmr-group">
+          <div class="bmr-sector">Tekstil &amp; Giyim</div>
+          <a class="bmr-item" href="https://valuebrandofficial.com" target="_blank" rel="noopener"><span class="bmr-txt"><span class="bmr-name">Value Brand</span><span class="bmr-url">valuebrandofficial.com</span></span><svg class="bmr-arrow" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M4 2.5h5.5V8M9.5 2.5 2.5 9.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <a class="bmr-item" href="https://myarjajeans.com" target="_blank" rel="noopener"><span class="bmr-txt"><span class="bmr-name">My Arja Jeans</span><span class="bmr-url">myarjajeans.com</span></span><svg class="bmr-arrow" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M4 2.5h5.5V8M9.5 2.5 2.5 9.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <a class="bmr-item" href="https://izmirim-giyim.vercel.app" target="_blank" rel="noopener"><span class="bmr-txt"><span class="bmr-name">İzmirim Giyim Outlet</span><span class="bmr-url">izmirim-giyim.vercel.app</span></span><svg class="bmr-arrow" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M4 2.5h5.5V8M9.5 2.5 2.5 9.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+        <div class="bmr-group">
+          <div class="bmr-sector">Eğitim Kurumları</div>
+          <a class="bmr-item" href="https://ozelegekozalakanaokulu.com" target="_blank" rel="noopener"><span class="bmr-txt"><span class="bmr-name">Özel Ege Kozalak Anaokulu</span><span class="bmr-url">ozelegekozalakanaokulu.com</span></span><svg class="bmr-arrow" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M4 2.5h5.5V8M9.5 2.5 2.5 9.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <a class="bmr-item" href="https://ikilisanim.com" target="_blank" rel="noopener"><span class="bmr-txt"><span class="bmr-name">İki Lisanım · Online Dil Eğitimi</span><span class="bmr-url">ikilisanim.com</span></span><svg class="bmr-arrow" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M4 2.5h5.5V8M9.5 2.5 2.5 9.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+        <div class="bmr-group">
+          <div class="bmr-sector">Sağlık, Masaj &amp; Psikoloji</div>
+          <a class="bmr-item" href="https://mistikmasaj.com" target="_blank" rel="noopener"><span class="bmr-txt"><span class="bmr-name">Mistik Masaj</span><span class="bmr-url">mistikmasaj.com</span></span><svg class="bmr-arrow" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M4 2.5h5.5V8M9.5 2.5 2.5 9.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <a class="bmr-item" href="https://fiorapsikoloji.com" target="_blank" rel="noopener"><span class="bmr-txt"><span class="bmr-name">Fiora Psikoloji</span><span class="bmr-url">fiorapsikoloji.com</span></span><svg class="bmr-arrow" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M4 2.5h5.5V8M9.5 2.5 2.5 9.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+        <div class="bmr-group">
+          <div class="bmr-sector">Hukuk &amp; Tazminat</div>
+          <a class="bmr-item" href="https://tazminatinihesapla.com" target="_blank" rel="noopener"><span class="bmr-txt"><span class="bmr-name">Tazminatını Hesapla</span><span class="bmr-url">tazminatinihesapla.com</span></span><svg class="bmr-arrow" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M4 2.5h5.5V8M9.5 2.5 2.5 9.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <a class="bmr-item" href="https://uzmanhukukburosu.com" target="_blank" rel="noopener"><span class="bmr-txt"><span class="bmr-name">Uzman Hukuk Bürosu</span><span class="bmr-url">uzmanhukukburosu.com</span></span><svg class="bmr-arrow" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M4 2.5h5.5V8M9.5 2.5 2.5 9.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+        <div class="bmr-group">
+          <div class="bmr-sector">Medya &amp; Ajans</div>
+          <a class="bmr-item" href="https://galamedya.com.tr" target="_blank" rel="noopener"><span class="bmr-txt"><span class="bmr-name">Gala Medya · Oyunculuk &amp; Casting</span><span class="bmr-url">galamedya.com.tr</span></span><svg class="bmr-arrow" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M4 2.5h5.5V8M9.5 2.5 2.5 9.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <a class="bmr-item" href="https://hasmedya360.com" target="_blank" rel="noopener"><span class="bmr-txt"><span class="bmr-name">Has Medya</span><span class="bmr-url">hasmedya360.com</span></span><svg class="bmr-arrow" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M4 2.5h5.5V8M9.5 2.5 2.5 9.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+        <div class="bmr-group">
+          <div class="bmr-sector">Turizm &amp; Konaklama</div>
+          <a class="bmr-item" href="https://guzelvadi.com" target="_blank" rel="noopener"><span class="bmr-txt"><span class="bmr-name">Güzel Vadi Termal</span><span class="bmr-url">guzelvadi.com</span></span><svg class="bmr-arrow" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M4 2.5h5.5V8M9.5 2.5 2.5 9.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+        <div class="bmr-group">
+          <div class="bmr-sector">Organizasyon &amp; Etkinlik</div>
+          <a class="bmr-item" href="https://neselianlarorganizasyon.com" target="_blank" rel="noopener"><span class="bmr-txt"><span class="bmr-name">Neşeli Anlar Organizasyon</span><span class="bmr-url">neselianlarorganizasyon.com</span></span><svg class="bmr-arrow" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M4 2.5h5.5V8M9.5 2.5 2.5 9.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+        <div class="bmr-group">
+          <div class="bmr-sector">Saat &amp; Aksesuar</div>
+          <a class="bmr-item" href="https://saatciplus.com" target="_blank" rel="noopener"><span class="bmr-txt"><span class="bmr-name">Saatçi Plus</span><span class="bmr-url">saatciplus.com</span></span><svg class="bmr-arrow" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M4 2.5h5.5V8M9.5 2.5 2.5 9.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+        <div class="bmr-group">
+          <div class="bmr-sector">Kuyumculuk &amp; Sarrafiye</div>
+          <a class="bmr-item" href="https://hasburaksarrafiye.com" target="_blank" rel="noopener"><span class="bmr-txt"><span class="bmr-name">Has Burak Sarrafiye</span><span class="bmr-url">hasburaksarrafiye.com</span></span><svg class="bmr-arrow" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M4 2.5h5.5V8M9.5 2.5 2.5 9.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+        <div class="bmr-group">
+          <div class="bmr-sector">Berber · Online Randevu</div>
+          <a class="bmr-item" href="https://bygorkemrezervasyon.vercel.app" target="_blank" rel="noopener"><span class="bmr-txt"><span class="bmr-name">by Görkem Barber Shop</span><span class="bmr-badge">Yapım Aşamasında</span><span class="bmr-url">bygorkemrezervasyon.vercel.app</span></span><svg class="bmr-arrow" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M4 2.5h5.5V8M9.5 2.5 2.5 9.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+        <div class="bmr-group">
+          <div class="bmr-sector">Aydınlatma</div>
+          <a class="bmr-item" href="https://narlight.vercel.app" target="_blank" rel="noopener"><span class="bmr-txt"><span class="bmr-name">Nar Light</span><span class="bmr-badge">Yapım Aşamasında</span><span class="bmr-url">narlight.vercel.app</span></span><svg class="bmr-arrow" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M4 2.5h5.5V8M9.5 2.5 2.5 9.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+        <div class="bmr-group">
+          <div class="bmr-sector">Temizlik Hizmetleri</div>
+          <a class="bmr-item" href="https://nazilliarslanyikama.com" target="_blank" rel="noopener"><span class="bmr-txt"><span class="bmr-name">Nazilli Arslan Yıkama</span><span class="bmr-url">nazilliarslanyikama.com</span></span><svg class="bmr-arrow" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M4 2.5h5.5V8M9.5 2.5 2.5 9.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+        <div class="bmr-group">
+          <div class="bmr-sector">Lojistik &amp; Terminal</div>
+          <a class="bmr-item" href="https://fltfreeland.com" target="_blank" rel="noopener"><span class="bmr-txt"><span class="bmr-name">FLT Freeland Terminal</span><span class="bmr-badge">Tanıtım Sayfası</span><span class="bmr-url">fltfreeland.com</span></span><svg class="bmr-arrow" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M4 2.5h5.5V8M9.5 2.5 2.5 9.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
         </div>
       </div>
     </div>
+
+    <div class="bmr-panel" id="bmr-ig" role="tabpanel" aria-labelledby="bmr-tab-ig" hidden>
+      <p class="bmr-note">Sosyal medya yönetimi ve içerik üretimi yaptığımız markalar. Profili açmak için tıklayın.</p>
+      <div class="bmr-cols">
+        <div class="bmr-group">
+          <div class="bmr-sector">Sağlık &amp; Diş Hekimliği</div>
+          <a class="bmr-item" href="https://www.instagram.com/dr.ridvangunes/" target="_blank" rel="noopener"><span class="bmr-txt"><span class="bmr-name">Dr. Rıdvan Güneş</span><span class="bmr-url">@dr.ridvangunes</span></span><svg class="bmr-arrow" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M4 2.5h5.5V8M9.5 2.5 2.5 9.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <a class="bmr-item" href="https://www.instagram.com/avrupadent/" target="_blank" rel="noopener"><span class="bmr-txt"><span class="bmr-name">Avrupadent Diş Kliniği</span><span class="bmr-url">@avrupadent</span></span><svg class="bmr-arrow" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M4 2.5h5.5V8M9.5 2.5 2.5 9.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <a class="bmr-item" href="https://www.instagram.com/primedentalturkey/" target="_blank" rel="noopener"><span class="bmr-txt"><span class="bmr-name">Prime Dental Turkey</span><span class="bmr-url">@primedentalturkey</span></span><svg class="bmr-arrow" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M4 2.5h5.5V8M9.5 2.5 2.5 9.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <a class="bmr-item" href="https://www.instagram.com/dentapoint/" target="_blank" rel="noopener"><span class="bmr-txt"><span class="bmr-name">Dentapoint</span><span class="bmr-url">@dentapoint</span></span><svg class="bmr-arrow" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M4 2.5h5.5V8M9.5 2.5 2.5 9.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+        <div class="bmr-group">
+          <div class="bmr-sector">Emlak &amp; Gayrimenkul</div>
+          <a class="bmr-item" href="https://www.instagram.com/alfavillas.tr/" target="_blank" rel="noopener"><span class="bmr-txt"><span class="bmr-name">Alfa Villas</span><span class="bmr-url">@alfavillas.tr</span></span><svg class="bmr-arrow" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M4 2.5h5.5V8M9.5 2.5 2.5 9.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <a class="bmr-item" href="https://www.instagram.com/alfavillas_zeytinhanemlak/" target="_blank" rel="noopener"><span class="bmr-txt"><span class="bmr-name">Zeytinhane Emlak</span><span class="bmr-url">@alfavillas_zeytinhanemlak</span></span><svg class="bmr-arrow" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M4 2.5h5.5V8M9.5 2.5 2.5 9.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <a class="bmr-item" href="https://www.instagram.com/grandemlak/" target="_blank" rel="noopener"><span class="bmr-txt"><span class="bmr-name">Grand Emlak</span><span class="bmr-url">@grandemlak</span></span><svg class="bmr-arrow" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M4 2.5h5.5V8M9.5 2.5 2.5 9.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+        <div class="bmr-group">
+          <div class="bmr-sector">Gıda &amp; Restoran</div>
+          <a class="bmr-item" href="https://www.instagram.com/dedecorbaofficial/" target="_blank" rel="noopener"><span class="bmr-txt"><span class="bmr-name">Dede Çorba</span><span class="bmr-url">@dedecorbaofficial</span></span><svg class="bmr-arrow" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M4 2.5h5.5V8M9.5 2.5 2.5 9.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <a class="bmr-item" href="https://www.instagram.com/ventoitalianoristorante/" target="_blank" rel="noopener"><span class="bmr-txt"><span class="bmr-name">Vento Italiano Ristorante</span><span class="bmr-url">@ventoitalianoristorante</span></span><svg class="bmr-arrow" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M4 2.5h5.5V8M9.5 2.5 2.5 9.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <a class="bmr-item" href="https://www.instagram.com/tarladanipsalapirinci/" target="_blank" rel="noopener"><span class="bmr-txt"><span class="bmr-name">Tarladan İpsala Pirinci</span><span class="bmr-url">@tarladanipsalapirinci</span></span><svg class="bmr-arrow" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M4 2.5h5.5V8M9.5 2.5 2.5 9.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+        <div class="bmr-group">
+          <div class="bmr-sector">Turizm &amp; Kiralama</div>
+          <a class="bmr-item" href="https://www.instagram.com/fethiyesailing/" target="_blank" rel="noopener"><span class="bmr-txt"><span class="bmr-name">Fethiye Sailing</span><span class="bmr-url">@fethiyesailing</span></span><svg class="bmr-arrow" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M4 2.5h5.5V8M9.5 2.5 2.5 9.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <a class="bmr-item" href="https://www.instagram.com/avis/" target="_blank" rel="noopener"><span class="bmr-txt"><span class="bmr-name">Avis Araç Kiralama</span><span class="bmr-url">@avis</span></span><svg class="bmr-arrow" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M4 2.5h5.5V8M9.5 2.5 2.5 9.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+        <div class="bmr-group">
+          <div class="bmr-sector">Güzellik &amp; Bakım</div>
+          <a class="bmr-item" href="https://www.instagram.com/norafacebeauty/" target="_blank" rel="noopener"><span class="bmr-txt"><span class="bmr-name">Nora Face Beauty</span><span class="bmr-url">@norafacebeauty</span></span><svg class="bmr-arrow" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M4 2.5h5.5V8M9.5 2.5 2.5 9.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <a class="bmr-item" href="https://www.instagram.com/reine__beauty/" target="_blank" rel="noopener"><span class="bmr-txt"><span class="bmr-name">Reine Beauty</span><span class="bmr-url">@reine__beauty</span></span><svg class="bmr-arrow" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M4 2.5h5.5V8M9.5 2.5 2.5 9.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <a class="bmr-item" href="https://www.instagram.com/izmirnailstudyo/" target="_blank" rel="noopener"><span class="bmr-txt"><span class="bmr-name">İzmir Nail Stüdyo</span><span class="bmr-url">@izmirnailstudyo</span></span><svg class="bmr-arrow" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M4 2.5h5.5V8M9.5 2.5 2.5 9.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+        <div class="bmr-group">
+          <div class="bmr-sector">Eğitim Kurumları</div>
+          <a class="bmr-item" href="https://www.instagram.com/egekozalakanaokulu/" target="_blank" rel="noopener"><span class="bmr-txt"><span class="bmr-name">Ege Kozalak Anaokulu</span><span class="bmr-url">@egekozalakanaokulu</span></span><svg class="bmr-arrow" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M4 2.5h5.5V8M9.5 2.5 2.5 9.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+        <div class="bmr-group">
+          <div class="bmr-sector">Mobilya &amp; Ev Dekorasyon</div>
+          <a class="bmr-item" href="https://www.instagram.com/umarahome/" target="_blank" rel="noopener"><span class="bmr-txt"><span class="bmr-name">Umara Home</span><span class="bmr-url">@umarahome</span></span><svg class="bmr-arrow" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M4 2.5h5.5V8M9.5 2.5 2.5 9.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+        <div class="bmr-group">
+          <div class="bmr-sector">Tekstil &amp; Kadın Giyim</div>
+          <a class="bmr-item" href="https://www.instagram.com/ironathleticsclub/" target="_blank" rel="noopener"><span class="bmr-txt"><span class="bmr-name">Iron Athletics Club</span><span class="bmr-url">@ironathleticsclub</span></span><svg class="bmr-arrow" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M4 2.5h5.5V8M9.5 2.5 2.5 9.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <a class="bmr-item" href="https://www.instagram.com/shoutcomtr/" target="_blank" rel="noopener"><span class="bmr-txt"><span class="bmr-name">Shoutcom TR</span><span class="bmr-url">@shoutcomtr</span></span><svg class="bmr-arrow" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M4 2.5h5.5V8M9.5 2.5 2.5 9.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <a class="bmr-item" href="https://www.instagram.com/valuebrandofficiall/" target="_blank" rel="noopener"><span class="bmr-txt"><span class="bmr-name">Value Brand</span><span class="bmr-url">@valuebrandofficiall</span></span><svg class="bmr-arrow" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M4 2.5h5.5V8M9.5 2.5 2.5 9.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <a class="bmr-item" href="https://www.instagram.com/izmirim_giyim/" target="_blank" rel="noopener"><span class="bmr-txt"><span class="bmr-name">İzmirim Giyim</span><span class="bmr-url">@izmirim_giyim</span></span><svg class="bmr-arrow" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M4 2.5h5.5V8M9.5 2.5 2.5 9.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+        <div class="bmr-group">
+          <div class="bmr-sector">Teknik, İlaç &amp; Uluslararası</div>
+          <a class="bmr-item" href="https://www.instagram.com/klimatisteknikk/" target="_blank" rel="noopener"><span class="bmr-txt"><span class="bmr-name">Klimatist Teknik</span><span class="bmr-url">@klimatisteknikk</span></span><svg class="bmr-arrow" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M4 2.5h5.5V8M9.5 2.5 2.5 9.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <a class="bmr-item" href="https://www.instagram.com/ecotecpharmailacsanayi/" target="_blank" rel="noopener"><span class="bmr-txt"><span class="bmr-name">Ecotec Pharma İlaç San.</span><span class="bmr-url">@ecotecpharmailacsanayi</span></span><svg class="bmr-arrow" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M4 2.5h5.5V8M9.5 2.5 2.5 9.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <a class="bmr-item" href="https://www.instagram.com/euroasien.de/" target="_blank" rel="noopener"><span class="bmr-txt"><span class="bmr-name">Euroasien (Almanya)</span><span class="bmr-url">@euroasien.de</span></span><svg class="bmr-arrow" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M4 2.5h5.5V8M9.5 2.5 2.5 9.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+      </div>
+    </div>
+
+    <script>
+    (function(){
+      var tabs = Array.prototype.slice.call(document.querySelectorAll('.bmr-tab'));
+      function pick(t, focus){
+        tabs.forEach(function(b){
+          var on = (b === t);
+          b.setAttribute('aria-selected', on ? 'true' : 'false');
+          b.tabIndex = on ? 0 : -1;
+          var p = document.getElementById(b.getAttribute('aria-controls'));
+          if(p) p.hidden = !on;
+        });
+        if(focus) t.focus();
+      }
+      tabs.forEach(function(b, i){
+        b.addEventListener('click', function(){ pick(b); });
+        b.addEventListener('keydown', function(ev){
+          var d = ev.key === 'ArrowRight' ? 1 : ev.key === 'ArrowLeft' ? -1 : 0;
+          if(!d) return;
+          ev.preventDefault();
+          pick(tabs[(i + d + tabs.length) % tabs.length], true);
+        });
+      });
+    })();
+    </script>
 
     <!-- Full reference CTA -->
     <div class="rounded-xl border border-brand-border p-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6" style="background:#0d1314;">
@@ -3371,15 +3549,42 @@
       "Projeler & İş Birlikleri":"Projects & Collaborations",
       "Farklı sektörlerde yürüttüğümüz dijital reklam, sosyal medya ve yaratıcı içerik projeleriyle markalara görünürlük, algı ve iletişim gücü kazandırıyoruz.":"Through digital advertising, social media and creative content projects across different sectors, we give brands visibility, perception and communication power.",
       "Sosyal Medya":"Social Media",
-      "Perakende & E-ticaret Markaları":"Retail & E-Commerce Brands",
-      "Ürün odaklı içerik yönetimi, reklam kampanyaları ve marka kimliği çalışmaları.":"Product-focused content management, ad campaigns and brand identity work.",
-      "Referans Talep Et":"Request References",
-      "12+ ülkede yürütülen uluslararası kampanyalar ve çok dilli içerik stratejileri.":"International campaigns run in 12+ countries and multilingual content strategies.",
-      "Güzellik & Sağlık Markaları":"Beauty & Wellness Brands",
-      "Premium görsel kimlik, içerik üretimi ve hedef kitle odaklı dijital iletişim yönetimi.":"Premium visual identity, content production and audience-focused digital communication management.",
       "Daha fazla referans için bizimle iletişime geçin.":"Contact us for more references.",
       "Sektörünüze özel örnek çalışmalarımızı paylaşalım.":"Let us share case studies specific to your sector.",
       "Referans Talep Edin":"Request References",
+      "Web Sitesi":"Websites",
+      "Instagram Markası":"Instagram Brands",
+      "Farklı Sektörde Web Projesi":"Sectors with Web Projects",
+      "Web Siteleri":"Websites",
+      "Son yaptığımız web sitesi projeleri. Siteyi açmak için tıklayın.":"Our latest website projects. Click to open a site.",
+      "Sosyal medya yönetimi ve içerik üretimi yaptığımız markalar. Profili açmak için tıklayın.":"Brands we run social media and produce content for. Click to open the profile.",
+      "Yapım Aşamasında":"In Progress",
+      "Tanıtım Sayfası":"Landing Page",
+      "Gıda & Restoran":"Food & Restaurants",
+      "Mobilya, Ev & Dekorasyon":"Furniture, Home & Decor",
+      "Tekstil & Giyim":"Textile & Apparel",
+      "Eğitim Kurumları":"Education",
+      "Sağlık, Masaj & Psikoloji":"Health, Massage & Psychology",
+      "Hukuk & Tazminat":"Law & Compensation",
+      "Medya & Ajans":"Media & Agency",
+      "Organizasyon & Etkinlik":"Events & Organization",
+      "Saat & Aksesuar":"Watches & Accessories",
+      "Kuyumculuk & Sarrafiye":"Jewelry & Gold Exchange",
+      "Berber · Online Randevu":"Barber · Online Booking",
+      "Aydınlatma":"Lighting",
+      "Temizlik Hizmetleri":"Cleaning Services",
+      "Lojistik & Terminal":"Logistics & Terminal",
+      "Sağlık & Diş Hekimliği":"Health & Dentistry",
+      "Turizm & Kiralama":"Tourism & Rentals",
+      "Güzellik & Bakım":"Beauty & Care",
+      "Mobilya & Ev Dekorasyon":"Furniture & Home Decor",
+      "Tekstil & Kadın Giyim":"Textile & Womenswear",
+      "Teknik, İlaç & Uluslararası":"Technical, Pharma & International",
+      "İki Lisanım · Online Dil Eğitimi":"İki Lisanım · Online Language Courses",
+      "Gala Medya · Oyunculuk & Casting":"Gala Medya · Acting & Casting",
+      "Avrupadent Diş Kliniği":"Avrupadent Dental Clinic",
+      "Avis Araç Kiralama":"Avis Car Rental",
+      "Euroasien (Almanya)":"Euroasien (Germany)",
       "Sosyal medyayı":"Turn social media",
       "bir marka aracına":"into a powerful",
       "dönüştürün.":"brand tool.",
@@ -3583,15 +3788,42 @@
       "Projeler & İş Birlikleri":"Proyectos y Colaboraciones",
       "Farklı sektörlerde yürüttüğümüz dijital reklam, sosyal medya ve yaratıcı içerik projeleriyle markalara görünürlük, algı ve iletişim gücü kazandırıyoruz.":"A través de proyectos de publicidad digital, redes sociales y contenido creativo en distintos sectores, aportamos a las marcas visibilidad, percepción y poder de comunicación.",
       "Sosyal Medya":"Redes Sociales",
-      "Perakende & E-ticaret Markaları":"Marcas de Retail y E-Commerce",
-      "Ürün odaklı içerik yönetimi, reklam kampanyaları ve marka kimliği çalışmaları.":"Gestión de contenido orientada al producto, campañas publicitarias y trabajo de identidad de marca.",
-      "Referans Talep Et":"Solicitar Referencias",
-      "12+ ülkede yürütülen uluslararası kampanyalar ve çok dilli içerik stratejileri.":"Campañas internacionales realizadas en más de 12 países y estrategias de contenido multilingüe.",
-      "Güzellik & Sağlık Markaları":"Marcas de Belleza y Salud",
-      "Premium görsel kimlik, içerik üretimi ve hedef kitle odaklı dijital iletişim yönetimi.":"Identidad visual premium, producción de contenido y gestión de comunicación digital orientada al público.",
       "Daha fazla referans için bizimle iletişime geçin.":"Contáctanos para ver más referencias.",
       "Sektörünüze özel örnek çalışmalarımızı paylaşalım.":"Compartamos casos de estudio específicos para tu sector.",
       "Referans Talep Edin":"Solicitar Referencias",
+      "Web Sitesi":"Sitios Web",
+      "Instagram Markası":"Marcas en Instagram",
+      "Farklı Sektörde Web Projesi":"Sectores con Proyectos Web",
+      "Web Siteleri":"Sitios Web",
+      "Son yaptığımız web sitesi projeleri. Siteyi açmak için tıklayın.":"Nuestros últimos proyectos web. Haz clic para abrir el sitio.",
+      "Sosyal medya yönetimi ve içerik üretimi yaptığımız markalar. Profili açmak için tıklayın.":"Marcas para las que gestionamos redes sociales y producimos contenido. Haz clic para abrir el perfil.",
+      "Yapım Aşamasında":"En Desarrollo",
+      "Tanıtım Sayfası":"Página de Presentación",
+      "Gıda & Restoran":"Alimentación y Restaurantes",
+      "Mobilya, Ev & Dekorasyon":"Muebles, Hogar y Decoración",
+      "Tekstil & Giyim":"Textil y Moda",
+      "Eğitim Kurumları":"Educación",
+      "Sağlık, Masaj & Psikoloji":"Salud, Masajes y Psicología",
+      "Hukuk & Tazminat":"Derecho e Indemnizaciones",
+      "Medya & Ajans":"Medios y Agencias",
+      "Organizasyon & Etkinlik":"Eventos y Organización",
+      "Saat & Aksesuar":"Relojes y Accesorios",
+      "Kuyumculuk & Sarrafiye":"Joyería y Compraventa de Oro",
+      "Berber · Online Randevu":"Barbería · Reserva Online",
+      "Aydınlatma":"Iluminación",
+      "Temizlik Hizmetleri":"Servicios de Limpieza",
+      "Lojistik & Terminal":"Logística y Terminal",
+      "Sağlık & Diş Hekimliği":"Salud y Odontología",
+      "Turizm & Kiralama":"Turismo y Alquiler",
+      "Güzellik & Bakım":"Belleza y Cuidado",
+      "Mobilya & Ev Dekorasyon":"Muebles y Decoración del Hogar",
+      "Tekstil & Kadın Giyim":"Textil y Moda Femenina",
+      "Teknik, İlaç & Uluslararası":"Técnico, Farmacéutico e Internacional",
+      "İki Lisanım · Online Dil Eğitimi":"İki Lisanım · Cursos de Idiomas Online",
+      "Gala Medya · Oyunculuk & Casting":"Gala Medya · Actuación y Casting",
+      "Avrupadent Diş Kliniği":"Clínica Dental Avrupadent",
+      "Avis Araç Kiralama":"Avis Alquiler de Coches",
+      "Euroasien (Almanya)":"Euroasien (Alemania)",
       "Sosyal medyayı":"Convierte las redes",
       "bir marka aracına":"sociales en una",
       "dönüştürün.":"herramienta de marca.",
